@@ -15,15 +15,15 @@ const validPassword = (password,hashedPassword)=>{
     return match
 }
 
-const genPwd = (password)=>{
-    const generatetd = bcrypt.hash(password,10,(err,hash)=>{
-        if(err){
-            console.log("hashing error");
-        }else{
-            console.log('hash completed');
-        }
-    })
-    return generatetd;
+const genPwd = async (password) => {
+    try {
+        const hash = await bcrypt.hash(password, 10);
+        console.log('Hash completed');
+        return hash;
+    } catch (err) {
+        console.error('Hashing error:', err);
+        throw err;  // Propagate the error
+    }
 }
 
 

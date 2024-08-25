@@ -18,7 +18,7 @@ const options ={
 
 const strategy = new JwtStratagey(options, async (payload , done)=>{
     try{
-        const result  = await pool.query('');
+        const result  = await pool.query('select * from users where id = $1' , [payload.sub]);
         const user = result.rows[0];
         done(null,user);
     }catch(err){
