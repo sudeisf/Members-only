@@ -12,7 +12,7 @@ const PUB_KEY = fs.readFileSync(pathToKey,'utf8');
 const options ={
     jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey : PUB_KEY,
-    algorithm: ['RS256']
+    algorithms: ['RS256']
 }
 
 

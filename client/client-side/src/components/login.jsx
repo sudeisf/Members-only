@@ -4,7 +4,7 @@ import axios  from 'axios';
 import { postData } from "../services/rigesterApi";
 
 
-export default function SignUp (){
+export default function LogIn (){
     const [data,setData] = useState({
         firstname:'',
         lastname:'',
@@ -52,20 +52,10 @@ export default function SignUp (){
             <>
             
                
-            <form className="w-[80%] md:w-[50%] h-[100vh] md:h-full mt-[20%] md:mt-auto mb-auto mr-auto ml-auto" onSubmit={handleSubmit}>
-                    <div className="text-black  flex flex-col  gap-1 p-3 sm:p-4 md:p-1 lg:p-5  align-middle   *:capitalize mr-auto ml-auto  md:w-[75%] xl:w-[60%] ">
-                        <div>
-                            <h1 className="text-center font-new-amsterdam font-medium text-3xl capitalize">Sign up</h1>
-                        </div>
-                        <div className="*:text-lg flex flex-col gap-3">
-                            <div className="font-new-amsterdam font-medium">fistname </div>
-                            <input className="text-black  text-2 h-12 rounded-md border-slate-600 border-[1px] shadow-sm w-[100%] focus:shadow-outline p-4 placeholder:text-slate-500" placeholder="first name"  type="text" name="firstname" value={data.firstname} onChange={handleCahnge} required/>
-                            {err.firstname && <p className=" font-sans text-[2px] text-[red]">{err.firstname}</p> }
-                        </div>
-                        <div className="*:text-lg flex flex-col gap-3">
-                            <div className="font-new-amsterdam font-medium">lastname</div>
-                            <input className="text-black  text-2 h-12 rounded-md border-slate-600 border-[1px] shadow-sm w-[100%] p-4 placeholder:text-slate-500" placeholder="last name" type="text" name="lastname" value={data.lastname}  onChange={handleCahnge} required/>
-                            {err.lastname && <p className=" font-sans text-[2px] text-[red]">{err.lastname}</p> }
+            <form className="w-[80%] md:w-[50%]   mt-[8%]  mr-auto ml-auto" onSubmit={handleSubmit}>
+                    <div className="text-black  flex flex-col  gap-1 p-3 sm:p-4 md:p-1 lg:p-5  align-middle   *:capitalize mr-auto ml-auto  md:w-[75%] xl:w-[60%] mb-auto mt-auto">
+                          <div>
+                            <h1 className="text-center font-new-amsterdam font-medium text-3xl capitalize">log in</h1>
                         </div>
                         <div className="*:text-lg flex flex-col gap-3">
                             <div className="font-new-amsterdam font-medium">email</div>
@@ -76,15 +66,10 @@ export default function SignUp (){
                              <input className="text-black  text-2 h-12 rounded-md border-slate-600 border-[1px] shadow-sm w-[100%] p-4 placeholder:text-slate-500" placeholder="••••••••" type="password" name="password" value={data.password}  onChange={handleCahnge} required/>
                              {err.password && <p className=" font-sans text-[2px] text-[red]">{err.password}</p> }
                         </div>
-                        <div className="*:text-lg flex flex-col gap-3">
-                            <div className="font-new-amsterdam font-medium">confirm password</div>
-                             <input className="text-black  text-2 h-12 rounded-md border-slate-600 border-[1px] shadow-sm w-[100%] p-4 placeholder:text-slate-500 placeholder:text-[1rem]" placeholder="••••••••"  type="password" name="passwordConfirmation" value={data.passwordConfirmation} onChange={handleCahnge} required/>
-                            {err.passwordConfirmation && <p className=" font-sans text-[2px] text-[red]">{err.passwordConfirmation}</p> }
-                        </div>
 
                         <div className="flex flex-col justify-center mt-2 gap-1" >
-                            <button type="submit" className="bg-slate-800 hover:bg-slate-600 hover:outline-8 hover:border-2  text-white text-xl  capitalize items-center font-Jersey h-12 p-2 font-normal rounded-xl  shadow-sm w-[100%]">register</button>
-                            <p className="appearance-none text-center"><a href="" className="text-slate-500 font-semibold  ">aleardy have an account ?</a></p>
+                            <button type="submit" className="bg-slate-800 hover:bg-slate-600 hover:outline-8 hover:border-2  text-white text-2xl  capitalize items-center font-Jersey h-12 p-2 font-normal rounded-xl  shadow-sm w-[100%]">log in</button>
+                            <p className="appearance-none text-center"><a href="" className="text-slate-500 font-semibold  ">i don't have an account?</a></p>
                         </div>
                     </div>
                    

@@ -41,10 +41,45 @@ async function registerControllerPost (req, res,next) {
             user: user,
             token: jwt.token,
             expiresIn: jwt.expires
-        })
+        });
+
      }catch(err){
         next(err)
      }
+}
+
+
+
+async function loginControllerPost(req, res, next) {
+    try {
+        const loginUser = {
+            email: req.body.email,
+            password: req.body.password,
+        };
+
+      
+        const result = await pool.query('SELECT * FROM users WHERE email = $1', [loginUser.email]);
+        const user = result.rows[0];
+
+        
+        if (!user) {
+            return res.status(401).json('User not found');
+        }
+
+      
+        const isValid = await utilis.validPassword(loginUser.password, user.password);
+
+        
+        if (isValid) {
+            const tokenObj = utilis.issueJWT(user);
+            return res.status(200).json({ success: true, user: user, token: tokenObj.token, expiresIn: tokenObj.expires });
+        } else {
+           
+            return res.status(401).json({ success: false, msg: "Invalid password" });
+        }
+    } catch (err) {
+        next(err);
+    }
 }
 
 
@@ -53,7 +88,7 @@ async function registerControllerPost (req, res,next) {
 
 
 
-
 module.exports = {
-    registerControllerPost
+    registerControllerPost,
+    loginControllerPost
 }

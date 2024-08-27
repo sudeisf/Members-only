@@ -1,16 +1,22 @@
 import { useState } from 'react'
-
+import { Outlet } from 'react-router-dom';
 import './App.css'
-import Signup from './components/signup'
+import Signup from './components/signup';
+import NavBar from './components/navBar';
+import Home from './pages/home';
+// import { Outlet } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
-      <div className='p-5 bg-black text-white'>
-        <Signup/>
-      </div>
+        <NavBar />
+        <div>
+          <Outlet/>
+        </div>
+        
+   
         
     </>
   )

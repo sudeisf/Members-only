@@ -42,7 +42,7 @@ const validator  = [
     
     body('passwordConfirmation').custom((value, { req }) => {
         return value === req.body.password;
-      }),
+      }).withMessage("the password doesn't match"),
     
 ]
 
