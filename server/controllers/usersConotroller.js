@@ -17,13 +17,6 @@ async function registerControllerPost (req, res,next) {
             email: req.body.email,
             password: req.body.password
         }
-
-        //debugging 
-        // for (const key in newUser) {
-        //     if (newUser.hasOwnProperty(key)) {
-        //         console.log(`${key}: ${newUser[key]}`);
-        //     }
-        // }
         
         const hashedPwd = await utilis.genPwd(newUser.password);
         const result = await pool.query("Insert into users (first_name,last_name,password,email) values ($1,$2,$3,$4) returning *;",
@@ -43,10 +36,10 @@ async function registerControllerPost (req, res,next) {
             expiresIn: jwt.expires
         });
 
-     }catch(err){
+        }catch(err){
         next(err)
-     }
-}
+        }
+    }
 
 
 
@@ -63,7 +56,7 @@ async function loginControllerPost(req, res, next) {
 
         
         if (!user) {
-            return res.status(401).json('User not found');
+            return res.status(401).json({succes: false , msg : 'user not found'});
         }
 
       
@@ -72,7 +65,7 @@ async function loginControllerPost(req, res, next) {
         
         if (isValid) {
             const tokenObj = utilis.issueJWT(user);
-            return res.status(200).json({ success: true, user: user, token: tokenObj.token, expiresIn: tokenObj.expires });
+            return res.status(200).json({ success: true, user: user, token: tokenObj.token, expiresIn: tokenObj.expires , redirectUrl : '/home' });
         } else {
            
             return res.status(401).json({ success: false, msg: "Invalid password" });

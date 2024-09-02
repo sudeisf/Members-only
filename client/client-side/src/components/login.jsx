@@ -1,81 +1,112 @@
+import React, { useState } from 'react';
+import { useAuth } from '../Context/AuthContext';
+import axios from 'axios';
+import Pic from '../assets/login.svg';
 
-import React ,{useState} from "react";
-import axios  from 'axios';
-import { postData } from "../services/rigesterApi";
+const LoginDialog = ({ isOpen, onClose }) => {
+  const { login } = useAuth();
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+  });
+  const [err, setErr] = useState('');
 
-
-export default function LogIn (){
-    const [data,setData] = useState({
-        firstname:'',
-        lastname:'',
-        email:'',
-        password:'',
-        passwordConfirmation:''
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
     });
-    const [err, setErr] = useState({})
+  };
 
-    const handleCahnge= (e) =>{
-        const {name , value} = e.target;
-        setData({
-            ...data, [name] : value
-        });
-        setErr({...err,[name]:''});
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:3001/api/login', data);
+      login(res.data.token);
+      onClose();
+      setData({});
+    } catch (error) {
+      setErr(error.response?.data?.msg || "An error occurred");
     }
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        try {
-            const res = await axios.post('http://localhost:3001/api/register', data);
-            console.log('Success:', res.data);  // Use res.data to access the response data
-            setErr({})
-        } catch (err) {
-            if (err.response && err.response.data.errors) {
-                console.error('Error response:', err.response.data);
-                const  vlaidationErr = err.response.data.errors;
-                const  errObj = {};
-                vlaidationErr.forEach(error=>{
-                    errObj[error.path] = error.msg;
-                });
-                setErr(errObj);
-                console.error('Error response:', err.response.data);
-            } else if (err.request) {
-               
-                console.error('Error request:', err.request);
-            } else {
-               
-                console.error('Error:', err.message);
-            }
-        }
-    };
+  };
 
-        return(
-            <>
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-70 z-1110">
+      <div className={`bg-cyan-600  rounded-lg shadow-lg w-full max-w-4xl h-[600px] flex justify-between  md:mx-0 transform transition-transform duration-3000 ease-in-out ${ isOpen ? 'translate-y-0 opacity-100 scale-100':'translate-y-10 opacity-0 scale-95'}`} >
+        <div className='  flex flex-col  mr-auto ml-auto'>
+          <img src={Pic} alt="Login" className="w-[15rem] h-1/2 mr-auto ml-auto " />
+          <div className="flex flex-col mr-auto ml-auto   gap-2 border-white h-1/2 ">
+                    <h1 className="text-white font-Jersey  font-medium capitalize text-[2.6rem] md:text-[3rem] lg:text-[2rem] mr-auto ml-auto text-center  ">wellcome to memebers only</h1>
+                    <p className="text-white font-Rubik  md:text-[1rem] capitalize text-center ml-auto mr-auto">we are delighted for chosing our platform</p>
+                    {/* <button className="border-white border-2 text-center hover:bg-slate-700 hover:text-white  text-white bg-cyan-600 w-[50%]  capitalize  font-Jersey text-xl h-12 p-2 rounded-xl shadow-md mr-auto ml-auto"   ><NavLink to={'/wellcome'}>back to home</NavLink></button> */}
+                
+                </div>
+        </div>
+
+        <div className='bg-orange-400 w-[50%] rounded-r-lg shadow-md mr-2 mt-2 mb-2 '>
+        <div className='text-right'>
+            <button
+              type="button"
+              onClick={onClose}
+              className="bg-orange-400 text-white   font-bold py-2 px-4 rounded w-fit text-2xl -auto"
+            >
+              x
+            </button>
+            </div>
+            <form onSubmit={handleSubmit} className="  p-10">
             
+            <h1 className=" font-normal font-Bebas-Neue mb-2 text-center text-4xl text-white">Login</h1>
+    
+    
+    
+              <div  className='mb-4'>
+    
+                <label htmlFor="email" className="block text-sm font-new-amsterdam font-normal text-white">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={data.email}
+                  onChange={handleChange}
+                  className="text-black  text-2 h-12 rounded-md border-slate-600 border-[1px] shadow-sm w-[100%] p-4 placeholder:text-slate-500" placeholder="avcs@xyz.com"                   required
+                />
+              </div>
+              
+              <div className="mb-4">
+                <label htmlFor="password" className="block text-sm font-new-amsterdam font-normal text-white">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={data.password}
+                  onChange={handleChange}
+                  className="text-black  text-2 h-12 rounded-md border-slate-600 border-[1px] shadow-sm w-[100%] p-4 placeholder:text-slate-500" placeholder="••••••••"
+                  required
+                />
+              </div>
+              
+              {err && <p className="text-red-400 text-sm mb-4">{err}</p>}
+              
+              <div className="flex flex-col gap-4 justify-end">
                
-            <form className="w-[80%] md:w-[50%]   mt-[8%]  mr-auto ml-auto" onSubmit={handleSubmit}>
-                    <div className="text-black  flex flex-col  gap-1 p-3 sm:p-4 md:p-1 lg:p-5  align-middle   *:capitalize mr-auto ml-auto  md:w-[75%] xl:w-[60%] mb-auto mt-auto">
-                          <div>
-                            <h1 className="text-center font-new-amsterdam font-medium text-3xl capitalize">log in</h1>
-                        </div>
-                        <div className="*:text-lg flex flex-col gap-3">
-                            <div className="font-new-amsterdam font-medium">email</div>
-                             <input className="text-black  text-2 h-12 rounded-md border-slate-600 border-[1px] shadow-sm w-[100%] p-4 placeholder:text-slate-500" placeholder="avcs@xyz.com" type="email" name="email" value={data.email} onChange={handleCahnge} required/> </div>
-                             {err.email && <p className=" font-sans text-[2px] text-[red]">{err.email}</p> }
-                        <div className="*:text-lg flex flex-col gap-3">
-                            <div className="font-new-amsterdam font-medium">password</div>
-                             <input className="text-black  text-2 h-12 rounded-md border-slate-600 border-[1px] shadow-sm w-[100%] p-4 placeholder:text-slate-500" placeholder="••••••••" type="password" name="password" value={data.password}  onChange={handleCahnge} required/>
-                             {err.password && <p className=" font-sans text-[2px] text-[red]">{err.password}</p> }
-                        </div>
+                <button
+                  type="submit"
+                  className="bg-cyan-600  hover:bg-blue-600 text-white font-new-amsterdam font-normal text-xl py-2 px-4 rounded-md shadow-sm border-2 border-white"
+                >
+                  Login
+                </button>
+                <p className='text-center text-white text-lg capitalize'>have no account?</p>
+              </div>
+            </form>
+          </div>
+        </div>
+       
+        </div>
+       
+  );
+};
 
-                        <div className="flex flex-col justify-center mt-2 gap-1" >
-                            <button type="submit" className="bg-slate-800 hover:bg-slate-600 hover:outline-8 hover:border-2  text-white text-2xl  capitalize items-center font-Jersey h-12 p-2 font-normal rounded-xl  shadow-sm w-[100%]">log in</button>
-                            <p className="appearance-none text-center"><a href="" className="text-slate-500 font-semibold  ">i don't have an account?</a></p>
-                        </div>
-                    </div>
-                   
-                </form>
-        
-             
-            </>
-        )
-}
+export default LoginDialog;
