@@ -26,7 +26,8 @@ export default function SignUp({ isOpen, onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission behavior
         try {
-            const res = await axios.post('http://localhost:3001/api/register', data);
+            const API_URL = import.meta.env.API_URL
+            const res = await axios.post(`${API_URL}/api/register`, data);
             console.log('Success:', res.data); // Use res.data to access the response data
             setErr({});
             if (res.data.success) {

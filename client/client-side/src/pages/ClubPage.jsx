@@ -57,7 +57,7 @@ export default function ClubPage() {
     <div>
      
         
- <div className="grid grid-cols-3 gap-4 w-3/4 ml-auto mr-auto py-8 px-2">
+ <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 2xl:gap-x-3 lg:min-w-[50%] max-w-[75%] 3xl:max-w-[65%] ml-auto mr-auto py-10 lg:px-2">
       {clubData.length > 0 ? (
         clubData.map((club, index) => (
           <div className="max-w-lg  bg-[#1F2937]  drop-shadow-md  rounded-md *:text-white  " key={index}>

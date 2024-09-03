@@ -22,14 +22,17 @@ const LoginDialog = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3001/api/login', data);
+      const API_URL = import.meta.env.API_URL
+      const res = await axios.post(`${API_URL}/api/login`, data);
       login(res.data.token);
       onClose();
       setData({});
     } catch (error) {
+      console.error("Login failed:", error);
       setErr(error.response?.data?.msg || "An error occurred");
     }
   };
+  
 
   if (!isOpen) return null;
 

@@ -28,7 +28,10 @@ app.use(session({
 }));
 
 //may allow me to make request from http of client side / react
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
 
 
 require('./config/passport')(passport);

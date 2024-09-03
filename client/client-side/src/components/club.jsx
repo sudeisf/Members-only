@@ -46,11 +46,11 @@ export default function Club(){
     fetchData();
   }, []); // Empd0dbf3
     return (
-        <div className=" w-[40%] h-[650px] rounded-md  mt-[2rem] sticky top-[70px] z-10 p-2 flex flex-col gap-5">
+        <div className=" w-[40%] 2xl:pr-20 h-[650px] rounded-md  mt-[2rem] sticky top-[70px] z-10 p-2 flex flex-col gap-5">
             <div className="grid grid-cols-1 gap-4 w-full   ">
       {clubData.length > 0 && 
         clubData.slice(0,6).map((club, index) => (
-          <div className="min-w-md p-2 bg-[#1F2937]  shadow-sm items-center rounded-xl border-1 border-white   flex justify-between  " key={index}>
+          <div className="min-w-md max-w-xl p-2 bg-[#1F2937]  shadow-sm items-center rounded-xl border-1 border-white   flex justify-between  " key={index}>
             <div className=" w-[30%]">
               {/* <img src={images[club.coverpic]} alt="cover pic" className=" h-full w-full object-cover  mr-auto ml-auto " /> */}
               <div
