@@ -26,8 +26,8 @@ export default function SignUp({ isOpen, onClose }) {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission behavior
         try {
-            const API_URL = import.meta.env.API_URL
-            const res = await axios.post(`${API_URL}/api/register`, data);
+            const REACT_APP_API_URL = import.meta.env.REACT_APP_API_URL
+            const res = await axios.post(`${REACT_APP_API_URL}/api/register`, data);
             console.log('Success:', res.data); // Use res.data to access the response data
             setErr({});
             if (res.data.success) {
