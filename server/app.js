@@ -19,24 +19,22 @@ app.use(session({
         pool: pool,
         tableName: 'users'
     }),
-    secret:"12345678",
-    resave:false,
-    saveUninitialized:false,
-    cookie:{
-        maxAge: 1000 * 60 * 60 * 24
+    secret: "12345678",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 24 hours
+        secure: process.env.NODE_ENV === 'production', // Set secure cookies in production
+        sameSite: 'lax' // Helps with cross-origin issues
     }
 }));
 
 //may allow me to make request from http of client side / react
 app.use(cors({
-    origin: process.env.COR_ORIGIN,
-    credentials: true,
-    methods: ['GET','POST']
-}));
-app.options('*', cors({
-    origin: process.env.COR_ORIGIN,
-    credentials: true,
-    methods: ['GET', 'POST']
+    origin: process.env.CORS_ORIGIN, // Corrected typo here
+    credentials: true, // Allow sending cookies with requests
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add more methods if needed
+    allowedHeaders: ['Content-Type', 'Authorization'] // Add headers that your frontend might send
 }));
 
 console.log('CORS origin is:', process.env.COR_ORIGIN);
@@ -48,27 +46,6 @@ app.use(passport.session());
 
 // router 
 app.use('/api',routes);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
