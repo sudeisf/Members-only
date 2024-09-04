@@ -1,14 +1,12 @@
 {
-    "projects": {
-      "client": {
-        "root": "client/client-side",
-        "builds": [
-          { "src": "client/client-side/package.json", "use": "@vercel/static-build" }
-        ],
-        "routes": [
-          { "src": "/(.*)", "dest": "/client/client-side/$1" }
-        ]
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "dist"
+        }
       }
-    }
+    ]
   }
   

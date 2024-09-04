@@ -1,14 +1,15 @@
 {
-    "projects": {
-      "server": {
-        "root": "server",
-        "builds": [
-          { "src": "server/package.json", "use": "@vercel/node" }
-        ],
-        "routes": [
-          { "src": "/api/(.*)", "dest": "/server/$1" }
-        ]
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node"
       }
-    }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "/api/$1"
+      }
+    ]
   }
   

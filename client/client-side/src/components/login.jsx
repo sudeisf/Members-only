@@ -22,8 +22,8 @@ const LoginDialog = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const REACT_APP_API_URL = import.meta.env.REACT_APP_API_URL
-      const res = await axios.post(`${REACT_APP_API_URL}/api/login`, data);
+      const VITE_API_UR = import.meta.env.VITE_API_UR
+      const res = await axios.post(`${VITE_API_UR}/api/login`, data);
       login(res.data.token);
       onClose();
       setData({});
