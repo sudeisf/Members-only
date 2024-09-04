@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <App />, // Base layout for the application
     children: [
       {
-        path: '/wellcome',
+        path: '/',
         index:true,
         element: <Wellcome />,
       },

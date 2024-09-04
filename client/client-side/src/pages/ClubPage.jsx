@@ -40,8 +40,9 @@ export default function ClubPage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const  API_URL = import.meta.env.VITE_API_URL;
       try {
-        const response = await axios.get('http://localhost:3001/api/club');
+        const response = await axios.get(`${API_URL}/api/club`);
         setClubData(response.data.club);
         setErr('');
       } catch (error) {

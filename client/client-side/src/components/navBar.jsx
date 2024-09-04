@@ -19,7 +19,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
             {isAuthenticated && (
                 <div className="md:flex flex-row gap-6 ">
                     <NavLink
-                        to='/wellcome'
+                        to='/'
                         end
                         className={({ isActive }) =>
                             `font-Rubik capitalize space-x-2 h-7 text-[1rem] ${isActive ? 'border-b-2  border-white border-solid ' : ''}`
@@ -74,7 +74,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
                 {isAuthenticated && (
                     <button
                         onClick={() => {
-                            navigate('/wellcome');
+                            navigate('/');
                             logout();
                         }}
                         className="bg-[#0D9488] text-white font-Bebas-Neue capitalize px-3 text-[1rem] font-light rounded-md shadow-md  border-2 border-white"

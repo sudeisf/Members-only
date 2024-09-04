@@ -29,7 +29,7 @@ app.use(session({
 
 //may allow me to make request from http of client side / react
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: process.env.COR_ORIGIN,
     credentials: true,
 }));
 
@@ -64,6 +64,6 @@ app.use('/api',routes);
 
 
 
-app.listen(3001,()=>{
-    console.log('server connected\n http://localhost:3001   ');
+app.listen(3000,()=>{
+    console.log('server connected\n http://localhost:3000 ');
 })
