@@ -48,7 +48,8 @@ export default function SignUp({ isOpen, onClose }) {
             } else if (err.request) {
                 console.error('Error request:', err.request);
             } else {
-                console.error('Error:', err.message);
+                console.error("Login failed:", error);
+                setErr(err.response?.data?.msg || "An error occurred");
             }
         }
     };
