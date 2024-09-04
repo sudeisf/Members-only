@@ -29,10 +29,16 @@ app.use(session({
 
 //may allow me to make request from http of client side / react
 app.use(cors({
-    origin: "*",
+    origin: process.env.COR_ORIGIN,
     credentials: true,
     methods: ['GET','POST']
 }));
+app.options('*', cors({
+    origin: process.env.COR_ORIGIN,
+    credentials: true,
+    methods: ['GET', 'POST']
+}));
+
 console.log('CORS origin is:', process.env.COR_ORIGIN);
 
 
