@@ -31,7 +31,9 @@ app.use(session({
 app.use(cors({
     origin: process.env.COR_ORIGIN,
     credentials: true,
+    methods: ['GET','POST']
 }));
+console.log('CORS origin is:', process.env.COR_ORIGIN);
 
 
 require('./config/passport')(passport);
