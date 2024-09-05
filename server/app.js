@@ -35,8 +35,10 @@ app.use(cors({
     credentials: true, // Allow sending cookies with requests
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add more methods if needed
     allowedHeaders: ['Content-Type', 'Authorization'] // Add headers that your frontend might send
-}));
 
+}));
+app.options('*',cors());
+console.log(process.env.CORS_ORIGIN);
 
 require('./config/passport')(passport);
 app.use(passport.session());

@@ -19,7 +19,7 @@ async function registerControllerPost (req, res,next) {
         }
         
         const hashedPwd = await utilis.genPwd(newUser.password);
-        const result = await pool.query("Insert into users (first_name,last_name,password,email) values ($1,$2,$3,$4) returning *;",
+        const result = await pool.query("Insert into users (firstname,lastname,password,email) values ($1,$2,$3,$4) returning *;",
             [
                 newUser.firstname,
                 newUser.lastname,

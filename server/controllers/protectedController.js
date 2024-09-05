@@ -10,7 +10,7 @@ const  privatePostControllerPost= (req, res) =>{
 
 const  privateClubGet= async (req, res) =>{
     try{
-        const result = await db.query('select * from club ;');
+        const result = await db.query('select * from clubs ;');
         const club = result.rows;
         res.status(200).json(
             {
