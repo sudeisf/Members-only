@@ -56,7 +56,8 @@ const Wellcome = () => {
               Join us on this journey by signing up today.
             </p>
 
-            <button className="border-white bg-[#1F2937] mt-3 border-2 text-center hover:bg-slate-700 hover:text-white text-white w-[50%] capitalize font-Jersey md:text-xl h-12 p-2 rounded-xl shadow-md ml-auto mr-auto">
+            <button 
+            className=" bg-[#0D9488] mt-3  text-center hover:bg-slate-700 hover:text-white text-white w-[50%] capitalize font-Jersey md:text-xl h-12 p-2 rounded-2xl border-2 shadow-lg ml-auto mr-auto">
               Sign up today
             </button>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import pic from '../assets/login.svg';
 
 export default function SignUp({ isOpen, onClose }) {
@@ -58,34 +58,28 @@ export default function SignUp({ isOpen, onClose }) {
 
     return (
         <>
-            <div className="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-70 z-40">
-                <div className="bg-cyan-600 rounded-lg shadow-lg w-full max-w-4xl h-[700px] flex justify-between p-2">
-                    <div className="flex flex-col mr-auto ml-auto">
-                        <img src={pic} alt="Login" className="w-[16rem] h-2/5 mx-auto" />
-                        <div className="flex flex-col mx-auto gap-2 text-center">
-                            <h1 className="text-white font-medium  text-[2.6rem] md:text-[3rem] lg:text-[2.5rem] font-Jersey">Welcome to Members Only</h1>
-                            <p className="text-white md:text-[1rem] font-Rubiks">We are delighted that you chose our platform</p>
-                        </div>
-                    </div>
+            <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm  z-40">
+                <div className="bg-[#111827] flex-col rounded-lg shadow-lg  w-[30rem] max-w-4xl h-[700px] flex border-[#9c9a9a52] border  px-5 py-2">
+                   
 
-                    <div className="bg-gray-100 w-[50%] h-auto rounded-lg shadow-md p-1">
-                        <div className="text-right">
-                            <button 
-                                type="button"
-                                onClick={onClose}
-                                className="text-black  font-bold py-2 px-4 text-2xl"
+    
+                <div className='text-right'>
+                            <button
+                            type="button"
+                            onClick={onClose}
+                            className=" text-white font-bold  px-4 rounded w-fit text-2xl -auto"
                             >
-                                &times;
+                            x
                             </button>
                         </div>
 
                         <form className=" w-[90%] ml-auto mr-auto h-fit *:font-Rubik" onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-2 h-1/2 ">
-                                <h1 className="text-center font-medium font-new-amsterdam text-cyan-600 text-3xl capitalize">Sign Up</h1>
+                                <h1 className="text-center font-medium font-new-amsterdam text-white text-3xl capitalize">Sign Up</h1>
                                 <div>
-                                    <label className="block font-medium text-cyan-600">First Name</label>
+                                    <label className="block font-medium text-white">First Name</label>
                                     <input
-                                        className="w-full p-3 border-2 border-cyan-600 rounded-md mt-2"
+                                        className="w-full py-3 mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
                                         placeholder="First Name"
                                         type="text"
                                         name="firstname"
@@ -96,9 +90,9 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.firstname && <p className="text-red-600 text-sm">{err.firstname}</p>}
                                 </div>
                                 <div>
-                                    <label className="block font-medium text-cyan-600">Last Name</label>
+                                    <label className="block font-medium text-white">Last Name</label>
                                     <input
-                                        className="w-full p-3 border-2 border-cyan-600 rounded-md mt-2"
+                                        className="w-full py-3   mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
                                         placeholder="Last Name"
                                         type="text"
                                         name="lastname"
@@ -109,9 +103,9 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.lastname && <p className="text-red-600 text-sm">{err.lastname}</p>}
                                 </div>
                                 <div>
-                                    <label className="block font-medium text-cyan-600">Email</label>
+                                    <label className="block font-medium text-white">Email</label>
                                     <input
-                                        className="w-full p-3 border-2 border-cyan-600 rounded-md mt-2"
+                                        className="w-full py-3   mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
                                         placeholder="example@domain.com"
                                         type="email"
                                         name="email"
@@ -122,9 +116,9 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.email && <p className="text-red-600 text-sm">{err.email}</p>}
                                 </div>
                                 <div>
-                                    <label className="block font-medium text-cyan-600">Password</label>
+                                    <label className="block font-medium text-white">Password</label>
                                     <input
-                                        className="w-full p-3 border-2 border-cyan-600 rounded-md mt-2"
+                                        className="w-full py-3  mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
                                         placeholder="••••••••"
                                         type="password"
                                         name="password"
@@ -135,9 +129,9 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.password && <p className="text-red-600 text-sm">{err.password}</p>}
                                 </div>
                                 <div>
-                                    <label className="block font-medium text-cyan-600">Confirm Password</label>
+                                    <label className="block font-medium text-white">Confirm Password</label>
                                     <input
-                                        className="w-full p-3 border-2 border-cyan-600 rounded-md mt-2"
+                                        className="w-full py-3   mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
                                         placeholder="••••••••"
                                         type="password"
                                         name="passwordConfirmation"
@@ -147,19 +141,19 @@ export default function SignUp({ isOpen, onClose }) {
                                     />
                                     {err.passwordConfirmation && <p className="text-red-600 text-sm">{err.passwordConfirmation}</p>}
                                 </div>
-                      <div className="">
-                                    <button type="submit" className="w-full p-3 bg-cyan-600 text-white rounded-md hover:bg-slate-600">
+                                  <div className="mt-2">
+                                    <button type="submit" className="w-full p-3 bg-[#0D9488] text-white rounded-md hover:bg-slate-600">
                                         Register
                                     </button>
-                                    {/* <p className="text-center mt-2">
-                                        <a href="#" className=" font-Rubik font-Bebas-Neue text-black">Already have an account?</a>
-                                    </p> */}
+                                    <p className="text-center mt-2">
+                                        <NavLink to="#" className={" font-Rubik text-white"}>Already have an account?</NavLink>
+                                    </p>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
+            
         </>
     );
 }

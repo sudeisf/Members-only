@@ -52,7 +52,7 @@ export default function Club(){
             <div className="grid grid-cols-1 gap-4 w-full   ">
       {clubData.length > 0 && 
         clubData.slice(0,5).map((club, index) => (
-          <div className="min-w-md max-w-xl p-2 bg-[#1F2937]  shadow-sm items-center rounded-xl border-1 border-white   flex justify-between  " key={index}>
+          <div className="min-w-md max-w-xl p-2 bg-[#1F2937]   items-center rounded-xl border-r border-b border-l border-t border-[#9c9a9a52]  flex justify-between  " key={index}>
             <div className=" w-[30%]">
               {/* <img src={images[club.coverpic]} alt="cover pic" className=" h-full w-full object-cover  mr-auto ml-auto " /> */}
               <div

@@ -8,14 +8,14 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
     const navigate = useNavigate();
 
     return (
-        <nav className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'} top-0 text-slate-100 w-full flex flex-row justify-between p-2  items-center ${isAuthenticated ? 'bg-[#111827] ' : 'bg-[#111827]'} `}>
+        <nav className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'} top-0 text-slate-100 w-full flex flex-row justify-between p-2  border-[#9c9a9a52]  items-center ${isAuthenticated ? 'bg-[#111827] border-b ' : 'bg-[#111827]'} `}>
             <div className="flex items-center align-middle">
                 <div className="rounded-[50%] w-9 h-9 border-white border-2 drop-shadow-md">
                 <img src={`${isAuthenticated ? unlock : lock}`} alt="fd" className="w-4 mt-[8px] ml-auto mr-auto shadow-md" />
                 </div>
                 <p className={`font-new-amsterdam text-[1.2rem] ml-3 uppercase drop-shadow-xl ${isAuthenticated ? 'text-white' : 'text-white'}`}>members-only</p>
             </div>
-            <div className="flex w-[30%] justify-around">
+            <div className="flex w-[30%] justify-between">
             {isAuthenticated && (
                 <div className="md:flex flex-row gap-6 ">
                     <NavLink
@@ -50,17 +50,17 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
             <div className="flex gap-3">
                 {!isAuthenticated && (
                     <div className="w-[26rem] flex  ">
-                        <div className="ml-auto">
+                        <div className="ml-auto flex gap-3 ">
                     
                     <button
                             onClick={onSignUpClick}
-                            className=" border-2 border-white text-white font-new-amsterdam bg-[#1F2937]   px-3 rounded-md shadow-sm py-1"
+                            className="  text-white font-Rubik bg-[#0D9488] border-2 text-sm  px-3 rounded-md shadow-sm py-1 capitalize"
                             >
-                            signup
+                            sign up
                         </button>
                         <button
                             onClick={onLoginClick}
-                            className=" text-white font-new-amsterdam    px-3 rounded-md shadow-sm py-1"
+                            className=" text-white font-Rubik text-md    px-3 rounded-md shadow-sm py-1"
                             >
                             Login
                         </button>
@@ -77,7 +77,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
                             navigate('/');
                             logout();
                         }}
-                        className="bg-[#0D9488] text-white font-Bebas-Neue capitalize px-3 text-[1rem] font-light rounded-md shadow-md  border-2 border-white"
+                        className="bg-[#0D9488] text-white font-Bebas-Neue capitalize px-3 text-[1rem] font-light rounded-md shadow-md  "
                     >
                         log out
                     </button>
