@@ -24,19 +24,19 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 24 hours
-        secure: process.env.NODE_ENV === 'production', // Set secure cookies in production
+         // Set secure cookies in production
         sameSite: 'lax' // Helps with cross-origin issues
     }
 }));
 
 //may allow me to make request from http of client side / react
 app.use(cors({
-    origin: process.env.CORS_ORIGIN, // Corrected typo here
-    credentials: true, // Allow sending cookies with requests
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Add more methods if needed
-    allowedHeaders: ['Content-Type', 'Authorization'] // Add headers that your frontend might send
-
+    origin: process.env.CORS_ORIGIN, // Front-end origin
+    credentials: true, // Allow cookies to be sent
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.options('*',cors());
 console.log(process.env.CORS_ORIGIN);
 

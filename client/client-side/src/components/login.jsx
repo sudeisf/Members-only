@@ -21,8 +21,8 @@ const LoginDialog = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    axios.defaults.withCredentials = true;
     try {
-      axios.defaults.withCredentials = true;
       const API_URL = import.meta.env.VITE_API_URL;
       console.log('API URL:', API_URL);
       const res = await axios.post(`${API_URL}/api/login`, data);
