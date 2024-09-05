@@ -37,8 +37,6 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'] // Add headers that your frontend might send
 }));
 
-console.log('CORS origin is:', process.env.COR_ORIGIN);
-
 
 require('./config/passport')(passport);
 app.use(passport.session());
@@ -46,6 +44,10 @@ app.use(passport.session());
 
 // router 
 app.use('/api',routes);
+app.use('/',(req,res)=>{
+    res.send("hello world")
+})
+
 
 
 
