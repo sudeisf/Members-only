@@ -36,7 +36,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
                         club
                     </NavLink>
                     <NavLink
-                        to='/posts'
+                        to='/protected/posts'
                         className={({ isActive }) =>
                             `font-Rubik capitalize space-x-2 h-7 text-[1rem] ${isActive ? 'border-b-2 border-white' : ''}`
                         }

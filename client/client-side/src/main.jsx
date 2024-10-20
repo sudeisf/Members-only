@@ -1,17 +1,23 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import SignUp from './components/signup.jsx';
+
 import App from './App.jsx';
 import './index.css';
-import Home from './pages/wellcome.jsx';
-import Register from './pages/register.jsx';
-import Wellcome from './pages/wellcome.jsx';
-import LogIn from './components/login.jsx';
+
+
+
 import ProtectedRoute from './pages/protected.jsx';
 import { AuthProvider } from './Context/AuthContext.jsx';
 import Posts from './pages/posts.jsx';
 import ClubPage from './pages/ClubPage.jsx';
+import SecretSection from './components/SecretePage.jsx';
+import Home from './pages/home.jsx';
+import PostPage from './pages/postPage.jsx';
+import { QueryClient , QueryClientProvider } from 'react-query';
+
+
+const queryClient = new QueryClient();
 
 // Define routes using createBrowserRouter
 const router = createBrowserRouter([
@@ -22,46 +28,35 @@ const router = createBrowserRouter([
       {
         path: '/',
         index:true,
-        element: <Wellcome />,
+        element: <Home />,
       },
 
-      {
-        path: 'register',
-        element: <Register />,
-        children: [
-          {
-            path: 'signup',
-            element: <SignUp />,
-          },
-          {
-            path: 'login',
-            element: <LogIn />,
-          },
-      ]
-      },
+    
       {
         path: 'protected',
         element: <ProtectedRoute />, 
         children: [
           {
             path: 'posts',
-            element: <Posts />,
+            element: <PostPage />,
           },
           {
             path: 'club',
             element: <ClubPage />,
-          },
+          }
+        
         ]
     }
 ]
   }
 ]);
 
-// Render the application
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>
 );

@@ -1,41 +1,45 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import './App.css'
 import Signup from './components/signup';
 import NavBar from './components/navBar';
-import Home from './pages/home';
 import LoginDialog from './components/login';
-// import { Outlet } from 'react-router-dom';
+import Overlays from './components/overlays';
+
 
 function App() {
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDialogO, setIsDialogO] = useState(false);
-
+  
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
 
+
+
   const openSignUpDialog = () => setIsDialogO(true);
   const closeSignUpDialog = () => setIsDialogO(false);
+
+ 
+
   return (
     <>
+      {/* Dialog Components */}
+      <LoginDialog isOpen={isDialogOpen} onClose={closeDialog} />
+      <Signup isOpen={isDialogO} onClose={closeSignUpDialog} />
+    
 
-<LoginDialog isOpen={isDialogOpen} onClose={closeDialog} />
-<Signup isOpen={isDialogO} onClose={closeSignUpDialog} />
+      {/* NavBar and Outlet */}
+      <NavBar
+        onLoginClick={openDialog}
+        onSignUpClick={openSignUpDialog}
+        onOpenS={isDialogO}
+        onOpenL={isDialogOpen}
+      />
 
-
-
-        <NavBar onLoginClick={openDialog} onSignUpClick={openSignUpDialog} onOpenS={isDialogO} onOpenL={isDialogOpen} />
-        <div>
-          <Outlet/>
-        </div>
-
-        
-   
-        
+      {/* Here is where the Outlet context is provided */}
+      <Outlet  />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

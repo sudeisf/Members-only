@@ -34,12 +34,13 @@ const issueJWT = (user) =>{
 
     const payload = {
         sub: id,
-        iat: Date.now()
+        iat: Math.floor(Date.now() / 1000), // Issued at, in seconds
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24) // Expiration: 24 hours from now (in seconds)
     };
 
     const signedToken  = jsonwebtoken.sign(payload,PRIV_KEY,{algorithm: 'RS256'});
     return {
-        token: "bearer" + signedToken,
+        token: "Bearer " + signedToken,
         expires :expiresIn
     }
 }

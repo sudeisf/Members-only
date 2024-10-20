@@ -38,15 +38,8 @@ const LoginDialog = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center  backdrop-blur-sm z-50">
+    <div className="fixed inset-0 flex items-center justify-center  backdrop-blur-[2px] z-50">
       <div className={`bg-[#111827] rounded-xl w-[30rem] gap-5 max-w-4xl h-[500px] flex flex-col  md:mx-0 transform transition-transform duration-3000 ease-in  border-x border-y border-[#9c9a9a52]  ${isOpen ? 'translate-y-0 opacity-100 scale-80' : 'translate-y-10 opacity-0 scale-65'}`}>
-        {/* <div className='flex flex-col mr-auto ml-auto'>
-          <img src={Pic} alt="Login" className="w-[15rem] h-1/2 mr-auto ml-auto " />
-          <div className="flex flex-col mr-auto ml-auto gap-2 border-white h-1/2 ">
-            <h1 className="text-white font-Jersey font-medium capitalize text-[2.6rem] md:text-[3rem] lg:text-[2rem] mr-auto ml-auto text-center">Welcome to Members Only</h1>
-            <p className="text-white font-Rubik md:text-[1rem] capitalize text-center ml-auto mr-auto">We are delighted for choosing our platform</p>
-          </div>
-        </div> */}
 
           <div className='text-right'>
             <button
@@ -54,7 +47,7 @@ const LoginDialog = ({ isOpen, onClose }) => {
               onClick={onClose}
               className=" text-white font-bold  px-4 rounded w-fit text-2xl -auto"
             >
-              x
+              &times;
             </button>
           </div>
           <form onSubmit={handleSubmit} className="w-2/3 ml-auto mr-auto">
@@ -104,4 +97,4 @@ const LoginDialog = ({ isOpen, onClose }) => {
   );
 };
 
-export default LoginDialog;
+export default LoginDialog; 

@@ -13,6 +13,7 @@ import music from '../assets/club/music.jpg';
 import photo from '../assets/club/photography.jpg';
 import robot from '../assets/club/robot.jpg';
 import science from '../assets/club/science.jpg';
+import { useQuery } from "react-query";
 
 export default function Club(){
     const images ={
@@ -29,29 +30,42 @@ export default function Club(){
     }
     
   const { isAuthenticated } = useAuth();
-  const [clubData, setClubData] = useState([]);
+
   const [err, setErr] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const API_URL =import.meta.env.VITE_API_URL;
-      try {
-        const response = await axios.get(`${API_URL}/api/club`);
-        setClubData(response.data.club);
-        setErr('');
-      } catch (error) {
-        setErr(error.response?.data?.msg || "Error fetching clubs");
-        console.log(error.response?.data || error.message);
-      }
-    };
+  const fetchData = async () => {
+    const API_URL = import.meta.env.VITE_API_URL;
+    const token = localStorage.getItem('jwtToken');
+   const response = await axios.get(`${API_URL}/api/clubs`,{
+     headers: { 
+         Authorization: token, 
+         "Content-Type": "application/json" 
+     },
+     withCredentials: true 
+   });
+   
+    return response.data;
+   }
+   
+   const  {data: clubData, error , isLoading} = useQuery('clubData2', fetchData,{
+    staleTime: 1000 * 60 * 5, // 5 minutes before the data is considered stale
+    cacheTime: 1000 * 60 * 10 , // 10 minutes to keep data in the cache 
+    refetchOnWindowFocus: false, // prevent refaching when the window is focused
+  });
+  
+  if(isLoading){
+    return <div>Loading</div>;
+  }
 
-    fetchData();
-  }, []); // Empd0dbf3
+  if(error){
+    return <div>{error.message}</div>
+  }
+   // Empd0dbf3
     return (
         <div className=" w-[40%] 2xl:pr-20 h-[650px] rounded-md  mt-[2rem] sticky top-[70px] z-10 p-2 flex flex-col gap-5">
             <div className="grid grid-cols-1 gap-4 w-full   ">
-      {clubData.length > 0 && 
-        clubData.slice(0,5).map((club, index) => (
+      {clubData.club.length > 0 && 
+        clubData.club.slice(0,5).map((club, index) => (
           <div className="min-w-md max-w-xl p-2 bg-[#1F2937]   items-center rounded-xl border-r border-b border-l border-t border-[#9c9a9a52]  flex justify-between  " key={index}>
             <div className=" w-[30%]">
               {/* <img src={images[club.coverpic]} alt="cover pic" className=" h-full w-full object-cover  mr-auto ml-auto " /> */}
