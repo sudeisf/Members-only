@@ -1,28 +1,37 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
-import lock from '../assets/lock.svg'
-import unlock from '../assets/unlock.svg'
+import { useTheme } from "../Context/ThemeContext";
+import CustomIcon from "./custom/darkNdNigt";
+import CustomLockIcon from '../components/custom/lockIcon'
 
 const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
     const { isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
+    const {toggleTheme , darkMode}  = useTheme();
+    const color  =  darkMode ? 'dark' : 'light';
+    
+   
+
 
     return (
-        <nav className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'} top-0 text-slate-100 w-full flex flex-row justify-between p-2  border-[#9c9a9a52]  items-center ${isAuthenticated ? 'bg-[#111827] border-b ' : 'bg-[#111827]'} `}>
+        <nav className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'}  top-0 text-dark dark:text-white w-full flex flex-row justify-between p-2  border-b dark:border-[#d5d4d489]  dark:border-1 items-center bg-[#fafafa] dark:bg-dark-background `}>
+
+
             <div className="flex items-center align-middle">
-                <div className="rounded-[50%] w-9 h-9 border-white border-2 drop-shadow-md">
-                <img src={`${isAuthenticated ? unlock : lock}`} alt="fd" className="w-4 mt-[8px] ml-auto mr-auto shadow-md" />
+                <div className="rounded-[50%] w-9 h-9 dark:border-white border-black border-2 drop-shadow-md items-center">
+                 <CustomLockIcon color={color}  className="mr-auto ml-auto w-5 h-5 mt-[5px]"/>
                 </div>
-                <p className={`font-new-amsterdam text-[1.2rem] ml-3 uppercase drop-shadow-xl ${isAuthenticated ? 'text-white' : 'text-white'}`}>members-only</p>
+                <p className={`font-new-amsterdam text-[1.2rem] ml-3 uppercase drop-shadow-xl tex-dark`}>members-only</p>
             </div>
-            <div className="flex w-[30%] justify-between">
-            {isAuthenticated && (
-                <div className="md:flex flex-row gap-6 ">
+
+
+             {isAuthenticated && (
+                <div className="lg:flex flex-row gap-6 hidden">
                     <NavLink
                         to='/'
                         end
                         className={({ isActive }) =>
-                            `font-Rubik capitalize space-x-2 h-7 text-[1rem] ${isActive ? 'border-b-2  border-white border-solid ' : ''}`
+                            `font-Rubik capitalize space-x-2 h-7 text-[1rem] ${isActive ? 'border-b-2  border-dark-background border-solid dark:border-white ' : ''}`
                         }
                     >
                         home
@@ -30,7 +39,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
                     <NavLink
                         to='/protected/club' 
                         className={({ isActive }) =>
-                            `font-Rubik capitalize space-x-2 h-7 text-[1rem] ${isActive ? 'border-b-2 border-white' : ''}`
+                            `font-Rubik capitalize space-x-2 h-7 text-[1rem] ${isActive ? 'border-b-2 border-dark-background dark:border-white' : ''}`
                         }
                     >
                         club
@@ -38,52 +47,62 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
                     <NavLink
                         to='/protected/posts'
                         className={({ isActive }) =>
-                            `font-Rubik capitalize space-x-2 h-7 text-[1rem] ${isActive ? 'border-b-2 border-white' : ''}`
+                            `font-Rubik capitalize space-x-2 h-7 text-[1rem] ${isActive ? 'border-b-2 border-dark-background dark:border-white' : ''}`
                         }
                     >
                         posts
                     </NavLink>
                    
                 </div>
-            )}
+              )}
 
-            <div className="flex gap-3">
-                {!isAuthenticated && (
-                    <div className="w-[26rem] flex  ">
-                        <div className="ml-auto flex gap-3 ">
+
+
+               
+
+            <div className="flex items-center align-middle gap-4 ">
+
+                <div className="flex justify-end">
+                        <CustomIcon 
+                        colorMode = {color}
+                            className="w-5 h-5"
+                            onClick={toggleTheme} 
+                            />  
+                    </div>
+            {!isAuthenticated && (
+                    <div className=" flex justify-end">
+                        <div className=" flex gap-3 ">
                     
-                    <button
-                            onClick={onSignUpClick}
-                            className="  text-white font-Rubik bg-[#0D9488] border-2 text-sm  px-3 rounded-md shadow-sm py-1 capitalize"
-                            >
-                            sign up
-                        </button>
-                        <button
-                            onClick={onLoginClick}
-                            className=" text-white font-Rubik text-md    px-3 rounded-md shadow-sm py-1"
-                            >
-                            Login
-                        </button>
+                            <button
+                                onClick={onSignUpClick}
+                                className="  text-white font-Rubik bg-dark-background dark:bg-[#0D9488] border-2 text-sm  px-3 rounded-md shadow-sm py-1 capitalize"
+                                >
+                                sign up
+                            </button>
+                            <button
+                                onClick={onLoginClick}
+                                className=" text-black dark:text-white font-Rubik text-md    px-3 rounded-md shadow-sm py-1"
+                                >
+                                Login
+                            </button>
 
                         </div>
                     </div>
-                       
-                    
                 )}
 
-                {isAuthenticated && (
+             {isAuthenticated && (
                     <button
                         onClick={() => {
                             navigate('/');
                             logout();
                         }}
-                        className="bg-[#0D9488] text-white font-Bebas-Neue capitalize px-3 text-[1rem] font-light rounded-md shadow-md  "
+                        className="bg-dark-background dark:bg-[#0D9488] text-white font-Bebas-Neue capitalize px-3 py-1 text-[1rem] font-light rounded-md shadow-md  "
                     >
                         log out
                     </button>
-                )}
+                    )}
             </div>
-            </div>
+         
            
         </nav>
     );

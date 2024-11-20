@@ -9,13 +9,13 @@ import './index.css';
 
 import ProtectedRoute from './pages/protected.jsx';
 import { AuthProvider } from './Context/AuthContext.jsx';
-import Posts from './pages/posts.jsx';
+import Posts from './components/posts.jsx';
 import ClubPage from './pages/ClubPage.jsx';
 import SecretSection from './components/SecretePage.jsx';
-import Home from './pages/home.jsx';
+import Home from './pages/Home.jsx'; 
 import PostPage from './pages/postPage.jsx';
 import { QueryClient , QueryClientProvider } from 'react-query';
-
+import { ThemeProvider } from './Context/ThemeContext.jsx';
 
 const queryClient = new QueryClient();
 
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <ProtectedRoute />, 
         children: [
           {
-            path: 'posts',
+            path: 'posts/:id',
             element: <PostPage />,
           },
           {
@@ -54,9 +54,11 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+      <ThemeProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>
 );

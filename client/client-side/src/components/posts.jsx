@@ -1,4 +1,4 @@
-import Post from "../components/post";
+import Post from "./post";
 
 
 
@@ -64,7 +64,7 @@ const Posts =()=>{
 
     return ( 
 
-             <div  className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10 py-10 bg-[#111827] gap-x-3 gap-y-4 w-[60%]  min-h-screen">
+             <div  className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10 py-10 bg-[#fafafa] dark:bg-[#111827] gap-x-3 gap-y-4 w-[90%] md:w-[70%] ml-auto mr-auto min-h-screen">
             {messages.slice(0,9).map((msg, index) => (
                 <Post key={index} message={msg.message} timestamp={msg.timestamp} />
             ))}
