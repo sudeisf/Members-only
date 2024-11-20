@@ -36,7 +36,7 @@ const privateClubGet = async (req, res) => {
       );
   
       const clubData = response.rows;
-      console.log(clubData);
+      // console.log(clubData);
   
       res.status(200).json({
         success: true,
@@ -88,15 +88,17 @@ const privateJoinClubGet = async (req, res) => {
 };
 
 
+const privatePostControllerGet = async (req, res) => {  
+}
 
-const privateClubPostGet =(req,res)=>{
-
+const privatePostControllerPost = async (req, res) => {
 }
 
 
 module.exports = {
     privateClubGet,
     privateJoinClubGet,
-    privateClubPostGet,
-    privateGetClubs
+    privateGetClubs,
+    privatePostControllerGet,
+    privatePostControllerPost
 }
