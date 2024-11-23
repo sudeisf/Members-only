@@ -6,25 +6,8 @@ const PgSession = require('connect-pg-simple')(session);
 const pool = require('./config/database'); // Ensure this is configured correctly
 const passport = require('passport');
 const routes = require('./routes/userRoutes');
-const {createServer} = require('http')
-const {Server} = require('socket.io')
 
 
-const server = createServer(app)
-const io = new Server(server,{
-    cors:{
-        origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
-        methods:['GET', 'POST'],
-        allowedHeaders : ['content-type','application/json']
-        ,credentials: true
-    }
-})
-
-
-io.on('connection' , (socket)=>{
-    console.log('user connected')
-    
-})
 
 
 
