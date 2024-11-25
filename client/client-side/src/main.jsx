@@ -9,10 +9,8 @@ import './index.css';
 
 import ProtectedRoute from './pages/protected.jsx';
 import { AuthProvider } from './Context/AuthContext.jsx';
-import Posts from './components/posts.jsx';
 import ClubPage from './pages/ClubPage.jsx';
-import SecretSection from './components/SecretePage.jsx';
-import Home from './pages/Home.jsx'; 
+import Home from './pages/Home.jsx';
 import PostPage from './pages/postPage.jsx';
 import { QueryClient , QueryClientProvider } from 'react-query';
 import { ThemeProvider } from './Context/ThemeContext.jsx';
@@ -23,7 +21,7 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />, // Base layout for the application
+    element: <App />, 
     children: [
       {
         path: '/',
