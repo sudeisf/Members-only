@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const session = require('express-session');
 const PgSession = require('connect-pg-simple')(session);
-const pool = require('./config/database'); // Ensure this is configured correctly
+const pool = require('./config/database'); 
 const passport = require('passport');
 const routes = require('./routes/userRoutes');
 
