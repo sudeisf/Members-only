@@ -1,9 +1,15 @@
-import MakePost from "../components/post/makePost";
 import Post from "../components/post";
-const PostPage = () =>{
+import Posts from "../components/posts";
+import MakePost from "../components/post/makePost";
+import ClubSideline from "../components/post/clubSlideline";
+
+const PostHome = () => {
 
 
-    
+
+
+  
+
     const messages = [
         {
           message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a felis in  ex. Vivamus in suscipit magna. Nulla facilisi. Sed a laoreet arcu. Nam accumsan sem quis erat cursus, nec laoreet velit convallis. Praesent vehicula, eros non sodales luctus, quam risus scelerisque erat, et faucibus elit urna ut nunc. Integer ut nunc nec sem venenatis ultricies. Morbi id lacus orci. Curabitur sed velit vitae metus viverra gravida. Fusce sed tortor quis nisi dapibus dapibus. Integer ultricies lorem sed feugiat fermentum.",
@@ -63,27 +69,39 @@ const PostPage = () =>{
         } 
     ]
 
-    return(
-        <div className=" text-black  flex flex-col-2 ml-auto mr-auto w-[85%] mt-4">
+    
 
+
+    return ( 
+            <div className="bg-[#fefefe] dark:bg-[#111827]">
+            <ClubSideline  />
+
+            <div>
+            </div>
             <div 
-             className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10  bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%]">
+             className="grid grid-cols-4 px-5 2xl:px-16 xl:px-10 py-10 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[70%] md:w-full ml-auto mr-auto min-h-screen rounded-xl shadow-lg h">
                 {messages.slice(0,9).map((msg, index) => (
                     <Post key={index} message={msg.message} timestamp={msg.timestamp}  />
                 ))}
                 </div>
-
-                <div className="w-[50%] px-4 relative">
-            <MakePost  />
-
-                </div>
-
-
             </div>
 
-       
-    )
+        
+       )
 }
 
+export default PostHome;
 
-export default PostPage;
+
+
+
+
+
+
+
+
+
+
+
+
+

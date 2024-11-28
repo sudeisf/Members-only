@@ -89,9 +89,9 @@ export default function ClubPage() {
   }
 
   return (
-    <div>
+    <div >
       <Overlays />
-      <div className="bg-[#fafafa] dark:bg-[#111827]">
+      <div className="bg-[#fafafa] dark:bg-[#111827] h-screen">
       <div  className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4 2xl:gap-x-3 lg:min-w-[50%] max-w-[75%] 3xl:max-w-[65%] ml-auto mr-auto py-10 lg:px-2 top-0 relative z-1" >
         {clubData && clubData.clubs && clubData.clubs.length > 0 &&
           clubData.clubs.map((club, index) => {

@@ -88,6 +88,40 @@ const privateJoinClubGet = async (req, res) => {
 };
 
 
+
+const getClubsJoined = async (req, res) => { 
+  const userID = req.user ? req.user.id : null;
+  // console.log(userID);
+  try{
+   const result = await db.query(`
+                SELECT * 
+                  FROM clubs 
+                  WHERE id IN (
+                      SELECT DISTINCT club_id 
+                      FROM club_user 
+                      WHERE user_id = $1
+            );
+  `, [userID]);
+
+      const response = result.rows;
+
+      res.status(200).json({  
+        success : true, 
+        message: "The user has successfully joined the club",
+        result: response
+      });
+
+      // console.log(response);
+      
+  }catch(err){
+    res.status(400).json({
+        success : false,
+        message: "The user has not successfully joined the club",
+    });
+
+  }
+}
+
 const privatePostControllerGet = async (req, res) => {  
 }
 
@@ -95,10 +129,76 @@ const privatePostControllerPost = async (req, res) => {
 }
 
 
+
+const getClubById = async (req, res) => {
+
+  try {
+       const club_id = req.params.id;
+       const  user_id = req.user.id;
+       const result  = await db.query(`
+        select * from clubs where id = $1 
+        `,[
+          club_id,
+        
+        ])
+
+        const response = result.rows;
+        console.log(response)
+
+        res.status(200).json({
+          success : true,
+          message: "The user has successfully joined the club",
+          result: response
+        });
+
+  } catch (err) {
+      res.status(400).json({
+          success : false,
+          message: "The user has not successfully joined the club",
+      });
+  }
+}
+
+
+
+const privateMessagePost = async (req, res) => {  
+          const data = {
+            user_id: req.body.user_id,
+            club_id: req.body.club_id,
+            message: req.body.content
+          }
+
+          try{
+            const result  = await db.query(`
+                      INSERT INTO messages (content, user_id,club_id) VALUES ($1,$2,$3) returning *;`,
+                      [
+                        data.message,
+                        data.user_id,
+                        data.club_id
+                      ]
+              );
+              res.status(200).json({  
+                success : true, 
+                message: "The user has successfully joined the club",
+                result: result
+              });
+          }catch(err){
+            res.status(400).json({
+              success : false,
+              message: "The user has not successfully joined the club",
+            })
+          }
+
+
+}
+
 module.exports = {
     privateClubGet,
     privateJoinClubGet,
     privateGetClubs,
     privatePostControllerGet,
-    privatePostControllerPost
+    privatePostControllerPost,
+    getClubsJoined,
+    getClubById,
+    privateMessagePost
 }
