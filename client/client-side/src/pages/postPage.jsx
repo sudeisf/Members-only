@@ -6,8 +6,11 @@ const PostPage = () =>{
     
     const messages = [
         {
+          username: "John Doe",
+          email: "bS5oL@example.com",
           message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a felis in  ex. Vivamus in suscipit magna. Nulla facilisi. Sed a laoreet arcu. Nam accumsan sem quis erat cursus, nec laoreet velit convallis. Praesent vehicula, eros non sodales luctus, quam risus scelerisque erat, et faucibus elit urna ut nunc. Integer ut nunc nec sem venenatis ultricies. Morbi id lacus orci. Curabitur sed velit vitae metus viverra gravida. Fusce sed tortor quis nisi dapibus dapibus. Integer ultricies lorem sed feugiat fermentum.",
           timestamp: "2024-08-26T12:00:00Z"
+          , clubName: "Club A"
         },
         {
           message: "Sed dignissim nisi a justo feugiat, ac condimentum sapien gravida. Integer faucibus leo a facilisis sodales. Pr, magna eros luctus quam, sed sagittis lacus dolor ut est. Mauris consectetur erat sed egestas tristique. Integer sagittis nisi ac facilisis tincidunt. Pellentesque vitae augue in felis tincidunt dignissim. Aliquam erat volutpat. Ut vehicula risus nec quam pretium, a eleifend odio volutpat. Fusce at est id risus cursus pharetra. Ut non turpis eget elit vestibulum facilisis. Sed fringilla enim at diam elementum, sit amet aliquet est ullamcorper.",
@@ -67,15 +70,14 @@ const PostPage = () =>{
         <div className=" text-black  flex flex-col-2 ml-auto mr-auto w-[85%] mt-4">
 
             <div 
-             className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10  bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%]">
+             className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10  bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%] border-r">
                 {messages.slice(0,9).map((msg, index) => (
-                    <Post key={index} message={msg.message} timestamp={msg.timestamp}  />
+                    <Post key={index} data={msg}  />
                 ))}
                 </div>
 
                 <div className="w-[50%] px-4 relative">
-            <MakePost  />
-
+                  <MakePost  />
                 </div>
 
 

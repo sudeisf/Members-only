@@ -79,9 +79,9 @@ const PostHome = () => {
             <div>
             </div>
             <div 
-             className="grid grid-cols-4 px-5 2xl:px-16 xl:px-10 py-10 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[70%] md:w-full ml-auto mr-auto min-h-screen rounded-xl shadow-lg h">
+             className="grid grid-cols-3 px-5 2xl:px-16 xl:px-10 py-10 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[70%] md:w-full ml-auto mr-auto min-h-screen rounded-xl shadow-lg h">
                 {messages.slice(0,9).map((msg, index) => (
-                    <Post key={index} message={msg.message} timestamp={msg.timestamp}  />
+                    <Post key={index} data={msg}/>
                 ))}
                 </div>
             </div>
