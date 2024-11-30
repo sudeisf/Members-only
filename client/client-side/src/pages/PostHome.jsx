@@ -74,12 +74,10 @@ const PostHome = () => {
 
     return ( 
             <div className="bg-[#fefefe] dark:bg-[#111827]">
-            <ClubSideline  />
-
-            <div>
-            </div>
+                <ClubSideline  />
+            
             <div 
-             className="grid grid-cols-3 px-5 2xl:px-16 xl:px-10 py-10 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[70%] md:w-full ml-auto mr-auto min-h-screen rounded-xl shadow-lg h">
+             className="grid grid-cols-3  2xl:px-16 xl:px-10 [scrollbar-width:none] mt-2 pt-2 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[70%] md:w-full ml-auto mr-auto min-h-screen overflow-y-scroll h-[70vh] shadow-lg border-[1px]">
                 {messages.slice(0,9).map((msg, index) => (
                     <Post key={index} data={msg}/>
                 ))}

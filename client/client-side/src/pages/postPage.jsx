@@ -70,7 +70,7 @@ const PostPage = () =>{
         <div className=" text-black  flex flex-col-2 ml-auto mr-auto w-[85%] mt-4">
 
             <div 
-             className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10  bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%] border-r">
+             className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10  h-[90vh]  bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%] border-r overflow-y-scroll [scrollbar-width:none]">
                 {messages.slice(0,9).map((msg, index) => (
                     <Post key={index} data={msg}  />
                 ))}

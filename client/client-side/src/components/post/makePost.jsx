@@ -116,7 +116,7 @@ const MakePost = () => {
             const response = await axios.post(`${API_URL}/api/postMessage`, {
                 content: message,
                 user_id: userData.id,
-                club_id: clubData.id
+                club_id: id
             }, {
                 headers: {
                   Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`,
