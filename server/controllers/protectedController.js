@@ -122,37 +122,108 @@ const getClubsJoined = async (req, res) => {
   }
 }
 
-const privatePostControllerGet = async (req, res) => {  
-     try {
-        const club_id = req.params.id;
-        const  user_id = req.user.id;
-        const result  = await db.query(`
-            select c.name , m.content , u.username, u.email , m.sent_at
-            FROM messages m
-            JOIN users u ON m.user_id = $1
-            JOIN clubs c ON m.club_id = $2
-            `,[
-              user_id,
-              club_id 
-            ]
-          );
-          const  response = result.rows;
-          console.log(response)
-          res.status(200).json({
-            success : true,
-            result: response
-          })
-     } catch(err){
+const privatePostControllerGet = async (req, res) => {
+  try {
+    const { club_id } = req.query; // Extract club_id from query params
 
-      res.status(400).json({
-        success : false,
-        message: "The user has not successfully joined the club",
+    // Validate club_id
+    if (!club_id) {
+      return res.status(400).json({
+        success: false,
+        message: "club_id is required",
       });
+    }
 
-     }
-}
+    // Fetch posts/messages using SQL
+    const result = await db.query(
+      `
+      SELECT 
+        c.name AS club_name, 
+        m.content AS message_content, 
+        u.firstname,
+        u.lastname,
+        u.email, 
+        c.id ,
+        m.sent_at
+      FROM messages m
+      JOIN users u ON m.user_id = u.id
+      JOIN clubs c ON m.club_id = c.id
+      WHERE  m.club_id = $1
+      ORDER BY m.sent_at DESC
+      `,
+      [club_id]
+    );
 
-const privatePostControllerPost = async (req, res) => {
+    // Handle empty result set
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No messages found for this club",
+      });
+    }
+
+    // Return the results
+    res.status(200).json({
+      success: true,
+      result: result.rows,
+    });
+  } catch (err) {
+    console.error("Error in privatePostControllerGet:", err);
+
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+
+const privatePostControllerGetTwo = async (req, res) => {
+
+  try {
+    const userID = req.user.id;
+
+    // Fetch posts/messages using SQL
+    const result = await db.query(
+      ` 
+      SELECT 
+        c.name AS club_name, 
+        m.content AS message_content, 
+        u.firstname,
+        u.lastname,
+        u.email, 
+        c.id ,
+        m.sent_at
+      FROM messages m
+      JOIN users u ON m.user_id = u.id
+      JOIN clubs c ON m.club_id = c.id
+      WHERE  m.user_id = $1
+      ORDER BY m.sent_at DESC
+      `,
+      [userID]
+    );
+
+    // Handle empty result set
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No messages found for this club",
+      });
+    }
+
+    // Return the results
+    res.status(200).json({
+      success: true,
+      result: result.rows,
+    });
+  } catch (err) {
+    console.error("Error in privatePostControllerGet:", err);
+
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
 }
 
 
@@ -170,7 +241,7 @@ const getClubById = async (req, res) => {
         ])
 
         const response = result.rows;
-        console.log(response)
+        // console.log(response)
 
         res.status(200).json({
           success : true,
@@ -224,8 +295,8 @@ module.exports = {
     privateJoinClubGet,
     privateGetClubs,
     privatePostControllerGet,
-    privatePostControllerPost,
     getClubsJoined,
     getClubById,
-    privateMessagePost
+    privateMessagePost,
+    privatePostControllerGetTwo
 }

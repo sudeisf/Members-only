@@ -3,7 +3,7 @@ const router = Router();
 const userController = require('../controllers/usersConotroller');
 const {validator} = require('../utils/customValidator');
 const passport = require('passport');
-const { privateClubGet, privateJoinClubGet ,privateMessagePost,getClubsJoined,getClubById, privateGetClubs ,privatePostControllerPost,privatePostControllerGet} = require('../controllers/protectedController');
+const { privateClubGet, privateJoinClubGet ,privateMessagePost,getClubsJoined,getClubById, privateGetClubs ,privatePostControllerGetTwo,privatePostControllerGet} = require('../controllers/protectedController');
 const {createPost,getPost} = require ('../controllers/postController');
 
 
@@ -13,8 +13,10 @@ const {createPost,getPost} = require ('../controllers/postController');
 router.post('/register',validator,userController.registerControllerPost);
 router.post('/login',userController.loginControllerPost);
 
-router.post('/post',passport.authenticate('jwt',{session:false}),privatePostControllerPost);
+// router.post('/post',passport.authenticate('jwt',{session:false}),privatePostControllerPost);
+
 router.get('/post',passport.authenticate('jwt',{session:false}),privatePostControllerGet);
+
 router.get('/user',passport.authenticate('jwt',{session:false}),userController.getUserController);
 
 
@@ -28,6 +30,8 @@ router.get('/club-joined/:id',passport.authenticate('jwt',{session:false}),getCl
 
 router.post('/post/:id',passport.authenticate('jwt',{session:false}),createPost);
 router.get('/post/:id',passport.authenticate('jwt',{session:false}),getPost);
+
+router.get('/message',passport.authenticate('jwt',{session:false}),privatePostControllerGetTwo);
 
 
 
