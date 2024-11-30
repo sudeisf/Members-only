@@ -134,7 +134,7 @@ const MakePost = () => {
    
 
   return (
-    <div className="py-5 border-[1px] w-[28rem]  items-center rounded-xl space-y-7 shadow-sm sticky top-20 dark:bg-[#1F2937]">
+    <div className="py-5 border-2 w-[28rem]  items-center rounded-xl space-y-7 shadow-sm sticky top-20 dark:bg-[#1F2937]">
       <div id="userDetails" className="flex space-x-2 justify-between w-[90%] ml-auto mr-auto">
         <div className="flex space-x-2 items-center">
           <div id="profilePic" className="rounded-[50%] w-14 h-14 border-2 border-black bg-black dark:bg-white">
