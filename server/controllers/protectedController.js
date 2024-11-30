@@ -123,6 +123,33 @@ const getClubsJoined = async (req, res) => {
 }
 
 const privatePostControllerGet = async (req, res) => {  
+     try {
+        const club_id = req.params.id;
+        const  user_id = req.user.id;
+        const result  = await db.query(`
+            select c.name , m.content , u.username, u.email , m.sent_at
+            FROM messages m
+            JOIN users u ON m.user_id = $1
+            JOIN clubs c ON m.club_id = $2
+            `,[
+              user_id,
+              club_id 
+            ]
+          );
+          const  response = result.rows;
+          console.log(response)
+          res.status(200).json({
+            success : true,
+            result: response
+          })
+     } catch(err){
+
+      res.status(400).json({
+        success : false,
+        message: "The user has not successfully joined the club",
+      });
+
+     }
 }
 
 const privatePostControllerPost = async (req, res) => {
