@@ -53,16 +53,16 @@ const PostPage = () => {
   }
 
   return (
-    <div className="text-black flex flex-col-2 ml-auto mr-auto w-[85%] mt-4">
+    <div className="text-black flex flex-col-2 ml-auto mr-auto w-[85%] h-[90vh]  bg-[#F9FAFB] ">
       {/* Left Side: Posts */}
-      <div className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10 h-[90vh] bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%] border-r overflow-y-scroll [scrollbar-width:none]">
+      <div className="grid grid-cols-1 px-5 2xl:px-16 xl:px-10 h-full bg-[#F9FAFB] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%] border-r overflow-y-scroll [scrollbar-width:none]">
         {messages.slice(0, 9).map((msg, index) => (
           <Post key={index} data={msg} />
         ))}
       </div>
 
       {/* Right Side: Make Post */}
-      <div className="w-[50%] px-4 relative">
+      <div className="w-[50%] px-4 relative ">
         <MakePost />
       </div>
     </div>

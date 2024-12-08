@@ -2,6 +2,8 @@ import hero from '../assets/hero.svg';
 import { useAuth } from '../Context/AuthContext';
 import Posts from '../components/posts';
 import Club from '../components/club';
+import vid from '../assets/animation/hero.webm'
+import {motion as m} from 'framer-motion'
 
 const Home = () => {
   const { isAuthenticated } = useAuth();
@@ -35,15 +37,18 @@ const Home = () => {
         <div >
           <div className="bg-light-background dark:bg-dark-background  flex xl:h-[43rem] h-[50rem] border-white  ">
             <div className="w-[60%] mr-auto ml-auto text-center align-middle mb-auto mt-auto md:p-5 flex flex-col gap-5">
-            <img src={hero} alt="hero" className="w-[15rem] lg:w-[20rem] ml-auto mr-auto" />
+            {/* <img src={hero} alt="hero" className="w-[15rem] lg:w-[20rem] ml-auto mr-auto" /> */}
 
-              <h1 className="font-Jersey uppercase text-[3rem] lg:text-[4rem] text-center text-dark  dark:text-white drop-shadow-xl">
-                Welcome to Members Only
-              </h1>
-              <p className="text-dark dark:text-white text-sm lg:text-lg font-Rubik font-normal  text-center  3xl:max-w-[60%] mr-auto ml-auto">
+                
+                  <h1 className="font-new-amsterdam uppercase text-[3rem] lg:text-[3rem] text-left text-black  dark:text-white drop-shadow-xl">
+                    Discover Your Passion, Connect with Your Tribe. Join Clubs, Share Stories, and Explore Together!
+                    </h1>
+
+               
+             
+
+              <p className="text-black dark:text-white text-sm lg:text-lg font-Rubik font-normal  text-center  3xl:max-w-[60%] mr-auto ml-auto">
                 The "Members Only" project is a web application designed to provide exclusive access to content and features for registered users.
-                At its core, the project emphasizes the importance of authentication and authorization, 
-                ensuring that only authenticated users can view or interact with certain sections of the site.
               </p>
               <div>
                 <button className="bg-dark-background dark:bg-[#0D9488] mt-3  text-center hover:bg-cyan-600 text-white w-[50%] capitalize font-Bebas-Neue md:text-xl h-12 p-2 rounded-xl drop-shadow-xl ml-auto mr-auto">

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const CustomLockIcon = ({ color = 'light', size = 24, className = '', }) => {
-    const fillColor = color === 'dark' ? '#000000' : '#fefefe';
+const CustomLockIcon = ({ color = 'dark', size = 24, className = '', }) => {
+    const fillColor = color === 'light' ? '#000000' : '#fefefe';
 
   return (
     <svg 

@@ -174,7 +174,7 @@ const MakePost = () => {
             placeholder="What's on your mind?"
             onChange={(e) => setMessage(e.target.value)}
             value={message}
-            className="w-[95%] focus:outline-none text-sm  border-none resize-none overflow-hidden scrollbar-hide dark:bg-[#6d7075] dark:outline-none p-1"
+            className="w-[95%] focus:outline-none text-sm bg-white  border-none resize-none overflow-hidden scrollbar-hide dark:bg-[#6d7075] dark:outline-none p-1"
             rows="1"
             cols="20"
           ></textarea>

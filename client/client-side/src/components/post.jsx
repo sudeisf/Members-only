@@ -15,15 +15,19 @@ import music from '../assets/club-icons/music.svg'
 import photo from '../assets/club-icons/photo.svg'
 import robot from '../assets/club-icons/robot.svg'
 import science from '../assets/club-icons/science.svg'
+import { parseISO, format } from "date-fns";
 
 
 const Post = ({data}) =>{
 
     const [open , setOpen] = useState(false);
 
-    const isoDate = data.timestamp;
+    const isoDate = data.sent_at; 
+    const parsedDate = parseISO(isoDate); // Parses the ISO timestamp
+    const formattedDate = format(parsedDate, "MMM d, yyyy");
+    console.log(data.timestamp); // Check what is being passed
 
-    const fomatedDate = moment(isoDate).format(" MMM do, yyyy");
+
 
     const images = {
         1: chess,
@@ -39,7 +43,7 @@ const Post = ({data}) =>{
       };
 
     return (
-        <div className="flex flex-col gap-2 text-[.8rem] overflow-visible  border dark:border-none bg-white dark:bg-[#1F2937] p-5 rounded-[15px] text-black dark:text-white shadow-sm   3xl:max-w-[65%]  2xl:ml-auto w-full font-Rubik  h-fit ">
+        <div className="flex flex-col gap-2 text-[.8rem] overflow-visible justify-between   border-[1px] dark:border-none bg-white dark:bg-[#1F2937] p-5 rounded-[15px] text-black dark:text-white shadow-sm   3xl:max-w-[65%]  2xl:ml-auto w-full font-Rubik  h-fit ">
             
                 <div id="avatar-info" className="flex justify-between p-5 items-start  border-b">
                     <div id="avatar" className="flex gap-3">
@@ -47,28 +51,28 @@ const Post = ({data}) =>{
                         <img src={data.profilePicture} alt="" className="w-[3rem] h-[3rem] rounded-full" />
                         </div>
                         <div id="user-info pt-1">
-                            <p className=" text-md font-lg  capitalize">{data.firstname} {data.lastname[0]}.</p>
+                            <p className=" text-md font-lg  capitalize">{data.firstname} {data.lastname}.</p>
                             <p className=" text-sm text-[#757678]">{data.email}</p>
-                            <p className=" text-sm text-[#757678]">{fomatedDate}</p>
+                            <p className=" text-sm text-[#757678]">{formattedDate}</p>
                         </div>
                     </div>
 
                         
 
                         <div id="option-info" className="relative overflow-visible">
-                            <img src={options} className="w-[1.5rem] h-[1.5rem]" alt="" onClick={() => setOpen(!open)} />
+                            <img src={options} className="w-[1rem] h-[1rem]" alt="" onClick={() => setOpen(!open)} />
                             <div
                                 className={`absolute top-[1.5rem] left-0 flex-col gap-2 text-auto bg-[#eeefef] w-[6rem] rounded-lg transition-all duration-200 ease-in-out text-black 
                                 transform ${open ? 'opacity-100 scale-100 flex' : 'opacity-0 scale-95 hidden'}`}
                                 >
-                                <p className="border-b p-2">option 1</p>
-                                <p className="p-2">option 2</p>
+                                <p className="border-b p-2 hover:bg-[#e0e0e0]">option 1</p>
+                                <p className="p-2 hover:bg-[#e0e0e0]">option 2</p>
                             </div>
                         </div> 
                 </div>
 
                 <div id="post-info" className="py-1">
-                    <p className="text-justify  text-lg font-normal p-4 text-[#5e5f60] px-5 border-l-4 border-b  border-l-green-900 rounded-tl-lg">{data.message_content}</p>
+                    <p className="text-justify  text-[1rem] font-normal p-4 text-[#5e5f60] dark:text-white px-5  rounded-tl-lg">{data.message_content}</p>
                 </div>
 
                 <div id="club-name" className="flex gap-2 items-center px-2 py-1 ">

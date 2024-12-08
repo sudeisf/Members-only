@@ -67,7 +67,8 @@ const ClubSideline = () =>{
         }
 
     return (
-        <div className="flex  space-x-10 justify-around dark:text-white overflow-x-scroll border-b py-4 [scrollbar-width:none] w-[90%] mr-auto ml-auto border-[1px] mt-2 rounded-xl">
+        <div className="flex  space-x-10 justify-around dark:text-white overflow-x-scroll  py-4 [scrollbar-width:none] p-4
+         mr-auto ml-auto border-[1px] rounded-xl w-fit">
             {
             clublist.map((club)=>(
                     <div className="flex flex-col gap-2 items-center">

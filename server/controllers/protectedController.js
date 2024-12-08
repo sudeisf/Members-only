@@ -181,8 +181,6 @@ const privatePostControllerGet = async (req, res) => {
 const privatePostControllerGetTwo = async (req, res) => {
 
   try {
-    const userID = req.user.id;
-
     // Fetch posts/messages using SQL
     const result = await db.query(
       ` 
@@ -197,10 +195,9 @@ const privatePostControllerGetTwo = async (req, res) => {
       FROM messages m
       JOIN users u ON m.user_id = u.id
       JOIN clubs c ON m.club_id = c.id
-      WHERE  m.user_id = $1
       ORDER BY m.sent_at DESC
-      `,
-      [userID]
+      `
+     
     );
 
     // Handle empty result set

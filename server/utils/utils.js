@@ -18,7 +18,6 @@ const validPassword = (password,hashedPassword)=>{
 const genPwd = async (password) => {
     try {
         const hash = await bcrypt.hash(password, 10);
-        console.log('Hash completed');
         return hash;
     } catch (err) {
         console.error('Hashing error:', err);

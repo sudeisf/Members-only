@@ -3,18 +3,31 @@ import { useAuth } from "../Context/AuthContext";
 import { useTheme } from "../Context/ThemeContext";
 import CustomIcon from "./custom/darkNdNigt";
 import CustomLockIcon from '../components/custom/lockIcon'
+import {motion as m , useScroll , useSpring} from "framer-motion";
+
 
 const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
     const { isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
     const {toggleTheme , darkMode}  = useTheme();
     const color  =  darkMode ? 'dark' : 'light';
+
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001,
+        
+
+      })
     
    
 
 
     return (
-        <nav className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'}  top-0 text-dark dark:text-white w-full flex flex-row justify-between p-2  border-b dark:border-[#d5d4d489]  dark:border-1 items-center bg-[#fafafa] dark:bg-dark-background `}>
+        <>
+        <nav  
+        className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'}  top-0 text-black bg-[#F9FAFB] dark:text-white w-full flex flex-row justify-between p-2  dark:border-[#d5d4d489]  dark:border-1 items-center  dark:bg-dark-background `}>
 
 
             <div className="flex items-center align-middle">
@@ -103,8 +116,10 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
                     )}
             </div>
          
-           
         </nav>
+        <m.div style={{ scaleX , transformOrigin: 'left' }} className="fixed top-0 z-50 left-0 right-0 bottom-0 h-[4px] bg-dark-background dark:bg-[#0D9488]  self-start" />
+</>
+        
     );
 };
 

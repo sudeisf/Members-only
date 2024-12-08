@@ -6,9 +6,11 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {useAnimate} from "motion/react-mini"
+import { useEffect } from "react";
 
 const PostHome = () => {
-
+  const [scope, animate] = useAnimate();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -33,7 +35,6 @@ const PostHome = () => {
         },
         withCredentials: true,
       });
-
       return response.data.result; // Return only the result data
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -51,20 +52,31 @@ const PostHome = () => {
     refetchOnWindowFocus: false, // Prevent refetching on window focus
   });
 
+  useEffect(() => { 
+    if(messages2.length > 0){
+      animate(".post", { opacity: 1 }, { duration: 1, delay: 0.1 });
+    }
+  }, [messages2]);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) {
     console.error(error);
     return <div>Error: Unable to load posts. Please try again later.</div>;
   }
 
+ 
+
     return ( 
             <div className="bg-[#fefefe] dark:bg-[#111827]">
                 <ClubSideline  />
             
             <div 
-             className="grid grid-cols-3  2xl:px-16 xl:px-10 [scrollbar-width:none] mt-2 pt-2 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[70%] md:w-full ml-auto mr-auto min-h-screen overflow-y-scroll h-[70vh] shadow-lg border-[1px]">
+            ref={scope}
+             className="grid grid-cols-3  2xl:px-16 xl:px-10 [scrollbar-width:none] mt-2 pt-2 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%] md:w-full ml-auto mr-auto min-h-screen overflow-y-scroll  shadow-lg ">
                 {messages2.map((msg, index) => (
-                    <Post key={index} data={msg}/>
+                    <div key={index} className="post">
+                    <Post key={index} data={msg} />
+                    </div>
                 ))}
                 </div>
             </div>

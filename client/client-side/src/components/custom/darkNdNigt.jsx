@@ -1,8 +1,8 @@
 import React from 'react';
 
-const CustomIcon = ({ colorMode = 'light', size = 256 ,className ='',onClick }) => {
+const CustomIcon = ({ colorMode = 'dark', size = 256 ,className ='',onClick }) => {
   // Set colors based on the color mode
-  const fillColor = colorMode === 'dark' ? '#000000' : '#fefefe';
+  const fillColor = colorMode === 'light' ? '#000000' : '#fefefe';
 
   return (
     <svg 

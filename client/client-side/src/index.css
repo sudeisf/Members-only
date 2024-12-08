@@ -6,8 +6,3 @@
 @tailwind components;
 @tailwind utilities;
 
-input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px #111827 inset !important; /* Keeps the background dark */
-    -webkit-text-fill-color: #ffffff !important; /* Ensures text color stays white */
-  }
-  

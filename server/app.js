@@ -16,16 +16,13 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 
 
-app.use(express.static(path.join(__dirname, 'Public')));
+// app.use(express.static(path.join(__dirname, 'Public')));
 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser()); 
-app.use((req, res, next) => {
-    console.log('Cookies:', req.cookies);
-    next();
-});
+
 
 
 
@@ -58,22 +55,10 @@ require('./config/passport')(passport);
 app.use(passport.initialize()); // Initialize Passport
 app.use(passport.session()); // Use Passport for session management
 
-// Logging middleware to track requests
-app.use((req, res, next) => {
-    console.log(`Request received: ${req.method} ${req.url}`);
-    next();
-});
-app.use((req, res, next) => {
-    console.log(`Request received: ${req.method} ${req.url}`);
-    next();
-});
 // API routes
 app.use('/api', routes);
 
-// Root route
-app.get('/', (req, res) => {
-    res.send("Hello, world!");
-});
+
 
 // Start the server
 app.listen(3000, () => {

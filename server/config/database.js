@@ -2,7 +2,6 @@ const {Pool} = require('pg');
 require('dotenv').config();
 const fs = require('fs');
 
-
 module.exports= new Pool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -10,9 +9,9 @@ module.exports= new Pool({
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT || 6543,
     ssl: {
-        rejectUnauthorized: true, // Enforces certificate validation
-        ca: fs.readFileSync('C://Users//sudei//Documents//members-only//prod-ca-2021.crt').toString(),
-    },
+        rejectUnauthorized: false,
+        ca: fs.readFileSync(__dirname + '/prod-ca-2021.crt')
+      }
 })
 
 
