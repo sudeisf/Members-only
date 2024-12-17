@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../Context/AuthContext";
+import { useAuth } from "../../Context/AuthContext";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useAtom } from "jotai";
-import UiAtom from "../State/modalState";
+import UiAtom from "../../State/modalState";
 import { useQuery } from "react-query";
-import Overlays from "./overlays";
+import Overlays from "../overlays";
 
 export default function Club(){
 

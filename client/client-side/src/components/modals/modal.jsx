@@ -1,6 +1,6 @@
 // import { useAtom } from "jotai";
 // import { UiAtom } from "../State/modalState";
-import  SecretSection from '../components/SecretePage';
+import  SecretSection from './VarificationModal';
 
 
 const Modal = ({type}) => {

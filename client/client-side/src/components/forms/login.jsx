@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../Context/AuthContext';
+import { useAuth } from '../../Context/AuthContext';
 import axios from 'axios';
 
 const LoginDialog = ({ isOpen, onClose }) => {

@@ -12,10 +12,10 @@ import robot from '../assets/club/robot.jpg';
 import science from '../assets/club/science.jpg';
 import { NavLink } from "react-router-dom";
 import { useQuery } from "react-query";
-import LoadingSpinner from "../components/loadingSpinner";
+import LoadingSpinner from "../components/custom/loadingSpinner";
 import { useAtom } from "jotai";
 import UiAtom from "../State/modalState";
-import SecretSection from "../components/SecretePage";
+import SecretSection from "../components/VarificationModal";
 import Overlays from "../components/overlays";
 import ClubSlideShows from "../components/slideshows/ClubSlideShows";
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
-import LoadingSpinner from "../loadingSpinner"
+import LoadingSpinner from "../../custom/loadingSpinner"
 // import { Navigate } from "react-router-dom";
 
 

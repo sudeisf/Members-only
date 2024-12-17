@@ -1,4 +1,4 @@
-import Post from "./post";
+import Post from "./post/post";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useEffect } from "react";

@@ -1,8 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../Context/AuthContext";
-import { useTheme } from "../Context/ThemeContext";
-import CustomIcon from "./custom/darkNdNigt";
-import CustomLockIcon from '../components/custom/lockIcon'
+import { useAuth } from "../../Context/AuthContext";
+import { useTheme } from "../../Context/ThemeContext";
+import CustomIcon from "../custom/darkNdNigt";
+import CustomLockIcon from '../custom/lockIcon'
 import {motion as m , useScroll , useSpring} from "framer-motion";
 
 
@@ -20,10 +20,6 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
         
 
       })
-    
-   
-
-
     return (
         <>
         <nav  

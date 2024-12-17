@@ -1,7 +1,7 @@
-import Post from "../components/post";
+import Post from "../components/post/post";
 import Posts from "../components/posts";
-import MakePost from "../components/post/makePost";
-import ClubSideline from "../components/post/clubSlideline";
+import MakePost from "../components/post/make-post-page/AddPost";
+import ClubSideline from "../components/post/post-home-page/JoinedClubs";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
