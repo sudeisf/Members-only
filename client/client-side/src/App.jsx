@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Signup from './components/signup';
-import NavBar from './components/navBar';
-import LoginDialog from './components/login';
-import Overlays from './components/overlays';
+import Signup from './components//forms/signup';
+import NavBar from './components/static/navBar';
+import LoginDialog from './components/forms/login';
+import Overlays from './components/modals/overlays';
 
 
 function App() {

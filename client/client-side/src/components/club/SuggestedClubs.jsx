@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useAtom } from "jotai";
 import UiAtom from "../../State/modalState";
 import { useQuery } from "react-query";
-import Overlays from "../overlays";
+import Overlays from "../modals/overlays";
 
 export default function Club(){
 

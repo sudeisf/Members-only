@@ -1,6 +1,6 @@
 
 import { createPortal } from "react-dom"
-import UiAtom from "../State/modalState"
+import UiAtom from "../../State/modalState"
 import { useAtomValue } from "jotai"
 import Modal from "./modal"
 

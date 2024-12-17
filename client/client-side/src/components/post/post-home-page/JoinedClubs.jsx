@@ -6,16 +6,16 @@ import LoadingSpinner from "../../custom/loadingSpinner"
 
 
 //importing the messages 
-import art from "../../../src/assets/club-icons/art.svg"
-import book from "../../../src/assets/club-icons/book.svg"
-import chess from "../../../src/assets/club-icons/chess.svg"
-import debate from "../../../src/assets/club-icons/debate.svg"
-import drama from "../../../src/assets/club-icons/drama.svg"
-import food from "../../../src/assets/club-icons/food.svg"
-import music from "../../../src/assets/club-icons/music.svg"
-import photo from "../../../src/assets/club-icons/photo.svg"
-import robot from "../../../src/assets/club-icons/robot.svg"
-import science from "../../../src/assets/club-icons/science.svg"
+import art from '../../../assets/club-icons/art.svg'
+import book from '../../../assets/club-icons/book.svg'
+import chess from '../../../assets/club-icons/chess.svg'    
+import debate from '../../../assets/club-icons/debate.svg'
+import drama from '../../../assets/club-icons/drama.svg'
+import food from '../../../assets/club-icons/food.svg'
+import music from '../../../assets/club-icons/music.svg'
+import photo from '../../../assets/club-icons/photo.svg'
+import robot from '../../../assets/club-icons/robot.svg'
+import science from '../../../assets/club-icons/science.svg'
 import { useNavigate } from "react-router-dom";
 
 

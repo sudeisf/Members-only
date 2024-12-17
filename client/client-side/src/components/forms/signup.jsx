@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { NavLink, useNavigate } from "react-router-dom";
-import pic from '../assets/login.svg';
+
 
 export default function SignUp({ isOpen, onClose }) {
     const navigate = useNavigate();

@@ -7,3 +7,6 @@
 @tailwind utilities;
 
 
+#root{
+    background-color: #F9FAFB;
+}

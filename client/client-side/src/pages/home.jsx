@@ -1,9 +1,8 @@
 import hero from '../assets/hero.svg';
 import { useAuth } from '../Context/AuthContext';
-import Posts from '../components/posts';
-import Club from '../components/club';
-import vid from '../assets/animation/hero.webm'
-import {motion as m} from 'framer-motion'
+import Posts from '../components/post/posts';
+import Club from '../components/club/SuggestedClubs';
+
 
 const Home = () => {
   const { isAuthenticated } = useAuth();

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import auth from '../assets/authentication.svg';
+import auth from '../../assets/authentication.svg';
 import axios from 'axios';
-import UiAtom from '../State/modalState';
+import UiAtom from '../../State/modalState';
 import { useAtom } from 'jotai';
 import { useLocation , useNavigate } from 'react-router-dom';
-import {useTheme} from '../Context/ThemeContext';
+import {useTheme} from '../../Context/ThemeContext';
 
-import TextField from '@mui/material/TextField';
 
 function SecretSection() {
    const para = useLocation();

@@ -3,17 +3,18 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-import plus from "../../assets/plus.svg";
-import art from "../../../src/assets/club-icons/art.svg";
-import book from "../../../src/assets/club-icons/book.svg";
-import chess from "../../../src/assets/club-icons/chess.svg";
-import debate from "../../../src/assets/club-icons/debate.svg";
-import drama from "../../../src/assets/club-icons/drama.svg";
-import food from "../../../src/assets/club-icons/food.svg";
-import music from "../../../src/assets/club-icons/music.svg";
-import photo from "../../../src/assets/club-icons/photo.svg";
-import robot from "../../../src/assets/club-icons/robot.svg";
-import science from "../../../src/assets/club-icons/science.svg";
+import plus from "../../../assets/plus.svg";
+import art from "../../../assets/club-icons/art.svg";
+import book from "../../../assets/club-icons/book.svg";
+import chess from "../../../assets/club-icons/chess.svg";
+import debate from "../../../assets/club-icons/debate.svg";
+import drama from "../../../assets/club-icons/drama.svg";
+import food from "../../../assets/club-icons/food.svg";
+import music from "../../../assets/club-icons/music.svg";
+import photo from "../../../assets/club-icons/photo.svg";
+import robot from "../../../assets/club-icons/robot.svg";
+import science from "../../../assets/club-icons/science.svg";
+import LoadingSpinner from "../../custom/loadingSpinner";
 
 const MakePost = () => {
   const [message, setMessage] = useState('');
@@ -136,13 +137,16 @@ const MakePost = () => {
   return (
     <div className="py-5 border-2 w-[28rem]  items-center rounded-xl space-y-7 shadow-sm sticky top-20 dark:bg-[#1F2937]">
       <div id="userDetails" className="flex space-x-2 justify-between w-[90%] ml-auto mr-auto">
-        <div className="flex space-x-2 items-center">
-          <div id="profilePic" className="rounded-[50%] w-14 h-14 border-2 border-black bg-black dark:bg-white">
-            <img
+        <div className="flex space-x-3 items-center">
+          <div id="profilePic" className="rounded-[50%] w-14 h-14 border-2 border-black dark:bg-white text-center flex items-center ">
+            {/* <img
               src="" // Add a dynamic profile picture URL or fallback image
               alt="Profile"
               className="w-full h-full object-cover rounded-full"
-            />
+            /> */}
+            <p className='items-center text-2xl text-black dark:text-white mx-auto font-new-amsterdam'>
+            {userData.firstname.charAt(0).toUpperCase()}
+            </p>
           </div>
 
           <div id="userInfo">
