@@ -22,7 +22,7 @@ function App() {
  
 
   return (
-    <>
+    <div>
       {/* Dialog Components */}
       <LoginDialog isOpen={isDialogOpen} onClose={closeDialog} />
       <Signup isOpen={isDialogO} onClose={closeSignUpDialog} />
@@ -38,7 +38,7 @@ function App() {
 
       {/* Here is where the Outlet context is provided */}
       <Outlet  />
-    </>
+    </div>
   );
 }
 

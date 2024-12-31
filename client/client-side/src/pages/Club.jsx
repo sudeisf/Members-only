@@ -95,8 +95,8 @@ export default function ClubPage() {
     
  
  
-      <div className="bg-[#F9FAFB] dark:bg-[#111827] h-full">
-        <h1 className="font-Bebas-Neue text-[3rem] md:text-[2rem] text-left text-black dark:text-white border-b-2 w-[65%] ml-auto mr-auto ]" >Clubs</h1>
+      <div className="bg-[#F9FAFB] dark:bg-[#111827] min-h-screen">
+        <h1 className="font-Bebas-Neue text-[3rem] md:text-[2rem] text-left text-black dark:text-white border-b-2 w-[65%] ml-auto mr-auto" >Clubs</h1>
       <div  className="grid  md:grid-cols-2 lg:grid-cols-3 gap-4 2xl:gap-x-3 lg:min-w-[50%] max-w-[75%] 3xl:max-w-[65%] ml-auto mr-auto py-10 lg:px-2 top-0 relative z-1" >
         {clubData && clubData.clubs && clubData.clubs.length > 0 &&
           clubData.clubs.map((club, index) => {
