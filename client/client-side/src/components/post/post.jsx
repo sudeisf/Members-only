@@ -42,12 +42,20 @@ const Post = ({data}) =>{
         10: photo,
       };
 
+      const txtlength =  message =>{
+        if(message.length > 150){
+          return message.slice(0, 150) + "...";
+        }
+        return message
+      }
+     
+
     return (
-        <div className="flex flex-col gap-2 text-[.8rem] overflow-visible justify-between    border-[1px] dark:border-none bg-white dark:bg-[#1F2937] p-5 rounded-[15px] text-black dark:text-white shadow-sm   3xl:max-w-[65%]  2xl:ml-auto w-full font-Rubik  h-fit ">
+        <div className="flex flex-col gap-2 md:text-[.8rem] overflow-visible justify-between border-2 border-gray-800 dark:border-none bg-white dark:bg-[#1F2937] p-5 rounded-[15px] text-black dark:text-white shadow-sm   3xl:max-w-[65%]  2xl:ml-auto  mx-auto font-Rubik  h-fit ">
             
-                <div id="avatar-info" className="flex justify-between p-5 items-start  border-b">
+                <div id="avatar-info" className="flex justify-between md:p-5 items-start  border-b">
                     <div id="avatar" className="flex gap-3">
-                        <div className="rounded-[50%] w-12 h-12 border-2 border-black dark:bg-white text-center flex items-center ">
+                        <div className="rounded-[50%] w-10 h-10 border-2 border-black dark:bg-white text-center flex items-center ">
                         {/* <img src={data.profilePicture} alt="" className="w-[3rem] h-[3rem] rounded-full" />
                          */}
                          <p className='items-center text-xl text-black dark:text-white mx-auto font-new-amsterdam'>
@@ -76,7 +84,7 @@ const Post = ({data}) =>{
                 </div>
 
                 <div id="post-info" className="py-1">
-                    <p className="text-justify  text-[1rem] font-normal p-4 text-[#5e5f60] dark:text-white px-5  rounded-tl-lg">{data.message_content}</p>
+                    <p className="text-justify text-xsm  md:text-[1rem] font-normal md:p-4 text-[#5e5f60] dark:text-white px-5  rounded-tl-lg">{data.message_content}</p>
                 </div>
 
                 <div id="club-name" className="flex gap-2 items-center  py-1 ">

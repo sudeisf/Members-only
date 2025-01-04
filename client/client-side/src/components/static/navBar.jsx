@@ -23,11 +23,11 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
     return (
         <>
         <nav  
-        className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'}  top-0 text-black bg-[#F9FAFB] dark:text-white w-full flex flex-row justify-between p-2  dark:border-[#d5d4d489]  dark:border-1 items-center  dark:bg-dark-background `}>
+        className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'}  top-0 text-black bg-[#F9FAFB] dark:text-white w-full flex flex-row justify-between p-2 border-2 border-black dark:border-[#d5d4d489]  dark:border-1 items-center  dark:bg-dark-background `}>
 
 
             <div className="flex items-center align-middle">
-                <div className="rounded-[50%] w-9 h-9 dark:border-white border-black border-2 drop-shadow-md items-center">
+                <div className="rounded-[50%] w-9 h-9 dark:border-white border-2 border-black  drop-shadow-md items-center">
                  <CustomLockIcon color={color}  className="mr-auto ml-auto w-5 h-5 mt-[5px]"/>
                 </div>
                 <p className={`font-new-amsterdam text-[1.2rem] ml-3 uppercase drop-shadow-xl tex-dark`}>members-only</p>

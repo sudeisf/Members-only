@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {useAnimate} from "motion/react-mini"
+import { useAnimate } from "framer-motion";
 import { useEffect } from "react";
 
 const PostHome = () => {
@@ -67,15 +67,15 @@ const PostHome = () => {
  
 
     return ( 
-            <div className="bg-[#fefefe] dark:bg-[#111827]">
+            <div className="bg-[#fefefe] dark:bg-[#111827] px-2">
                 <ClubSideline  />
             
             <div 
             ref={scope}
-             className="grid grid-cols-3  2xl:px-16 xl:px-10 [scrollbar-width:none] mt-2 pt-2 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%] md:w-full ml-auto mr-auto min-h-screen overflow-y-scroll  shadow-lg ">
+             className="grid grid-cols-1 px-2 md:grid-cols-2 xl:grid-cols-3 2xl:px-16 xl:px-10 [scrollbar-width:none] mt-2 pt-2 bg-[#fefefe] dark:bg-[#111827] gap-x-3 gap-y-4  lg:w-[90%] ml-auto mr-auto min-h-screen overflow-y-scroll  ">
                 {messages2.map((msg, index) => (
                     <div key={index} className="post">
-                    <Post key={index} data={msg} />
+                      <Post key={index} data={msg} />
                     </div>
                 ))}
                 </div>
