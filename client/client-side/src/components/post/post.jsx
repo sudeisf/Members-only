@@ -51,7 +51,7 @@ const Post = ({data}) =>{
      
 
     return (
-        <div className="flex flex-col gap-2 md:text-[.8rem] overflow-visible justify-between border-2 border-gray-800 dark:border-none bg-white dark:bg-[#1F2937] p-5 rounded-[15px] text-black dark:text-white shadow-sm   3xl:max-w-[65%]  2xl:ml-auto  mx-auto font-Rubik  h-fit ">
+        <div className="flex flex-col gap-2 md:text-[.8rem] overflow-visible justify-between border-2 border-gray-800 dark:border-none bg-white dark:bg-[#1F2937] p-5 rounded-[15px] text-black dark:text-white shadow-sm   w-full  2xl:ml-auto  mx-auto font-Rubik  h-fit ">
             
                 <div id="avatar-info" className="flex justify-between md:p-5 items-start  border-b">
                     <div id="avatar" className="flex gap-3">
