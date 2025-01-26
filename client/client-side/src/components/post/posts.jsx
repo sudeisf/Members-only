@@ -67,7 +67,7 @@ const Posts = () => {
           
             <div 
             ref={scope}
-             className="grid grid-cols-1  2xl:px-16 xl:px-10 [scrollbar-width:none] mt-2 pt-2  dark:bg-[#111827] gap-x-3 gap-y-4 w-[50%] md:w-full ml-auto mr-auto min-h-screen overflow-y-scroll  ">
+             className="grid grid-cols-1  2xl:px-16 xl:px-10 [scrollbar-width:none] mt-2 pt-2  dark:bg-[#111827] gap-x-3 gap-y-4 w-full md:w-full ml-auto mr-auto min-h-screen overflow-y-scroll  ">
                 {messages2.map((msg, index) => (
                     <div key={index} className="post">
                     <Post key={index} data={msg} />
