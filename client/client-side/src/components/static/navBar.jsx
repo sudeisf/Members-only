@@ -23,7 +23,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
     return (
         <>
         <nav  
-        className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'}  top-0 text-black bg-[#F9FAFB] dark:text-white w-full flex flex-row justify-between p-2 border-2 border-black dark:border-[#d5d4d489]  dark:border-1 items-center  dark:bg-dark-background `}>
+        className={` ${(onOpenS || onOpenL) ?'' : ' sticky top-0 z-50'}  top-0 text-black bg-[#F9FAFB] dark:text-white w-full flex flex-row justify-between p-2  dark:border-[#d5d4d489]  dark:border-1 items-center  dark:bg-dark-background `}>
 
 
             <div className="flex items-center align-middle">
