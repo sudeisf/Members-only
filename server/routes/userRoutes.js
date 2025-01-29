@@ -5,6 +5,7 @@ const {validator} = require('../utils/customValidator');
 const passport = require('passport');
 const { privateClubGet, privateJoinClubGet ,privateMessagePost,getClubsJoined,getClubById, privateGetClubs ,privatePostControllerGetTwo,privatePostControllerGet} = require('../controllers/protectedController');
 const {createPost,getPost} = require ('../controllers/postController');
+const notfication = require('../controllers/notificationController');
 
 
 
@@ -32,6 +33,7 @@ router.post('/post/:id',passport.authenticate('jwt',{session:false}),createPost)
 router.get('/post/:id',passport.authenticate('jwt',{session:false}),getPost);
 
 router.get('/message',passport.authenticate('jwt',{session:false}),privatePostControllerGetTwo);
+router.post('/send-notfication',passport.authenticate('jwt',{session:false}),notfication.New_notification);
 
 
 

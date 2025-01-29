@@ -6,25 +6,16 @@ const PgSession = require('connect-pg-simple')(session);
 const pool = require('./config/database'); 
 const passport = require('passport');
 const routes = require('./routes/userRoutes');
-
-
-
-
+const socketIO = require('socket.io');
+const http = require('http');
 
 const cors = require('cors');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 
-
-// app.use(express.static(path.join(__dirname, 'Public')));
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser()); 
-
-
-
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -44,11 +35,8 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 24 hours
-    
-       
     }
 }));
-
 
 // Passport middleware
 require('./config/passport')(passport);
@@ -58,9 +46,27 @@ app.use(passport.session()); // Use Passport for session management
 // API routes
 app.use('/api', routes);
 
+const server = http.createServer(app);
+const io = socketIO(server, {
+    cors: {
+        origin: process.env.CORS_ORIGIN,
+        methods: ['GET', 'POST'],
+        credentials: true
+    }
+});
 
+io.on('connection', (socket) => {
+    console.log('user connected');
+    socket.emit('message', {
+        message: 'Welcome to the app'
+    });
 
-// Start the server
-app.listen(3000, () => {
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
+
+// Start the server with `server.listen()`
+server.listen(3000, () => {
     console.log('Server connected\n http://localhost:3000');
 });
