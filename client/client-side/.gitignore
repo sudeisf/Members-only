@@ -24,3 +24,16 @@ dist-ssr
 *.sw?
 
 .vercel
+
+
+# Ignore test files
+/tests/
+
+# Ignore documentation files
+/docs/
+
+# Ignore local environment files
+.env
+
+# Ignore log files
+*.log
