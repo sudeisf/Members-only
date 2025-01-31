@@ -1,7 +1,7 @@
 const pool = require('../config/database');
 const io = require('../app').io;  // Ensure io is correctly initialized
 
-export const New_notification = async (req, res) => {
+const New_notification = async (req, res) => {
     try {
         // Destructure user_id and message from the request body
         const { user_id, message } = req.body;
@@ -42,3 +42,6 @@ export const New_notification = async (req, res) => {
         });    
     }
 };
+
+// Export the function using CommonJS
+module.exports = { New_notification };

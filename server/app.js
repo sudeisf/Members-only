@@ -12,6 +12,7 @@ const http = require('http');
 const cors = require('cors');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
+const { env } = require('process');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -35,6 +36,9 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 24 hours
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV,
+        httpOnly: true
     }
 }));
 
@@ -56,11 +60,7 @@ const io = socketIO(server, {
 });
 
 io.on('connection', (socket) => {
-    console.log('user connected');
-    socket.emit('message', {
-        message: 'Welcome to the app'
-    });
-
+    console.log('a user connected');
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });

@@ -29,11 +29,18 @@ async function registerControllerPost (req, res,next) {
         );
         const user = result.rows[0];
         const jwt  = utilis.issueJWT(user);
+
+        res.cookie('token', jwt.token,{
+            httpOnly: true,
+            sameSite: 'lax',
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: jwt.expires 
+        })
+
         res.status(200).json({
             succes: true,
             user: user,
-            token: jwt.token,
-            expiresIn: jwt.expires
+            mesasage : "User has been created successfully",
         });
 
         }catch(err){
