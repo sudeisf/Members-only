@@ -52,58 +52,57 @@ const createPost = async (req,res)=>{
 
 const getPost = async (req,res)=>{
     try{
-        const result =  await db.query(
-            `Select * from messages where club_id = $1 and user_id = $2 order by sent_at desc;`,
-            [
-                req.params.id,
-                req.user.id
-            ]
-        )
+        const clubID = req.params.id; // Get club ID from the URL parameter
+        const result = await db.query(
+            `Select * from messages where club_id = $1 order by sent_at desc;`,
+            [clubID]
+        );
 
         const response = result.rows;
 
         res.status(200).json({
             success : true,
             message: "The post has been created successfully",
-            data : response
+            data : response,
+            error: err.message
         });
     }catch(err){
         res.status(400).json({
             success : false,
             message: "The post has not been created successfully",
+            error: err.message 
         });
     }
 }
 
 
-const getAllPosts = async (req,res)=>{
-    try{
-
-        const result =  await db.query(
+const getAllPosts = async (req, res) => {
+    try {
+        // Fetch all posts for the authenticated user (across clubs)
+        const result = await db.query(
             `Select * from messages where user_id = $1 order by sent_at desc;`,
-            [
-                req.params.id
-            ]
-        )
+            [req.user.id]
+        );
 
         const response = result.rows;
 
         res.status(200).json({
-            success : true,
-            message: "The post has been created successfully",
-            data : response
+            success: true,
+            message: "Fetched all posts for the user successfully",
+            data: response
         });
 
-    }catch(err){
+    } catch (err) {
         res.status(400).json({
-            success : false,
-            message: "The post has not been created successfully",
+            success: false,
+            message: "Failed to fetch posts for the user",
+            error: err.message
         });
     }
 }
-
 
 module.exports = {
     createPost,
-    getPost
+    getPost,
+    getAllPosts
 }
