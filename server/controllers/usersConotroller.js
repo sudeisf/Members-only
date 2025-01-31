@@ -38,9 +38,9 @@ async function registerControllerPost (req, res,next) {
         })
 
         res.status(200).json({
-            succes: true,
+            success: true,
             user: user,
-            mesasage : "User has been created successfully",
+            message : "User has been created successfully",
         });
 
         }catch(err){

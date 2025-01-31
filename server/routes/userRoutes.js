@@ -1,48 +1,37 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const router = Router();
 const userController = require('../controllers/usersConotroller');
-const {validator} = require('../utils/customValidator');
-const passport = require('passport');
-const { privateClubGet, privateJoinClubGet ,privateMessagePost,getClubsJoined,getClubById, privateGetClubs ,privatePostControllerGetTwo,privatePostControllerGet} = require('../controllers/protectedController');
-const {createPost,getPost} = require ('../controllers/postController');
-const notfication = require('../controllers/notificationController');
+const { validator } = require('../utils/customValidator');
+const auth = require('../middleware/auth');  
+const {
+    privateClubGet,
+    privateJoinClubGet,
+    privateMessagePost,
+    getClubsJoined,
+    getClubById,
+    privateGetClubs,
+    privatePostControllerGetTwo,
+    privatePostControllerGet
+} = require('../controllers/protectedController');
+const { createPost, getPost } = require('../controllers/postController');
+const notification = require('../controllers/notificationController');
 
+// Public Routes
+router.post('/register', validator, userController.registerControllerPost);
+router.post('/login', userController.loginControllerPost);
 
-
-
-
-router.post('/register',validator,userController.registerControllerPost);
-router.post('/login',userController.loginControllerPost);
-
-// router.post('/post',passport.authenticate('jwt',{session:false}),privatePostControllerPost);
-
-router.get('/post',passport.authenticate('jwt',{session:false}),privatePostControllerGet);
-
-router.get('/user',passport.authenticate('jwt',{session:false}),userController.getUserController);
-
-
-
-
-router.get('/club',passport.authenticate('jwt',{session:false}),privateClubGet);
-router.get('/clubs',passport.authenticate('jwt',{session:false}),privateGetClubs);
-router.post('/club-join/:id',passport.authenticate('jwt',{session:false}),privateJoinClubGet);
-router.get('/club-joined',passport.authenticate('jwt',{session:false}),getClubsJoined);
-router.get('/club-joined/:id',passport.authenticate('jwt',{session:false}),getClubById);
-
-router.post('/post/:id',passport.authenticate('jwt',{session:false}),createPost);
-router.get('/post/:id',passport.authenticate('jwt',{session:false}),getPost);
-
-router.get('/message',passport.authenticate('jwt',{session:false}),privatePostControllerGetTwo);
-router.post('/send-notfication',passport.authenticate('jwt',{session:false}),notfication.New_notification);
-
-
-
-router.post('/postMessage',passport.authenticate('jwt',{session:false}),privateMessagePost);
-
-
-
-
-
-
+// Protected Routes
+router.get('/post', auth, privatePostControllerGet);  
+router.get('/user', auth, userController.getUserController);  
+router.get('/club', auth, privateClubGet);  
+router.get('/clubs', auth, privateGetClubs);  
+router.post('/club-join/:id', auth, privateJoinClubGet);  
+router.get('/club-joined', auth, getClubsJoined);  
+router.get('/club-joined/:id', auth, getClubById);  
+router.post('/post/:id', auth, createPost);  
+router.get('/post/:id', auth, getPost);  
+router.get('/message', auth, privatePostControllerGetTwo);  
+router.post('/send-notfication', auth, notification.New_notification);  
+router.post('/postMessage', auth, privateMessagePost);  
 
 module.exports = router;
