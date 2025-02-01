@@ -28,7 +28,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
 
             <div className="flex items-center align-middle">
                 <div className="rounded-[50%] w-9 h-9 dark:border-white border-2 border-black  drop-shadow-md items-center">
-                 <CustomLockIcon color={color}  className="mr-auto ml-auto w-5 h-5 mt-[5px]"/>
+                 <CustomLockIcon color={color}  className="mr-auto ml-auto w-5 h-5 mt-[6px]"/>
                 </div>
                 <p className={`font-new-amsterdam text-[1.2rem] ml-3 uppercase drop-shadow-xl tex-dark`}>members-only</p>
             </div>
@@ -90,7 +90,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
                             </button>
                             <button
                                 onClick={onLoginClick}
-                                className=" text-black dark:text-white font-Rubik text-md    px-3 rounded-md shadow-sm py-1"
+                                className=" text-black dark:text-white font-Rubik text-md px-3  py-1"
                                 >
                                 Login
                             </button>

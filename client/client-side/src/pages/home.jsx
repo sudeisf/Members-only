@@ -17,11 +17,11 @@ const Home = () => {
           <div className="w-[90%] text-center items-center flex flex-col md:p-10 gap-6 ml-auto mr-auto mt-[1rem] mb-auto text-white ">
             <img src={hero} alt="hero" className="w-[70%] max-w-[20rem]  ml-auto mr-auto" />
 
-            <h1 className="font-Bebas-Neue uppercase font-medium text-[2rem] md:text-[3rem] lg:text-[4rem] text-center text-black dark:text-white">
+            <h1 className="font-new-amsterdam uppercase font-medium text-[2rem] md:text-[3rem] lg:text-[4rem]  text-center text-black dark:text-white">
               Welcome to Members Only
             </h1>
 
-            <p className=" text-sm md:text-xl text-gray-500 dark:text-slate-300 md:text-md font-Rubik">
+            <p className=" text-sm md:text-xl xl:text-[1.3rem] text-gray-500 dark:text-slate-300 md:text-md font-Rubik xl:w-[80%] mr-auto ml-auto">
               We are happy to have you on our site. You can share your posts on whatever you want. It's secure and also has private clubs. 
               Join us on this journey by signing up today.
             </p>
