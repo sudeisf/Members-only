@@ -14,20 +14,20 @@ const Home = () => {
     <div>
       {!isAuthenticated ? (
         <div className="bg-light-background dark:bg-dark-background flex ">
-          <div className="w-[50%] text-center items-center flex flex-col md:p-10 gap-6 ml-auto mr-auto mt-auto mb-auto text-white">
-            <img src={hero} alt="hero" className="w-[20rem] ml-auto mr-auto" />
+          <div className="w-[90%] text-center items-center flex flex-col md:p-10 gap-6 ml-auto mr-auto mt-[1rem] mb-auto text-white ">
+            <img src={hero} alt="hero" className="w-[70%] max-w-[20rem]  ml-auto mr-auto" />
 
-            <h1 className="font-Bebas-Neue text-[3rem] md:text-[4rem] text-center text-black dark:text-white">
+            <h1 className="font-Bebas-Neue uppercase font-medium text-[2rem] md:text-[3rem] lg:text-[4rem] text-center text-black dark:text-white">
               Welcome to Members Only
             </h1>
 
-            <p className="text-black dark:text-slate-300 md:text-md font-Rubik font-normal md:text-left text-wrap text-justify">
+            <p className=" text-sm md:text-xl text-gray-500 dark:text-slate-300 md:text-md font-Rubik">
               We are happy to have you on our site. You can share your posts on whatever you want. It's secure and also has private clubs. 
               Join us on this journey by signing up today.
             </p>
 
             <button 
-            className=" bg-dark-background   dark:bg-[#0D9488] mt-3  text-center hover:bg-slate-700 hover:text-white text-white w-[50%] capitalize font-Jersey md:text-xl h-12 p-2 rounded-2xl border-2 shadow-lg ml-auto mr-auto">
+            className=" bg-dark-background   dark:bg-[#0D9488]   text-center hover:bg-slate-700 hover:text-white text-white w-[80%] max-w-[20rem] capitalize font-Jersey md:text-xl h-12 p-2 rounded-md border-2 shadow-lg ml-auto mr-auto">
               Sign up today
             </button>
           </div>

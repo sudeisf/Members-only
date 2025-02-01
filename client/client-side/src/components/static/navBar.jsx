@@ -79,7 +79,7 @@ const NavBar = ({ onLoginClick , onSignUpClick ,onOpenS,onOpenL }) => {
                             />  
                     </div>
             {!isAuthenticated && (
-                    <div className=" flex justify-end">
+                    <div className=" hidden md:flex justify-end">
                         <div className=" flex gap-3 ">
                     
                             <button
