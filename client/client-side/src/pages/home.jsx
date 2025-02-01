@@ -11,9 +11,9 @@ const Home = () => {
   
 
   return (
-    <div>
+    <div className='bg-light-background dark:bg-dark-background '>
       {!isAuthenticated ? (
-        <div className="bg-light-background dark:bg-dark-background flex ">
+        <div className="bg-light-background dark:bg-dark-background flex mt-10 md:mt-0 ">
           <div className="w-[90%] text-center items-center flex flex-col md:p-10 gap-6 ml-auto mr-auto mt-[1rem] mb-auto text-white ">
             <img src={hero} alt="hero" className="w-[70%] max-w-[20rem]  ml-auto mr-auto" />
 
