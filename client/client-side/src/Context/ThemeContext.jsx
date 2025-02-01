@@ -1,32 +1,29 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
 
 const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
     const [darkMode, setDarkMode] = useState(() => {
-        const savedTheme = localStorage.getItem("theme");
-        return savedTheme === "dark"; // True if "dark", otherwise false
+        return localStorage.getItem("theme") === "dark";
     });
 
     useEffect(() => {
-        if (darkMode) {
-            document.documentElement.classList.add("dark"); // Add 'dark' class for dark mode
-            localStorage.setItem("theme", "dark");
-        } else {
-            document.documentElement.classList.remove("dark"); // Remove 'dark' class for light mode
-            localStorage.setItem("theme", "light");
+        // Toggle the 'dark' class based on darkMode state
+        document.documentElement.classList.toggle("dark", darkMode);
+        // Persist the theme preference to localStorage
+        localStorage.setItem("theme", darkMode ? "dark" : "light");
+        // Disable the default browser dark mode if not in darkMode
+        if (!darkMode) {
+            document.documentElement.classList.remove("dark");
         }
     }, [darkMode]);
+    
 
-    const toggleTheme = () => {
-        setDarkMode((prevDarkMode) => !prevDarkMode);
-    };
+    const toggleTheme = () => setDarkMode((prev) => !prev);
 
-    return (
-        <ThemeContext.Provider value={{ darkMode, toggleTheme }}>
-            {children}
-        </ThemeContext.Provider>
-    );
+    const value = useMemo(() => ({ darkMode, toggleTheme }), [darkMode]);
+
+    return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
 
 export const useTheme = () => {
@@ -36,4 +33,3 @@ export const useTheme = () => {
     }
     return context;
 };
-

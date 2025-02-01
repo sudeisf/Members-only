@@ -1,9 +1,8 @@
-// tailwind.config.js
 export default {
   darkMode: 'class', // Enable dark mode via class
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",  // This should cover most React files
+    "./src/**/*.{js,ts,jsx,tsx}",  // Ensure Tailwind scans all relevant files
   ],
   theme: {
     extend: {
@@ -28,17 +27,17 @@ export default {
     },
   },
   plugins: [
+    require('daisyui'),
     function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-none': {
-          'scrollbar-width': 'none', // For Firefox
-          '-ms-overflow-style': 'none', // For IE and Edge
+          'scrollbar-width': 'none', // Firefox
+          '-ms-overflow-style': 'none', // IE and Edge
         },
         '.no-scrollbar::-webkit-scrollbar': {
-          display: 'none', // For Chrome, Safari, and Edge
+          display: 'none', // Chrome, Safari, and Edge
         },
       });
     },
-    require('daisyui')
   ],
 };
