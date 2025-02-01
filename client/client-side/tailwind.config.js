@@ -3,7 +3,7 @@ export default {
   darkMode: 'class', // Enable dark mode via class
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",  // This should cover most React files
   ],
   theme: {
     extend: {

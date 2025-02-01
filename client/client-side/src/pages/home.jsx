@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <div>
       {!isAuthenticated ? (
-        <div className="bg-light-background dark:bg-dark-background flex xl:h-[43.5rem] h-[100vh]">
+        <div className="bg-light-background dark:bg-dark-background flex ">
           <div className="w-[50%] text-center items-center flex flex-col md:p-10 gap-6 ml-auto mr-auto mt-auto mb-auto text-white">
             <img src={hero} alt="hero" className="w-[20rem] ml-auto mr-auto" />
 
@@ -31,10 +31,10 @@ const Home = () => {
               Sign up today
             </button>
           </div>
-        </div>
+        </div> 
       ) : (
         <div >
-          <div className="bg-light-background dark:bg-dark-background  flex xl:h-[43rem] h-[50rem] border-white  ">
+          <div className="bg-light-background dark:bg-dark-background  flex border-white  ">
             <div className="w-[60%] mr-auto ml-auto text-center align-middle mb-auto mt-auto md:p-5 flex flex-col gap-5">
             {/* <img src={hero} alt="hero" className="w-[15rem] lg:w-[20rem] ml-auto mr-auto" /> */}
 
