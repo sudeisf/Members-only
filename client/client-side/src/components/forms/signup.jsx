@@ -59,15 +59,12 @@ export default function SignUp({ isOpen, onClose }) {
     return (
         <>
             <div className="fixed inset-0 flex items-center justify-center backdrop-blur-sm  z-40">
-                <div className="bg-[#111827] flex-col rounded-lg shadow-lg  w-[30rem] max-w-4xl h-[700px] flex border-[#9c9a9a52] border  px-5 py-2">
-                   
-
-    
+                <div className="dark:bg-[#111827] bg-white flex-col rounded-lg shadow-lg  w-[28rem] max-w-4xl  flex border-[#9c9a9a52] border  px-5 ">
                 <div className='text-right'>
                             <button
                             type="button"
                             onClick={onClose}
-                            className=" text-white font-bold  px-4 rounded w-fit text-2xl -auto"
+                            className=" dark:text-white text-black font-bold  px-4 rounded w-fit text-2xl "
                             >
                             x
                             </button>
@@ -75,11 +72,11 @@ export default function SignUp({ isOpen, onClose }) {
 
                         <form className=" w-[90%] ml-auto mr-auto h-fit *:font-Rubik" onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-2 h-1/2 ">
-                                <h1 className="text-center font-medium font-new-amsterdam text-white text-3xl capitalize">Sign Up</h1>
+                                <h1 className="text-center font-medium font-new-amsterdam dark:text-white text-black text-3xl capitalize">Sign Up</h1>
                                 <div>
-                                    <label className="block font-medium text-white">First Name</label>
+                                    <label className="block font-medium dark:text-white text-black">First Name</label>
                                     <input
-                                        className="w-full py-3 mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
+                                        className="w-full py-3  bg-white dark:bg-[#111827] text-black dark:text-white border-b border-[#9c9a9a52]  focus-within:outline-none"
                                         placeholder="First Name"
                                         type="text"
                                         name="firstname"
@@ -90,9 +87,9 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.firstname && <p className="text-red-600 text-sm">{err.firstname}</p>}
                                 </div>
                                 <div>
-                                    <label className="block font-medium text-white">Last Name</label>
+                                    <label className="block font-medium text-black dark:text-white">Last Name</label>
                                     <input
-                                        className="w-full py-3   mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
+                                        className="w-full py-3    bg-white dark:bg-[#111827] text-black  border-b border-[#9c9a9a52] dark:text-white focus-within:outline-none"
                                         placeholder="Last Name"
                                         type="text"
                                         name="lastname"
@@ -103,9 +100,9 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.lastname && <p className="text-red-600 text-sm">{err.lastname}</p>}
                                 </div>
                                 <div>
-                                    <label className="block font-medium text-white">Email</label>
+                                    <label className="block font-medium text-black dark:text-white">Email</label>
                                     <input
-                                        className="w-full py-3   mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
+                                        className="w-full py-3   bg-white dark:bg-[#111827]  border-b border-[#9c9a9a52] dark:text-white text-black focus-within:outline-none"
                                         placeholder="example@domain.com"
                                         type="email"
                                         name="email"
@@ -116,9 +113,9 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.email && <p className="text-red-600 text-sm">{err.email}</p>}
                                 </div>
                                 <div>
-                                    <label className="block font-medium text-white">Password</label>
+                                    <label className="block font-medium text-black dark:text-white">Password</label>
                                     <input
-                                        className="w-full py-3  mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
+                                        className="w-full py-3   bg-white dark:bg-[#111827]   border-b border-[#9c9a9a52] dark:text-white text-black focus-within:outline-none"
                                         placeholder="••••••••"
                                         type="password"
                                         name="password"
@@ -129,9 +126,9 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.password && <p className="text-red-600 text-sm">{err.password}</p>}
                                 </div>
                                 <div>
-                                    <label className="block font-medium text-white">Confirm Password</label>
+                                <label className="block font-medium text-black dark:text-white">Confirm Password</label>
                                     <input
-                                        className="w-full py-3   mt-2 bg-[#111827] border-b border-[#9c9a9a52] text-white focus-within:outline-none"
+                                        className="w-full py-3   bg-white dark:bg-[#111827]  border-b border-[#9c9a9a52] dark:text-white text-black focus-within:outline-none"
                                         placeholder="••••••••"
                                         type="password"
                                         name="passwordConfirmation"
@@ -142,7 +139,7 @@ export default function SignUp({ isOpen, onClose }) {
                                     {err.passwordConfirmation && <p className="text-red-600 text-sm">{err.passwordConfirmation}</p>}
                                 </div>
                                   <div className="mt-2">
-                                    <button type="submit" className="w-full p-3 bg-[#0D9488] text-white rounded-md hover:bg-slate-600">
+                                    <button type="submit" className="w-full bg-black p-3 dark:bg-[#0D9488] text-white rounded-md hover:bg-slate-600">
                                         Register
                                     </button>
                                     <p className="text-center mt-2">
