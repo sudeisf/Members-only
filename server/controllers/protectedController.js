@@ -51,14 +51,12 @@ const privateClubGet = async (req, res) => {
   
 
 const privateJoinClubGet = async (req, res) => {
-    console.log('User Info:', req.user); // Add this line to see the user information
+    
     
     const clubID = req.params.id; 
-    const userID = req.user ? req.user.id : null; 
-    console.log(req.params.id);
-    if (!userID) {
-        return res.status(401).json({ error: 'Unauthorized: No user found' }); // Handle the case when userID is not available
-    }
+    const userID = req.session.user ? req.session.user.id: null; 
+  
+   
 
     try {
         const secret_key = req.body.secretKey;
@@ -87,7 +85,7 @@ const privateJoinClubGet = async (req, res) => {
 
 
 const getClubsJoined = async (req, res) => { 
-  const userID = req.user ? req.user.id : null;
+  const userID = req.session.user ? req.session.user.id: null;
   // console.log(userID);
   try{
    const result = await db.query(`
@@ -226,7 +224,7 @@ const getClubById = async (req, res) => {
 
   try {
        const club_id = req.params.id;
-       const  user_id = req.user.id;
+       const  user_id = req.session.user ? req.session.user.id: null;
        const result  = await db.query(`
         select * from clubs where id = $1 
         `,[

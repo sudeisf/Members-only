@@ -58,7 +58,7 @@ const MakePost = () => {
   );
 
   if (isLoading) return (
-    <div class="bg-white dark:bg-gray-800 shadow-md rounded-xl p-5 w-full max-w-md mx-auto">
+    <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-5 w-full max-w-md mx-auto">
   
   <div class="flex items-center justify-between animate-pulse">
     <div class="flex items-center space-x-3">
@@ -109,8 +109,6 @@ const MakePost = () => {
     }
     try{
             const API_URL = import.meta.env.VITE_API_URL;
-            const token = localStorage.getItem('jwtToken');
-            if (!token) throw new Error('User is not authenticated');
             const response = await axios.post(`${API_URL}/api/postMessage`, {
                 content: message,
                 user_id: userData.id,
@@ -136,11 +134,6 @@ const MakePost = () => {
       <div id="userDetails" className="flex space-x-2 justify-between w-[90%] ml-auto mr-auto">
         <div className="flex space-x-3 items-center">
           <div id="profilePic" className="rounded-[50%] w-14 h-14 border-2 border-black dark:bg-white text-center flex items-center ">
-            {/* <img
-              src="" // Add a dynamic profile picture URL or fallback image
-              alt="Profile"
-              className="w-full h-full object-cover rounded-full"
-            /> */}
             <p className='items-center text-2xl text-black dark:text-white mx-auto font-new-amsterdam'>
             {userData.firstname.charAt(0).toUpperCase()}
             </p>
