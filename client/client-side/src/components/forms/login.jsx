@@ -4,10 +4,12 @@ import axios from 'axios';
 import Alert from './alert';
 import { useEffect } from 'react';
 import {ClipLoader} from "react-spinners"
+import { useNavigate } from 'react-router-dom';
 
 const LoginDialog = ({ isOpen, onClose }) => {
   const [isloading , setLoading] = useState(null)
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -36,8 +38,8 @@ const LoginDialog = ({ isOpen, onClose }) => {
       const API_URL = import.meta.env.VITE_API_URL;
       console.log("API URL:", API_URL);
       const res = await axios.post(`${API_URL}/api/login`, data);
-      login(res.data.token);
       onClose();
+      navigate("/");
       setData({ email: "", password: "" });
       setErr(""); // Clear error on successful login
     } catch (error) {

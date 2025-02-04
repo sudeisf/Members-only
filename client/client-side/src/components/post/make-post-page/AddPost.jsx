@@ -22,20 +22,17 @@ const MakePost = () => {
 
   const userAndClubDataFecth = async () => {
     const API_URL = import.meta.env.VITE_API_URL;
-    const token = localStorage.getItem('jwtToken');
-    if (!token) throw new Error('User is not authenticated');
+ 
     
     const [clubDataFetch, userDataFetch] =  await Promise.all([
         axios.get(`${API_URL}/api/club-joined/${id}`, {
             headers: {
-              Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`,
               "Content-Type": "application/json",
             },
             withCredentials: true,
           }),
              axios.get(`${API_URL}/api/user`, {
                 headers: {
-                Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`,
                 "Content-Type": "application/json",
                 },
                 withCredentials: true,
@@ -120,7 +117,7 @@ const MakePost = () => {
                 club_id: id
             }, {
                 headers: {
-                  Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+  
                   "Content-Type": "application/json",
                 },
                 withCredentials: true,

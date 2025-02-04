@@ -11,16 +11,10 @@ const PostPage = () => {
   const fetchData = async () => {
     try {
       const API = import.meta.env.VITE_API_URL;
-      const token = localStorage.getItem("jwtToken");
-
-      if (!token) {
-        navigate("/login"); // Redirect to login if no token
-        throw new Error("User is not authenticated");
-      }
+     
 
       const response = await axios.get(`${API}/api/post/`, {
         headers: {
-          Authorization: token.startsWith("Bearer ") ? token : `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         params: {

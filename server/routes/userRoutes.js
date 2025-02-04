@@ -14,8 +14,7 @@ const {
     privatePostControllerGet
 } = require('../controllers/protectedController');
 const { createPost, getPost } = require('../controllers/postController');
-const { cookie } = require('express-validator');
-// const notification = require('../controllers/notificationController');
+
 
 // Public Routes
 router.post('/register', validator, userController.registerControllerPost);

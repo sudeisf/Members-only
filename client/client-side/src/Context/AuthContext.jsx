@@ -1,5 +1,5 @@
 import {  createContext, useContext, useState, useEffect } from "react";
-
+import axios from "axios";
 
 
 export const AuthenticateContext = createContext();
@@ -30,9 +30,20 @@ export const AuthProvider = ({children}) =>{
     })},[])
 
 
+     const logout = async () =>{
+        try{
+            axios.get(`${API_URL}/api/logout`,{
+                withCredentials: true
+            }).then((res)=>{
+                setIsAuthenticated(false)
+            })
+        }catch(err){
+            console.error(err)
+        }
+    }
 
 
-    return <AuthenticateContext.Provider value={{isAuthenticated, login , logout}} >
+    return <AuthenticateContext.Provider value={{isAuthenticated, logout ,loading }} >
             {children}
              </AuthenticateContext.Provider>
 }

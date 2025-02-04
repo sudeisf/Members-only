@@ -16,10 +16,9 @@ export default function Club(){
 
   const fetchData = async () => {
     const API_URL = import.meta.env.VITE_API_URL;
-    const token = localStorage.getItem('jwtToken');
+    
     const response = await axios.get(`${API_URL}/api/club`,{
      headers: { 
-         Authorization: token, 
          "Content-Type": "application/json" 
      },
      withCredentials: true 

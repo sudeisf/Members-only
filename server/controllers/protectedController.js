@@ -20,10 +20,7 @@ const privateGetClubs  = async (req, res) => {
 
 const privateClubGet = async (req, res) => {
     try {
-      const userId = req.user ? req.user.id : null;
-      if (!userId) {
-        return res.status(401).json({ error: 'Unauthorized: No user found' });
-      }
+      const userId = req.session.user.id
   
       // Modified SQL Query
       const response = await db.query(`

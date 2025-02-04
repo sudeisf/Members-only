@@ -23,10 +23,9 @@ import ClubSlideShows from "../components/slideshows/ClubSlideShows";
 const fetchData = async () => {
   try {
     const ApI_URL = import.meta.env.VITE_API_URL;
-    const token = localStorage.getItem('jwtToken'); 
+
     const response  = await axios.get(`${ApI_URL}/api/club`, {
-      headers: { 
-        Authorization: token.startsWith('Bearer ') ? token : `Bearer ${token}`,
+      headers: {
         "Content-Type": "application/json"
       },
       withCredentials: true
