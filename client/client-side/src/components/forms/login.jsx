@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../Context/AuthContext';
 import axios from 'axios';
+import Alert from './alert';
+import { useEffect } from 'react';
+import {ClipLoader} from "react-spinners"
 
 const LoginDialog = ({ isOpen, onClose }) => {
+  const [isloading , setLoading] = useState(null)
   const { login } = useAuth();
   const [data, setData] = useState({
     email: '',
     password: '',
   });
   const [err, setErr] = useState('');
+
+  useEffect(() => {
+    if (!isOpen) {
+      setData({ email: "", password: "" }); 
+    }
+  }, [isOpen]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,28 +29,41 @@ const LoginDialog = ({ isOpen, onClose }) => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     axios.defaults.withCredentials = true;
     try {
       const API_URL = import.meta.env.VITE_API_URL;
-      console.log('API URL:', API_URL);
+      console.log("API URL:", API_URL);
       const res = await axios.post(`${API_URL}/api/login`, data);
       login(res.data.token);
       onClose();
-      setData({ email: '', password: '' });
+      setData({ email: "", password: "" });
+      setErr(""); // Clear error on successful login
     } catch (error) {
-      console.error('Login failed:', error);
-      setErr(error.response?.data?.msg || 'An error occurred');
-      setInterval(() => {
-        setErr('');
-      }, 3000);
+      console.error("Login failed:", error);
+      setErr(error.response?.data?.msg || "An error occurred");
+      setTimeout(() => setErr(""), 5000); 
+      if (error.response?.data?.type === "password") {
+        setData({ ...data, password: "" });
+      }else if (error.response?.data?.type === "user"){
+        setData({ ...data,email: ''});
+      }
+      // Clear error after 5 seconds
+    }finally{
+      setLoading(false)
     }
   };
-
-  if (!isOpen) return null;
+  if (!isOpen) { // Reset form state
+    
+    return null; // Prevent rendering anything
+  }
+  
+  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[2px] z-50">
+       {err && <Alert message={err} onClose={() => setErr("")} />}
       <div className="dark:bg-[#111827] bg-[#ffffff]  rounded-xl w-[30rem] max-w-4xl h-[500px] border-1  flex flex-col  transform transition-transform duration-300 ease-in border border-[#9c9a9a52]">
         <div className="text-right">
           <button
@@ -61,7 +84,7 @@ const LoginDialog = ({ isOpen, onClose }) => {
               id="email"
               name="email"
               type="email"
-              className="peer placeholder-transparent h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none  focus:border-white bg-[#ffffff00]"
+              className="peer placeholder-transparent h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black  dark:focus:border-white bg-[#ffffff00]"
               placeholder="abc@gmail.com"
               value={data.email}
               onChange={handleChange}
@@ -79,7 +102,7 @@ const LoginDialog = ({ isOpen, onClose }) => {
               id="password"
               name="password"
               type="password"
-              className="peer placeholder-transparent h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-white bg-[#ffffff00]"
+              className="peer placeholder-transparent h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white bg-[#ffffff00]"
               placeholder="Password"
               value={data.password}
               onChange={handleChange}
@@ -91,12 +114,12 @@ const LoginDialog = ({ isOpen, onClose }) => {
               Password
             </label>
           </div>
-          {err && <p className="text-red-400 text-sm mt-4">{err}</p>}
+          
           <button
             type="submit"
             className="bg-[#000000d7] dark:bg-[#0d9489af] text-white text-xl py-2 px-4 rounded-md mt-6 shadow-sm w-full"
           >
-            Login
+            {isloading ? <ClipLoader color="#ffffff" size={15} />: "Login"}
           </button>
         </form>
       </div>

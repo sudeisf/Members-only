@@ -1,12 +1,12 @@
 
 
 const db = require('../config/database');
-const redis  = require('redis');
+// const redis  = require('redis');
 
-const publisher = redis.createClient();
-(async ()=>{
-    await publisher.connect();
-})();
+// const publisher = redis.createClient();
+// (async ()=>{
+//     await publisher.connect();
+// })();
 
 
 
@@ -29,7 +29,7 @@ const createPost = async (req,res)=>{
 
         const response = result.rows[0];
 
-        await publisher.publish('posts',JSON.stringify(response));
+        // await publisher.publish('posts',JSON.stringify(response));
 
         if(response){
             res.status(200).json({

@@ -1,3 +1,4 @@
 {
-    "terminal.integrated.rescaleOverlappingGlyphs": false
+    "terminal.integrated.rescaleOverlappingGlyphs": false,
+    "editor.fontSize": 13
 }

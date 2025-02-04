@@ -30,16 +30,16 @@ async function registerControllerPost (req, res,next) {
         const user = result.rows[0];
         const jwt  = utilis.issueJWT(user);
 
-        res.cookie('token', jwt.token,{
-            httpOnly: true,
-            sameSite: 'lax',
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: jwt.expires 
-        })
+       req.session.user = {
+            id: user.id,
+            email: user.email,
+            firstname: user.firstname,
+            lastname: user.lastname
+       }
 
         res.status(200).json({
             success: true,
-            user: user,
+            user: req.session.user,
             message : "User has been created successfully",
         });
 
@@ -51,7 +51,7 @@ async function registerControllerPost (req, res,next) {
 
 
 const getUserController = async (req, res, next) => {
-    const user_id = req.user.id;
+    const user_id = req.session.user.id;
     try {
         const result = await pool.query('SELECT * FROM users WHERE id = $1', [user_id]);
         const user = result.rows[0];
@@ -75,7 +75,7 @@ async function loginControllerPost(req, res, next) {
 
         
         if (!user) {
-            return res.status(401).json({succes: false , msg : 'user not found'});
+            return res.status(401).json({succes: false , type: 'user' , msg : 'user not found'});
         }
 
       
@@ -84,10 +84,16 @@ async function loginControllerPost(req, res, next) {
         
         if (isValid) {
             const tokenObj = utilis.issueJWT(user);
+            req.session.user = {
+                id: user.id,
+                email: user.email,
+                firstname: user.firstname,
+                lastname: user.lastname
+            }
             return res.status(200).json({ success: true, user: user, token: tokenObj.token, expiresIn: tokenObj.expires , redirectUrl : '/home' });
         } else {
            
-            return res.status(401).json({ success: false, msg: "Invalid password" });
+            return res.status(401).json({ success: false, type : 'password', msg: "Invalid password" });
         }
     } catch (err) {
         next(err);

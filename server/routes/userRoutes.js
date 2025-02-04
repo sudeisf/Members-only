@@ -14,7 +14,8 @@ const {
     privatePostControllerGet
 } = require('../controllers/protectedController');
 const { createPost, getPost } = require('../controllers/postController');
-const notification = require('../controllers/notificationController');
+const { cookie } = require('express-validator');
+// const notification = require('../controllers/notificationController');
 
 // Public Routes
 router.post('/register', validator, userController.registerControllerPost);
@@ -30,8 +31,20 @@ router.get('/club-joined', auth, getClubsJoined);
 router.get('/club-joined/:id', auth, getClubById);  
 router.post('/post/:id', auth, createPost);  
 router.get('/post/:id', auth, getPost);  
-router.get('/message', auth, privatePostControllerGetTwo);  
-router.post('/send-notfication', auth, notification.New_notification);  
+router.get('/message', auth, privatePostControllerGetTwo);    
 router.post('/postMessage', auth, privateMessagePost);  
 
+
+router.get('/logout',auth, (req,res)=>{
+    req.cookies.clearCookie('token');
+    req.session.destroy();
+    res.status(200).json({message: "User has been logged out successfully"})
+})
+router.get('/user',auth , (req,res)=>{
+    if(req.user){
+        res.status(200).json({isAuthenticated: true, user: req.user})
+    }else{
+        res.status(401).json({isAuthenticated: false, user: null})
+    }
+})
 module.exports = router;

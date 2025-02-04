@@ -70,14 +70,14 @@ export default function SignUp({ isOpen, onClose }) {
                             </button>
                         </div>
 
-                        <form className=" w-[90%] ml-auto mr-auto h-fit *:font-Rubik" onSubmit={handleSubmit}>
+                        <form className=" w-[90%] ml-auto mr-auto h-fit *:font-Rubik p-4" onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-2 h-1/2 ">
                                 <h1 className="text-center font-medium font-new-amsterdam dark:text-white text-black text-3xl capitalize">Sign Up</h1>
                                 <div>
                                     <label className="block font-medium dark:text-white text-black">First Name</label>
                                     <input
                                         className="w-full py-3  bg-white dark:bg-[#111827] text-black dark:text-white border-b border-[#9c9a9a52]  focus-within:outline-none"
-                                        placeholder="First Name"
+                                        placeholder="john"
                                         type="text"
                                         name="firstname"
                                         value={data.firstname}
@@ -90,7 +90,7 @@ export default function SignUp({ isOpen, onClose }) {
                                     <label className="block font-medium text-black dark:text-white">Last Name</label>
                                     <input
                                         className="w-full py-3    bg-white dark:bg-[#111827] text-black  border-b border-[#9c9a9a52] dark:text-white focus-within:outline-none"
-                                        placeholder="Last Name"
+                                        placeholder="doe"
                                         type="text"
                                         name="lastname"
                                         value={data.lastname}
@@ -142,9 +142,7 @@ export default function SignUp({ isOpen, onClose }) {
                                     <button type="submit" className="w-full bg-black p-3 dark:bg-[#0D9488] text-white rounded-md hover:bg-slate-600">
                                         Register
                                     </button>
-                                    <p className="text-center mt-2">
-                                        <NavLink to="#" className={" font-Rubik text-white"}>Already have an account?</NavLink>
-                                    </p>
+                                    
                                 </div>
                             </div>
                         </form>
