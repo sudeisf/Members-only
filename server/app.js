@@ -30,10 +30,12 @@ const { createClient } = require('redis');
 
 const redisClient = createClient({
     socket: {
-        host: '127.0.0.1', 
-        port: 6379
+        host: process.env
+            .REDIS_HOST || 'localhost',
+        port: process.env.REDIS_PORT || 6379
     }
 });
+
 
 redisClient.connect().catch(console.error);
 
