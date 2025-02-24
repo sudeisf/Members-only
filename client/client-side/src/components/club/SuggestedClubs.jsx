@@ -57,11 +57,11 @@ export default function Club(){
   }
    // Empd0dbf3
     return (
-        <div className=" w-[100%]  ml-auto mr-auto  max-h-fit rounded-md  mt-[2rem] sticky top-[70px] z-10  flex flex-col gap-5">
+        <div className=" w-[100%] mx-auto  ml-auto mr-auto  max-h-fit rounded-md  mt-[2rem] sticky top-[70px] z-10  flex flex-col gap-5">
             <div className="grid grid-cols-1 gap-4 w-full">
       {clubs.clubs?.length > 0 && 
         clubs.clubs.slice(0,5).map((club, index) => (
-          <div className="min-w-md max-w-xl p-2 bg-white dark:bg-[#1F2937]   items-center rounded-xl border-r border-b border-l border-t border-[#9c9a9a52]  flex justify-between w-full  " key={index}>
+          <div className=" max-w-md mx-auto p-2 bg-white dark:bg-[#1F2937]   items-center rounded-xl border-r border-b border-l border-t border-[#9c9a9a52]  flex justify-between w-full  " key={index}>
             <div className=" w-[30%]">
               <div
               className="  w-[3rem] h-[3rem] rounded-[50%] ml-5 bg-white dark:bg-[#1F2937] border-[#000] dark:border-[#0D9488]  border-[3px] text-center drop-shadow-sm    " 

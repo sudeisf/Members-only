@@ -3,67 +3,52 @@ import { useAuth } from '../Context/AuthContext';
 import Posts from '../components/post/posts';
 import Club from '../components/club/SuggestedClubs';
 
-
 const Home = () => {
   const { isAuthenticated } = useAuth();
-  
-  
-  
 
   return (
-    <div className='bg-light-background dark:bg-dark-background '>
+    <div className="bg-light-background dark:bg-dark-background">
       {!isAuthenticated ? (
-        <div className="bg-light-background dark:bg-dark-background flex mt-10 md:mt-0 ">
-          <div className="w-[90%] text-center items-center flex flex-col md:p-10 gap-6 ml-auto mr-auto mt-[1rem] mb-auto text-white ">
-            <img src={hero} alt="hero" className="w-[70%] max-w-[20rem]  ml-auto mr-auto" />
+        <div className="bg-light-background dark:bg-dark-background flex flex-col items-center justify-center mt-10 md:mt-0 px-4">
+          <div className="w-full max-w-4xl text-center flex flex-col items-center gap-6 p-4 md:p-10">
+            <img src={hero} alt="hero" className="w-4/5 max-w-xs md:max-w-md" />
 
-            <h1 className="font-new-amsterdam uppercase font-medium text-[2rem] md:text-[3rem] lg:text-[4rem]  text-center text-black dark:text-white">
+            <h1 className="font-new-amsterdam uppercase font-medium text-3xl md:text-4xl lg:text-5xl text-black dark:text-white">
               Welcome to Members Only
             </h1>
 
-            <p className=" text-sm md:text-xl xl:text-[1.3rem] text-gray-500 dark:text-slate-300 md:text-md font-Rubik xl:w-[80%] mr-auto ml-auto">
+            <p className="text-sm md:text-lg lg:text-xl text-gray-500 dark:text-slate-300 font-Rubik max-w-2xl">
               We are happy to have you on our site. You can share your posts on whatever you want. It's secure and also has private clubs. 
               Join us on this journey by signing up today.
             </p>
 
-            <button 
-            className=" bg-dark-background   dark:bg-[#0D9488]   text-center hover:bg-slate-700 hover:text-white text-white w-[80%] max-w-[20rem] capitalize font-Jersey md:text-xl h-12 p-2 rounded-md border-2 shadow-lg ml-auto mr-auto">
+            <button className="bg-dark-background dark:bg-[#0D9488] hover:bg-cyan-700 text-white w-full max-w-xs md:max-w-md text-lg md:text-xl h-12 p-2 rounded-md shadow-lg">
               Sign up today
             </button>
           </div>
-        </div> 
+        </div>
       ) : (
-        <div >
-          <div className="bg-light-background dark:bg-dark-background  flex border-white  ">
-            <div className="w-[60%] mr-auto ml-auto text-center align-middle mb-auto mt-auto md:p-5 flex flex-col gap-5">
-            {/* <img src={hero} alt="hero" className="w-[15rem] lg:w-[20rem] ml-auto mr-auto" /> */}
+        <div>
+          <div className="bg-light-background dark:bg-dark-background flex flex-col items-center text-center px-4 md:px-10">
+            <div className="w-full max-w-4xl flex flex-col items-center gap-5 p-5">
+              <h1 className="font-new-amsterdam uppercase text-2xl md:text-3xl lg:text-4xl text-black dark:text-white drop-shadow-xl text-center">
+                Discover Your Passion, Connect with Your Tribe. Join Clubs, Share Stories, and Explore Together!
+              </h1>
 
-                
-                  <h1 className="font-new-amsterdam uppercase text-[3rem] lg:text-[3rem] text-left text-black  dark:text-white drop-shadow-xl">
-                    Discover Your Passion, Connect with Your Tribe. Join Clubs, Share Stories, and Explore Together!
-                    </h1>
-
-               
-             
-
-              <p className="text-black dark:text-white text-sm lg:text-lg font-Rubik font-normal  text-center  3xl:max-w-[60%] mr-auto ml-auto">
+              <p className="text-black dark:text-white text-sm md:text-lg font-Rubik max-w-2xl">
                 The "Members Only" project is a web application designed to provide exclusive access to content and features for registered users.
               </p>
-              <div>
-                <button className="bg-dark-background dark:bg-[#0D9488] mt-3  text-center hover:bg-cyan-600 text-white w-[50%] capitalize font-Bebas-Neue md:text-xl h-12 p-2 rounded-xl drop-shadow-xl ml-auto mr-auto">
-                  Explore More
-                </button>
-              </div>
+
+              <button className="bg-dark-background dark:bg-[#0D9488] mt-3 hover:bg-cyan-600 text-white w-4/5 md:w-2/5 text-lg md:text-xl h-12 p-2 rounded-xl shadow-lg">
+                Explore More
+              </button>
             </div>
           </div>
-          <div className="flex flex-wrap lg:flex-nowrap gap-4 px-4 md:px-10 lg:px-20 xl:gap-3 xl:px-40 bg-[#fafafa] dark:bg-dark-background">
-              
-                <Posts />
-             
-                <Club />
-             
-           </div>
 
+          <div className="flex flex-wrap md:flex-nowrap gap-4 px-4 md:px-10 lg:px-20 xl:px-40 bg-[#fafafa] dark:bg-dark-background">
+            <Posts />
+            <Club />
+          </div>
         </div>
       )}
     </div>
