@@ -1,12 +1,8 @@
 
 
 const db = require('../config/database');
-// const redis  = require('redis');
 
-// const publisher = redis.createClient();
-// (async ()=>{
-//     await publisher.connect();
-// })();
+const {io} = require('../app.js');
 
 
 
@@ -29,9 +25,12 @@ const createPost = async (req,res)=>{
 
         const response = result.rows[0];
 
-        // await publisher.publish('posts',JSON.stringify(response));
+       
 
         if(response){
+            console.log(response);
+            io.emit('new_post',response);
+
             res.status(200).json({
                 success : true,
                 message: "The post has been created successfully",
@@ -52,7 +51,7 @@ const createPost = async (req,res)=>{
 
 const getPost = async (req,res)=>{
     try{
-        const clubID = req.params.id; // Get club ID from the URL parameter
+        const clubID = req.params.id; 
         const result = await db.query(
             `Select * from messages where club_id = $1 order by sent_at desc;`,
             [clubID]
@@ -60,12 +59,17 @@ const getPost = async (req,res)=>{
 
         const response = result.rows;
 
-        res.status(200).json({
-            success : true,
-            message: "The post has been created successfully",
-            data : response,
-            error: err.message
-        });
+        if(response > 0){
+            res.status(200).json({
+                success : true,
+                message: "The post has been created successfully",
+                data : response,
+                error: err.message
+            });
+
+        }
+
+       
     }catch(err){
         res.status(400).json({
             success : false,

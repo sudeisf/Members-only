@@ -250,37 +250,77 @@ const getClubById = async (req, res) => {
 }
 
 
+const privateMessagePost = async (req, res) => {
+  const { io } = require('../app'); // Importing io
 
-const privateMessagePost = async (req, res) => {  
-          const data = {
-            user_id: req.body.user_id,
-            club_id: req.body.club_id,
-            message: req.body.content
-          }
+  const data = {
+    user_id: req.body.user_id,
+    club_id: req.body.club_id,
+    message: req.body.content
+  };
 
-          try{
-            const result  = await db.query(`
-                      INSERT INTO messages (content, user_id,club_id) VALUES ($1,$2,$3) returning *;`,
-                      [
-                        data.message,
-                        data.user_id,
-                        data.club_id
-                      ]
-              );
-              res.status(200).json({  
-                success : true, 
-                message: "The user has successfully joined the club",
-                result: result
-              });
-          }catch(err){
-            res.status(400).json({
-              success : false,
-              message: "The user has not successfully joined the club",
-            })
-          }
+  console.log(io);  // Check if io is defined
 
+  try {
+    // Insert the new message into the database
+    const result = await db.query(`
+      INSERT INTO messages (content, user_id, club_id) VALUES ($1, $2, $3) RETURNING *;`,
+      [data.message, data.user_id, data.club_id]
+    );
 
-}
+    // Store the result rows into a separate variable
+    const messageData = result.rows[0];
+
+    // Fetch the user info based on user_id (You might already have this from another query or middleware)
+    const userResult = await db.query(`
+      SELECT firstname, lastname, email FROM users WHERE id = $1;`,
+      [data.user_id]
+    );
+
+    const userData = userResult.rows[0];
+
+    // Fetch the club info based on club_id
+    const clubResult = await db.query(`
+      SELECT name, id FROM clubs WHERE id = $1;`,
+      [data.club_id]
+    );
+
+    const clubData = clubResult.rows[0];
+
+    // Transform the message data to match the frontend's expected structure
+    const transformedMessageData = {
+      id: messageData.id,                // Post ID
+      firstname: userData.firstname,     // User's first name
+      lastname: userData.lastname,       // User's last name
+      email: userData.email,             // User's email
+      message_content: messageData.content, // Message content
+      sent_at: messageData.sent_at,      // Sent timestamp
+      club_name: clubData.club_name,     // Club name
+      club_id: clubData.id,              // Club ID
+    };
+
+    // Emit the transformed message data to all connected clients
+    if (io) {
+      console.log(transformedMessageData);  // Log the data before emitting
+      io.emit('new_post', transformedMessageData);  // Emit the 'new_post' event with the transformed message data
+    } else {
+      console.log('Socket.IO not initialized properly');
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Message created!",
+      result: result
+    });
+
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 
 module.exports = {
     privateClubGet,
