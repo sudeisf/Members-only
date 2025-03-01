@@ -7,7 +7,7 @@ const Home = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="bg-light-background dark:bg-dark-background">
+    <div className="bg-light-background dark:bg-dark-background ">
       {!isAuthenticated ? (
         <div className="bg-light-background dark:bg-dark-background flex flex-col items-center justify-center mt-10 md:mt-0 px-4">
           <div className="w-full max-w-4xl text-center flex flex-col items-center gap-6 p-4 md:p-10">
@@ -29,9 +29,9 @@ const Home = () => {
         </div>
       ) : (
         <div>
-          <div className="bg-light-background dark:bg-dark-background flex flex-col items-center text-center px-4 md:px-10">
-            <div className="w-full max-w-4xl flex flex-col items-center gap-5 p-5">
-              <h1 className="font-new-amsterdam uppercase text-2xl md:text-3xl lg:text-4xl text-black dark:text-white drop-shadow-xl text-center">
+          <div className="bg-light-background dark:bg-dark-background flex flex-col items-center text-center px-4 md:px-10 min-h-screen">
+            <div className="w-full max-w-4xl flex flex-col items-center gap-5 p-5 h-full justify-center mt-32">
+              <h1 className="font-new-amsterdam uppercase text-2xl md:text-3xl lg:text-6xl text-black dark:text-white drop-shadow-xl">
                 Discover Your Passion, Connect with Your Tribe. Join Clubs, Share Stories, and Explore Together!
               </h1>
 
@@ -39,7 +39,7 @@ const Home = () => {
                 The "Members Only" project is a web application designed to provide exclusive access to content and features for registered users.
               </p>
 
-              <button className="bg-dark-background dark:bg-[#0D9488] mt-3 hover:bg-cyan-600 text-white w-4/5 md:w-2/5 text-lg md:text-xl h-12 p-2 rounded-xl shadow-lg">
+              <button className="bg-dark-background dark:bg-[#0D9488] mt-3 hover:bg-cyan-600 transition duration-300 text-white w-4/5 md:w-2/5 text-lg md:text-xl h-12 rounded-xl shadow-lg">
                 Explore More
               </button>
             </div>

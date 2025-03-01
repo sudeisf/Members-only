@@ -1,6 +1,7 @@
 const { use } = require('passport');
 const db  = require('../config/database');
 
+
 const privateGetClubs  = async (req, res) => {
     try{
         const response = await db.query('select * from clubs ;');
@@ -229,7 +230,6 @@ const getClubById = async (req, res) => {
         select * from clubs where id = $1 
         `,[
           club_id,
-        
         ])
 
         const response = result.rows;
@@ -247,19 +247,20 @@ const getClubById = async (req, res) => {
           message: "The user has not successfully joined the club",
       });
   }
-}
+} 
+
+
 
 
 const privateMessagePost = async (req, res) => {
-  const { io } = require('../app'); // Importing io
+  
+  const {io} = require('../app');
 
   const data = {
     user_id: req.body.user_id,
     club_id: req.body.club_id,
     message: req.body.content
-  };
-
-  console.log(io);  // Check if io is defined
+  }; 
 
   try {
     // Insert the new message into the database
@@ -299,13 +300,13 @@ const privateMessagePost = async (req, res) => {
       club_id: clubData.id,              // Club ID
     };
 
-    // Emit the transformed message data to all connected clients
-    if (io) {
-      console.log(transformedMessageData);  // Log the data before emitting
-      io.emit('new_post', transformedMessageData);  // Emit the 'new_post' event with the transformed message data
-    } else {
-      console.log('Socket.IO not initialized properly');
+
+    if(io){
+       io.emit('new_post',transformedMessageData);
+    }else{
+      console.log('new post')
     }
+   
 
     res.status(200).json({
       success: true,

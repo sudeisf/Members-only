@@ -35,7 +35,7 @@ router.post('/postMessage', auth, privateMessagePost);
 
 
 router.get('/logout',auth, (req,res)=>{
-    req.cookies.clearCookie('token');
+    res.clearCookie('connect.sid');
     req.session.destroy();
     res.status(200).json({message: "User has been logged out successfully"})
 })

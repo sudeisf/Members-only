@@ -10,6 +10,10 @@ export const AuthProvider = ({ children }) => {
 
     const API_URL = import.meta.env.VITE_API_URL;
 
+
+    useEffect(() => {
+        setAuthChange((prev) => !prev);
+      }, []);
     // 🔄 Runs on mount & when authChange updates (login/logout)
     useEffect(() => {
         const checkAuth = async () => {

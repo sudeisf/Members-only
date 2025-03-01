@@ -1,5 +1,5 @@
 const express = require('express');
-const session = require('express-session'); // Correct version for v6
+const session = require('express-session'); 
 const passport = require('passport');
 const routes = require('./routes/userRoutes');
 
@@ -68,16 +68,12 @@ app.use(passport.session());
 // API routes
 app.use('/api', routes);
 
-
 io.on('connection', (socket) => {
     console.log('A user connected');
-
     socket.on('disconnect', () => {
         console.log('A user disconnected');
     });
 });
-
-
 
 
 // Start the server
@@ -86,5 +82,5 @@ server.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
 
+module.exports = {app , io}
 
-module.exports = { app, io };
