@@ -16,6 +16,7 @@ import { QueryClient , QueryClientProvider } from 'react-query';
 import { ThemeProvider } from './Context/ThemeContext.jsx';
 import PostHome from './pages/Post.jsx';
 import Just from './pages/just.jsx';
+import EditProfile from './components/profile/editProfile.jsx';
 
 const queryClient = new QueryClient();
 
@@ -52,8 +53,10 @@ const router = createBrowserRouter([
           {
             path: 'club',
             element: <ClubPage />,
+          },{
+            path: 'edit-profile',
+            element: <EditProfile />,
           }
-        
         ]
     }
 ]

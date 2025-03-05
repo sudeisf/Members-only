@@ -6,6 +6,7 @@ import CustomLockIcon from "../custom/lockIcon";
 import { motion as m, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import Profile from "../profile/Profile";
 
 const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
   const { isAuthenticated, logout } = useAuth();
@@ -41,7 +42,6 @@ const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
           </p>
         </div>
 
-        {/* Desktop Menu */}
         {isAuthenticated && (
           <div className="lg:flex flex-row gap-6 hidden">
             <NavLink
@@ -100,15 +100,19 @@ const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
           )}
 
           {isAuthenticated && (
-            <button
+            <div className="flex items-center gap-4">
+            <Profile />
+            {/* <button
               onClick={() => {
                 navigate("/");
                 logout();
               }}
-              className="bg-dark-background dark:bg-[#0D9488] text-white font-Bebas-Neue capitalize px-3 py-1 text-[1rem] font-light rounded-md shadow-md"
+              
+              className="bg-dark-background dark:bg-[#0D9488] text-white font-Bebas-Neue capitalize px-3 py-1 text-[1rem] font-light rounded-md shadow-md hidden lg:block"
             >
               log out
-            </button>
+            </button> */}
+            </div>
           )}
 
           {/* Hamburger Menu (Mobile Only) */}

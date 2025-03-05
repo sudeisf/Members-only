@@ -87,7 +87,6 @@ const privateJoinClubGet = async (req, res) => {
 
 const getClubsJoined = async (req, res) => { 
   const userID = req.session.user ? req.session.user.id: null;
-  // console.log(userID);
   try{
    const result = await db.query(`
                 SELECT * 

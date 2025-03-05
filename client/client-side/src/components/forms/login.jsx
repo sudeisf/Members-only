@@ -6,9 +6,11 @@ import { useEffect } from 'react';
 import {ClipLoader} from "react-spinners"
 import { useNavigate } from 'react-router-dom';
 
+
 const LoginDialog = ({ isOpen, onClose }) => {
   const [isloading , setLoading] = useState(null)
-  const { login } = useAuth();
+  const {checkAuth} = useAuth();
+
   const navigate = useNavigate();
   const [data, setData] = useState({
     email: '',
@@ -31,35 +33,38 @@ const LoginDialog = ({ isOpen, onClose }) => {
   };
 
   const handleSubmit = async (e) => {
-    setLoading(true)
     e.preventDefault();
+    setLoading(true);
     axios.defaults.withCredentials = true;
     try {
       const API_URL = import.meta.env.VITE_API_URL;
       console.log("API URL:", API_URL);
       const res = await axios.post(`${API_URL}/api/login`, data);
-      onClose();
-      navigate("/");
-      setData({ email: "", password: "" });
-      setErr(""); // Clear error on successful login
+      if (res.status === 200) {
+        await checkAuth(); // Update authentication state
+        onClose();
+        navigate("/");
+        setData({ email: "", password: "" });
+        setErr(""); // Clear error on successful login
+      }
     } catch (error) {
       console.error("Login failed:", error);
       setErr(error.response?.data?.msg || "An error occurred");
-      setTimeout(() => setErr(""), 5000); 
+      setTimeout(() => setErr(""), 5000);
       if (error.response?.data?.type === "password") {
-        setData({ ...data, password: "" });
-      }else if (error.response?.data?.type === "user"){
-        setData({ ...data,email: ''});
+        setData((prev) => ({ ...prev, password: "" }));
+      } else if (error.response?.data?.type === "user") {
+        setData((prev) => ({ ...prev, email: "" }));
       }
-      // Clear error after 5 seconds
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
-  };
-  if (!isOpen) { // Reset form state
-    
-    return null; // Prevent rendering anything
-  }
+};
+
+if (!isOpen) { // Reset form state
+  return null; // Prevent rendering anything
+}
+
   
   
 

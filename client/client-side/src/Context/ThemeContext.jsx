@@ -8,11 +8,11 @@ export const ThemeProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        // Toggle the 'dark' class based on darkMode state
+        
         document.documentElement.classList.toggle("dark", darkMode);
-        // Persist the theme preference to localStorage
+       
         localStorage.setItem("theme", darkMode ? "dark" : "light");
-        // Disable the default browser dark mode if not in darkMode
+        
         if (!darkMode) {
             document.documentElement.classList.remove("dark");
         }

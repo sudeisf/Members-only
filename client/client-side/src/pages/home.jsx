@@ -40,12 +40,12 @@ const Home = () => {
               </p>
 
               <button className="bg-dark-background dark:bg-[#0D9488] mt-3 hover:bg-cyan-600 transition duration-300 text-white w-4/5 md:w-2/5 text-lg md:text-xl h-12 rounded-xl shadow-lg">
-                Explore More
+                <a href="#sec-2">Explore more</a>
               </button>
             </div>
           </div>
 
-          <div className="flex flex-wrap md:flex-nowrap gap-4 px-4 md:px-10 lg:px-20 xl:px-40 bg-[#fafafa] dark:bg-dark-background">
+          <div id="sec-2" className="flex flex-wrap md:flex-nowrap gap-4 px-4 md:px-10 lg:px-20 xl:px-40 bg-[#fafafa] dark:bg-dark-background">
             <Posts />
             <Club />
           </div>

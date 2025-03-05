@@ -42,7 +42,7 @@ const Post = ({ data }) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 p-6 border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1F2937] rounded-2xl shadow-lg transition-all duration-300 ease-in-out hover:shadow-xl w-full max-w-2xl mx-auto max-h-fit">
+    <div className="flex flex-col gap-3 p-6 border  dark:border-gray-700 bg-white dark:bg-[#1F2937] rounded-2xl shadow-sm transition-all duration-300 ease-in-out hover:shadow-xl w-full max-w-2xl mx-auto max-h-fit">
       {/* Avatar & User Info */}
       <div className="flex items-center justify-between pb-3  border-gray-300 dark:border-gray-600">
         <div className="flex items-center gap-4">

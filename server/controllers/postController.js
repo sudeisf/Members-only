@@ -2,7 +2,7 @@
 
 const db = require('../config/database');
 
-const {io} = require('../app.js');
+
 
 
 
@@ -82,7 +82,7 @@ const getPost = async (req,res)=>{
 
 const getAllPosts = async (req, res) => {
     try {
-        // Fetch all posts for the authenticated user (across clubs)
+       
         const result = await db.query(
             `Select * from messages where user_id = $1 order by sent_at desc;`,
             [req.user.id]
