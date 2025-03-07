@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 // CORS configuration
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: ['https://members-only-380ig88ph-sudeisfs-projects.vercel.app', process.env.CORS_ORIGIN],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
