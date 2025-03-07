@@ -42,7 +42,7 @@ const LoginDialog = ({ isOpen, onClose }) => {
       const res = await axios.post(`${API_URL}/api/login`, data, {
         withCredentials: true,});
       if (res.status === 200) {
-        await checkAuth(); // Update authentication state
+        await checkAuth(); 
         onClose();
         navigate("/");
         setData({ email: "", password: "" });
