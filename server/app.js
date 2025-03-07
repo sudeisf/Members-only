@@ -25,21 +25,15 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-
+console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN);
 
 app.use(cors({
-    origin: function (origin, callback) {
-        const allowedOrigins = ['https://members-only-phi.vercel.app', 'http://localhost:5173'];
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, origin);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+    
+  }));
   
 
 const pgSession = require('connect-pg-simple')(session);
