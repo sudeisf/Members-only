@@ -32,23 +32,15 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-const {RedisStore} = require("connect-redis");
-const { createClient } = require('redis');
-
-const redisClient = createClient({
-    socket: {
-        host: process.env
-            .REDIS_HOST || 'localhost',
-        port: process.env.REDIS_PORT || 6379
-    }
-});
-
-
-redisClient.connect().catch(console.error);
+const pgSession = require('connect-pg-simple')(session);
+const pool = require('./config/database');
 
 // Session configuration
 app.use(session({ 
-    store: new RedisStore({ client: redisClient }),
+    store: new pgSession({
+        pool: pool,
+        tableName: 'session'
+    }),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -83,4 +75,3 @@ server.listen(PORT, () => {
 });
 
 module.exports = {app , io}
-
