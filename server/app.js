@@ -24,13 +24,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS configuration
+
+
+app.options('*', cors()); 
+
 app.use(cors({
-    origin: ['https://members-only-380ig88ph-sudeisfs-projects.vercel.app', process.env.CORS_ORIGIN],
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }));
+  
 
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/database');
@@ -57,13 +61,7 @@ require('./config/passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', process.env.CORS_ORIGIN);
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-  });
+
   
 // API routes
 app.use('/api', routes);
