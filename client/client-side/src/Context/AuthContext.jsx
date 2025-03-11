@@ -24,7 +24,9 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-        
+        useEffect(() => {
+            checkAuth();
+        }, []);
 
 
     const logout = async () => {

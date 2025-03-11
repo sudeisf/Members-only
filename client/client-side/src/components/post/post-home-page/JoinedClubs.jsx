@@ -66,14 +66,14 @@ const ClubSideline = () =>{
 
     return (
         <div className="flex  space-x-10 justify-around dark:text-white overflow-x-scroll scroll-smooth  py-4 [scrollbar-width:none] p-4
-         mr-auto mt-[1rem]  ml-auto border-2 border-black rounded-xl w-auto lg:w-[80%]" >
+         mr-auto mt-[1rem]  ml-auto border-2 border-black dark:border-white rounded-xl w-auto lg:w-[80%]" >
             {
             clublist.map((club)=>(
                     <div className="flex flex-col gap-2 items-center">
                       <div className="dark:border-white border-[.2rem] rounded-[50%] w-[4rem] h-[4rem] border-black items-center py-2  " onClick={() => navigate(`/protected/posts/${club.id}`)}>
                             <img src={images[club.coverpic]} alt="" className="w-14 h-10 " />
                         </div>
-                        <p className="text-[1rem] font-Rubik font-semibold text-black">{club.name}</p>
+                        <p className="text-[1rem] font-Rubik font-semibold text-black dark:text-white">{club.name}</p>
                     </div>
                 ))
             }

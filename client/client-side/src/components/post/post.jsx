@@ -56,25 +56,7 @@ const Post = ({ data }) => {
           </div>
         </div>
 
-        {/* Options Dropdown */}
-        <div className="relative">
-          <img
-            src={options}
-            className="w-6 h-6 cursor-pointer"
-            alt=""
-            onClick={() => setOpen(!open)}
-          />
-          {open && (
-            <div className="absolute right-0 top-8 flex flex-col bg-white dark:bg-gray-800 border dark:border-gray-600 w-28 rounded-lg shadow-md overflow-hidden">
-              <p className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                Option 1
-              </p>
-              <p className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
-                Option 2
-              </p>
-            </div>
-          )}
-        </div>
+      
       </div>
 
       {/* Post Content */}

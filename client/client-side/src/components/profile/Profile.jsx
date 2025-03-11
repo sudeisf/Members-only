@@ -15,14 +15,14 @@ export default function Profile() {
     return (
         <div className="relative pr-2">
             <div className="flex items-center gap-2 cursor-pointer" onClick={toggleDropdown}>
-                <div className="flex justify-center items-center h-8 w-8 bg-black dark:bg-white dark:text-black text-white rounded-full border-black border-2">
+                <div className="flex justify-center items-center h-8 w-8 bg-black dark:bg-white dark:text-black text-white rounded-full">
                     <h1 className=''>S</h1>
                 </div>
-                {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+             
             </div>
 
             {isOpen && (
-                <div className="absolute left-[-10rem] top-12 flex flex-col w-[200px] bg-white dark:bg-dark-background border-2 border-gray-500 shadow-md rounded-md">
+                <div className="absolute left-[-10rem] top-12 flex flex-col w-[200px] bg-gray-50 dark:bg-dark-background border-[1px] border-gray-500 shadow-lg rounded-md">
                     <div className="flex items-center gap-2 py-2 p-3 w-full border-b-2 border-gray-100">
                         <div className="flex relative justify-center items-center h-8 w-8 bg-gray-300 rounded-full border-black border-2 ">
                             <h1 className="text-lg absolute -top-[1px] self-center">s</h1>

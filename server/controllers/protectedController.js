@@ -121,7 +121,7 @@ const privatePostControllerGet = async (req, res) => {
   try {
     const { club_id } = req.query; // Extract club_id from query params
 
-    // Validate club_id
+    
     if (!club_id) {
       return res.status(400).json({
         success: false,
@@ -262,16 +262,15 @@ const privateMessagePost = async (req, res) => {
   }; 
 
   try {
-    // Insert the new message into the database
+  
     const result = await db.query(`
       INSERT INTO messages (content, user_id, club_id) VALUES ($1, $2, $3) RETURNING *;`,
       [data.message, data.user_id, data.club_id]
     );
 
-    // Store the result rows into a separate variable
     const messageData = result.rows[0];
 
-    // Fetch the user info based on user_id (You might already have this from another query or middleware)
+    
     const userResult = await db.query(`
       SELECT firstname, lastname, email FROM users WHERE id = $1;`,
       [data.user_id]
@@ -279,24 +278,24 @@ const privateMessagePost = async (req, res) => {
 
     const userData = userResult.rows[0];
 
-    // Fetch the club info based on club_id
+    
     const clubResult = await db.query(`
-      SELECT name, id FROM clubs WHERE id = $1;`,
+      SELECT name, id ,coverpic FROM clubs WHERE id = $1;`,
       [data.club_id]
     );
 
     const clubData = clubResult.rows[0];
 
-    // Transform the message data to match the frontend's expected structure
+   
     const transformedMessageData = {
-      id: messageData.id,                // Post ID
-      firstname: userData.firstname,     // User's first name
-      lastname: userData.lastname,       // User's last name
-      email: userData.email,             // User's email
-      message_content: messageData.content, // Message content
-      sent_at: messageData.sent_at,      // Sent timestamp
-      club_name: clubData.club_name,     // Club name
-      club_id: clubData.id,              // Club ID
+      m_id: messageData.id,               
+      firstname: userData.firstname,     
+      lastname: userData.lastname,      
+      email: userData.email,             
+      message_content: messageData.content, 
+      sent_at: messageData.sent_at,      
+      club_name: clubData.club_name,     
+      id:  clubData.id,         
     };
 
 

@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 
 console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN);
-app.options('*', cors()); // Enable preflight requests for all routes
+
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,

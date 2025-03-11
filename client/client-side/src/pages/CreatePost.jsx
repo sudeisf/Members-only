@@ -11,7 +11,7 @@ const PostPage = () => {
   const socket = useRef(null);
   const [posts, setPosts] = useState([]);
 
-  // Socket setup and cleanup inside useEffect with an empty dependency array
+
   useEffect(() => {
     socket.current = io(import.meta.env.VITE_API_URL, { withCredentials: true });
 
@@ -19,10 +19,10 @@ const PostPage = () => {
       console.log('Socket connected');
     });
 
-    // Listen for new posts and update state
+    
     socket.current.on('new_post', (newPost) => {
-      console.log('Received new post:', newPost); // Debugging line
-      setPosts((prevPosts) => [newPost, ...prevPosts]); // Insert the new post at the start of the list
+      console.log('Received new post:', newPost); 
+      setPosts((prevPosts) => [newPost, ...prevPosts]); 
     });
 
     return () => {
@@ -30,7 +30,7 @@ const PostPage = () => {
     };
   }, []);
   
-  // Fetch data function
+ 
   const fetchData = async () => {
     try {
       const API = import.meta.env.VITE_API_URL;
@@ -46,7 +46,6 @@ const PostPage = () => {
     }
   };
 
-  // Query to fetch initial posts from the API
   const {
     data: initialPosts = [],
     error,
@@ -77,16 +76,16 @@ const PostPage = () => {
   return (
     <div className="flex flex-col-reverse md:flex-row gap-4 w-full max-w-6xl mx-auto p-4">
       {/* Left Side: Posts */}
-      <div className="flex-1 space-y-4 overflow-auto max-h-screen p-2 bg-gray-50 dark:bg-[#111827] rounded-lg">
+      <div className="flex-1 space-y-4 overflow-auto max-h-screen p-2 bg-gray-50 dark:bg-[#11182772] rounded-lg">
         {posts.length ? (
-          posts.slice(0, 9).map((msg, index) => <Post key={index} data={msg} />)
+          posts.map((msg, index) => <Post key={index} data={msg} />)
         ) : (
           <p className="text-gray-500 text-center">No posts available.</p>
         )}
       </div>
 
      
-      <div className="w-full md:w-[40%] dark:bg-[#1F2937] p-4 rounded-lg">
+      <div className="w-full md:w-[40%]  p-4 rounded-lg">
         <MakePost />
       </div>
     </div>
