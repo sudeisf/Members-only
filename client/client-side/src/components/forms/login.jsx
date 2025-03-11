@@ -39,13 +39,7 @@ const LoginDialog = ({ isOpen, onClose }) => {
     try {
       const API_URL = import.meta.env.VITE_API_URL;
       console.log("API URL:", API_URL);
-      const res = await axios.post(`${API_URL}/api/login`, data, {
-        withCredentials: true},{
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-        },
-        });
+      const res = await axios.post(`${API_URL}/api/login`, data);
       if (res.status === 200) {
         await checkAuth(); 
         onClose();
