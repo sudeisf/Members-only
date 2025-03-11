@@ -34,6 +34,9 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
     
   }));
+
+  app.options('*', cors()); // Handles preflight requests
+
   
 
 const pgSession = require('connect-pg-simple')(session);
@@ -45,7 +48,7 @@ app.use(session({
         pool: pool,
         tableName: 'session'
     }),
-    secret: process.env.SESSION_SECRET,
+    secret: '123456',
     resave: false,
     saveUninitialized: false,
     cookie: {
