@@ -70,8 +70,8 @@ const LoginDialog = ({ isOpen, onClose }) => {
     }
 };
 
-if (!isOpen) { // Reset form state
-  return null; // Prevent rendering anything
+if (!isOpen) { 
+  return null;
 }
 
   
