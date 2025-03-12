@@ -32,14 +32,6 @@ const LoginDialog = ({ isOpen, onClose }) => {
     }));
   };
 
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    },
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,13 +40,19 @@ const LoginDialog = ({ isOpen, onClose }) => {
     try {
       const API_URL = import.meta.env.VITE_API_URL;
       console.log("API URL:", API_URL);
-      const res = await axios.post(`${API_URL}/api/login`, data, config);
+      const res = await axios.post(`${API_URL}/api/login`, data ,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
       if (res.status === 200) {
-        await checkAuth(); 
         onClose();
         navigate("/");
         setData({ email: "", password: "" });
-        setErr(""); // Clear error on successful login
+        setErr(""); 
       }
     } catch (error) {
       console.error("Login failed:", error);

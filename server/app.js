@@ -35,14 +35,14 @@ app.use(cors({
     
   }));
 
-  app.options('*', cors()); // Handles preflight requests
+ 
 
   
 
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/database');
 
-// Session configuration
+
 app.use(session({ 
     store: new pgSession({
         pool: pool,
@@ -52,11 +52,11 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24,  // 1 day
-        sameSite: 'none',
-        secure: process.env.NODE_ENV === 'production',
+        maxAge: 1000 * 60 * 60 * 24, 
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production', 
         httpOnly: true,
-    }
+    }    
 }));
 
 // Passport setup

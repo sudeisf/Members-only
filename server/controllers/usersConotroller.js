@@ -64,41 +64,39 @@ const getUserController = async (req, res, next) => {
 
 async function loginControllerPost(req, res, next) {
     try {
-        const loginUser = {
-            email: req.body.email,
-            password: req.body.password,
-        };
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ success: false, msg: "Email and password are required" });
+        }
 
-      
-        const result = await pool.query('SELECT * FROM users WHERE email = $1', [loginUser.email]);
+        const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         const user = result.rows[0];
 
-        
         if (!user) {
-            return res.status(401).json({succes: false , type: 'user' , msg : 'user not found'});
+            return res.status(401).json({ success: false, type: 'user', msg: 'User not found' });
         }
 
-      
-        const isValid = await utilis.validPassword(loginUser.password, user.password);
-
-        
-        if (isValid) {
-            const tokenObj = utilis.issueJWT(user);
-            req.session.user = {
-                id: user.id,
-                email: user.email,
-                firstname: user.firstname,
-                lastname: user.lastname
-            }
-            return res.status(200).json({ success: true, user: user, token: tokenObj.token, expiresIn: tokenObj.expires , redirectUrl : '/home' });
-        } else {
-           
-            return res.status(401).json({ success: false, type : 'password', msg: "Invalid password" });
+        const isValid = await utilis.validPassword(password, user.password);
+        if (!isValid) {
+            return res.status(401).json({ success: false, type: 'password', msg: "Invalid password" });
         }
+
+        const tokenObj = utilis.issueJWT(user);
+        req.session.user = {
+            id: user.id,
+            email: user.email,
+            firstname: user.firstname,
+            lastname: user.lastname
+        };
+
+        res.status(200).json({ success: true, user: req.session.user, token: tokenObj.token, expiresIn: tokenObj.expires });
+
     } catch (err) {
+        console.error("Login error:", err);
         next(err);
     }
 }
+
 
 
 
