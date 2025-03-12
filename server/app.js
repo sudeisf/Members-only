@@ -7,7 +7,6 @@ const cors = require('cors');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 
-
 const http = require('http');
 const { Server } = require('socket.io');
 const app = express();
@@ -19,25 +18,16 @@ const io = new Server(server, {
     }
 });
 
-// Middleware setup
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-
-console.log("CORS_ORIGIN:", process.env.CORS_ORIGIN);
-
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: ["https://front-members-only.vercel.app" ,str(process.env.CORS_ORIGIN)],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    
   }));
-
- 
-
-  
 
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/database');
