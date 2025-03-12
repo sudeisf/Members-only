@@ -49,6 +49,7 @@ const LoginDialog = ({ isOpen, onClose }) => {
         }
       );
       if (res.status === 200) {
+        await checkAuth()
         onClose();
         navigate("/");
         setData({ email: "", password: "" });
