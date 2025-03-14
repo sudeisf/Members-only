@@ -4,6 +4,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion as m, useScroll, useSpring } from "framer-motion";
+import { NavLink } from "react-router-dom";
 
 
 
