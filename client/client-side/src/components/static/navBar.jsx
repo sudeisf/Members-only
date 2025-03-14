@@ -7,6 +7,7 @@ import { motion as m, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import Profile from "../profile/Profile";
+import SideBar from "../SideBar/sidebar";
 
 const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
   const { isAuthenticated, logout } = useAuth();
@@ -106,50 +107,12 @@ const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
             </div>
           )}
 
-          {/* Hamburger Menu (Mobile Only) */}
-          {isAuthenticated && (
-            <button
-              className="lg:hidden block"
-              onClick={toggleSidebar}
-            >
-              {isSidebarOpen ? <X size={30} /> : <Menu size={30} />}
-            </button>
-          )}
+
+          <SideBar />
+         
         </div>
       </nav>
 
-      {/* Sidebar Mobile Menu */}
-      {isSidebarOpen && (
-        <>
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeSidebar}
-            className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md z-40"
-          />
-          <m.div
-            initial={{ x: "-100%" }}
-            animate={{ x: isSidebarOpen ? "0%" : "-100%" }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed left-0 top-0 w-64 h-full bg-light-background dark:bg-dark-background shadow-lg z-50 backdrop-blur-lg"
-          >
-            <nav className="flex flex-col gap-6 p-6">
-              <NavLink to="/" className="text-lg text-black dark:text-white" onClick={closeSidebar}>
-                Home
-              </NavLink>
-              <NavLink to="/protected/club" className="text-lg text-black dark:text-white" onClick={closeSidebar}>
-                Club
-              </NavLink>
-              <NavLink to="/protected/posts" className="text-lg text-black dark:text-white" onClick={closeSidebar}>
-                Posts
-              </NavLink>
-            </nav>
-          </m.div>
-        </>
-      )}
-
-      {/* Progress Bar */}
       <m.div
         style={{ scaleX, transformOrigin: "left" }}
         className="fixed top-0 z-50 left-0 right-0 h-[4px] bg-dark-background dark:bg-[#0D9488]"
