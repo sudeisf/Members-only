@@ -31,7 +31,7 @@ app.use(cors({
 
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/database');
-
+app.set("trust proxy", 1);
 
 app.use(session({ 
     store: new pgSession({
