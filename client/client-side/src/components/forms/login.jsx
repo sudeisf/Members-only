@@ -99,7 +99,7 @@ if (!isOpen) {
               id="email"
               name="email"
               type="email"
-              className="peer placeholder-transparent h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black  dark:focus:border-white bg-[#ffffff00]"
+              className="peer h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white bg-[#ffffff00] [&:-webkit-autofill]:bg-[#ffffff00] [&:-webkit-autofill]:dark:bg-[#111827] [&:-webkit-autofill]:shadow-[0_0_0_1000px_#ffffff_inset] dark:[&:-webkit-autofill]:shadow-[0_0_0_1000px_#111827_inset] [&:-webkit-autofill]:!text-black dark:[&:-webkit-autofill]:!text-white [&::placeholder]:opacity-0"
               placeholder="abc@gmail.com"
               value={data.email}
               onChange={handleChange}
@@ -117,7 +117,7 @@ if (!isOpen) {
               id="password"
               name="password"
               type="password"
-              className="peer placeholder-transparent h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white bg-[#ffffff00]"
+              className="peer h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white bg-[#ffffff00] [&:-webkit-autofill]:bg-[#ffffff00] [&:-webkit-autofill]:dark:bg-[#111827] [&:-webkit-autofill]:shadow-[0_0_0_1000px_#ffffff_inset] dark:[&:-webkit-autofill]:shadow-[0_0_0_1000px_#111827_inset] [&:-webkit-autofill]:!text-black dark:[&:-webkit-autofill]:!text-white [&::placeholder]:opacity-0"
               placeholder="Password"
               value={data.password}
               onChange={handleChange}

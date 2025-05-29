@@ -1,5 +1,8 @@
 const { use } = require('passport');
 const db  = require('../config/database');
+const notification = require('../services/notficationService')
+const {io} = require('../app')
+
 
 
 const privateGetClubs  = async (req, res) => {
@@ -57,8 +60,6 @@ const privateJoinClubGet = async (req, res) => {
     const clubID = req.params.id; 
     const userID = req.session.user ? req.session.user.id: null; 
   
-   
-
     try {
         const secret_key = req.body.secretKey;
         const result_p = await db.query(`SELECT * FROM clubs WHERE secret = $1`, [secret_key]);
@@ -66,6 +67,9 @@ const privateJoinClubGet = async (req, res) => {
             const result = await db.query(`
                 INSERT INTO club_user (user_id, club_id) VALUES ($1, $2);
             `, [userID, clubID]);
+            
+            i
+            await notification.newMember(userID,clubID,io)
 
             res.status(200).json({
                 success : true,
@@ -82,6 +86,7 @@ const privateJoinClubGet = async (req, res) => {
         res.status(500).json({ error: 'An error occurred while joining the club' });
     }
 };
+
 
 
 
@@ -128,8 +133,7 @@ const privatePostControllerGet = async (req, res) => {
         message: "club_id is required",
       });
     }
-
-    // Fetch posts/messages using SQL
+L
     const result = await db.query(
       `
       SELECT 
@@ -232,7 +236,6 @@ const getClubById = async (req, res) => {
         ])
 
         const response = result.rows;
-        // console.log(response)
 
         res.status(200).json({
           success : true,

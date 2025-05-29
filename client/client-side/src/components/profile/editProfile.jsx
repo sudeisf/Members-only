@@ -181,7 +181,7 @@ export default function EditProfile() {
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-2 p-4">
-                    <button disabled={submitLoading} className="bg-black dark:bg-white text-white dark:text-black rounded-md p-2 w-full md:w-20">{submitLoading ?  <LoaderCircle className="w-8 h-8 animate-spin text-blue-500" /> : "Update"}</button>
+                    <button disabled={submitLoading} className="bg-black dark:bg-white text-white text-center dark:text-black rounded-md p-2 w-full md:w-20">{submitLoading ?  <LoaderCircle className="w-4 h-4 animate-spin text-white mx-auto  " /> : "Update"}</button>
                     <button onClick={handleDiscard} className="bg-white dark:bg-dark-background text-black dark:text-white rounded-md p-2 border-2 border-black dark:border-white w-full md:w-20">Discard</button>
                 </div>
                 {message && <p className="text-center mt-2 text-sm text-blue-600">{message}</p>}

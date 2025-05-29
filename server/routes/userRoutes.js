@@ -14,6 +14,7 @@ const {
     privatePostControllerGet
 } = require('../controllers/protectedController');
 const { createPost, getPost } = require('../controllers/postController');
+const notificationController = require('../controllers/notificationController')
 
 
 // Public Routes
@@ -33,6 +34,13 @@ router.get('/post/:id', auth, getPost);
 router.get('/message', auth, privatePostControllerGetTwo);    
 router.post('/postMessage', auth, privateMessagePost);  
 router.patch('/update', auth ,userController.updateUser);
+
+
+
+// notification sevices
+router.patch('notifications/:id/read', auth ,notificationController.markAsRead);
+router.patch('notifications/read-all', auth ,notificationController.markAllAsRead);
+
 
 
 router.get('/logout',auth, (req,res)=>{
