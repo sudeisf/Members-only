@@ -49,7 +49,7 @@ const Post = ({ data }) => {
   const clubIcon = images[clubId] ||  images[data.id];
 
   return (
-    <div className="flex flex-col gap-3 p-6 border dark:border-gray-700 bg-white dark:bg-[#1F2937] rounded-2xl shadow-sm transition-all duration-300 ease-in-out hover:shadow-xl w-full max-w-2xl mx-auto max-h-fit">
+    <div className="flex flex-col gap-3 p-6 border dark:border-gray-700 bg-white dark:bg-[#1F2937] rounded-2xl shadow-xs transition-all duration-300 ease-in-out hover:shadow-xl w-full max-w-2xl mx-auto max-h-fit">
       <div className="flex items-center justify-between pb-3 border-gray-300 dark:border-gray-600">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 flex items-center justify-center rounded-full text-black dark:text-white border-2 text-lg font-bold shadow-sm">
