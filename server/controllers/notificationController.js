@@ -1,4 +1,4 @@
-const {io} = require('../app');
+
 const notification = require('../services/notficationService');
 const db = require('../config/database')
 
@@ -35,7 +35,7 @@ module.exports ={
     async markAsRead(req,res){
         const notificationID = req.params.id;
         try {
-            const response = await notification.markAsRead(notificationID, io);
+            const response = await notification.markAsRead(notificationID);
             if (response.success) {
               return res.status(200).json({
                 message: response.message,
@@ -50,7 +50,7 @@ module.exports ={
         const userID =  req.session.user.id;
       
         try {
-          const response = await notification.markAllAsRead(userID, io);
+          const response = await notification.markAllAsRead(userID);
           if (response.success) {
             return res.status(200).json({
               message: response.message,

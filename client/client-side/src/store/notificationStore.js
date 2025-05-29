@@ -4,17 +4,20 @@ import{io} from "socket.io-client"
 import axios from "axios";
 
 
-socket.current = io(import.meta.env.VITE_API_URL, { withCredentials: true });
+// const socket = io(import.meta.env.VITE_API_URL, { withCredentials: true });
 
 
 export const useNotificationStore  = create(persist(
-    (set) => ({
+    (set,get) => ({
         notifications : [],
         isLoading : false,
         addNotification: (notification) =>
             set((state) => ({
               notifications: [notification, ...state.notifications],
             })),
+        getNotificationCount: () => {
+                return get().notifications.filter((n) => !n.is_read).length;
+              },              
         clearNotifications: () => set({ notifications: [] }),
         markasRead : async (id) =>{
             try{
@@ -74,7 +77,7 @@ export const useNotificationStore  = create(persist(
     }
 ))
 
-socket.on("notification:new", (data) => {
-    const { addNotification } = useNotificationStore.getState();
-    addNotification(data);
-  });
+// socket.on("notification:new", (data) => {
+//     const { addNotification } = useNotificationStore.getState();
+//     addNotification(data);
+//   });

@@ -1,7 +1,6 @@
 const { use } = require('passport');
 const db  = require('../config/database');
 const notification = require('../services/notficationService')
-const {io} = require('../app')
 
 
 
@@ -69,7 +68,7 @@ const privateJoinClubGet = async (req, res) => {
             `, [userID, clubID]);
             
             i
-            await notification.newMember(userID,clubID,io)
+            await notification.newMember(userID,clubID)
 
             res.status(200).json({
                 success : true,
@@ -133,7 +132,6 @@ const privatePostControllerGet = async (req, res) => {
         message: "club_id is required",
       });
     }
-L
     const result = await db.query(
       `
       SELECT 
@@ -178,7 +176,7 @@ L
 
 
 const privatePostControllerGetTwo = async (req, res) => {
-
+   
   try {
     // Fetch posts/messages using SQL
     const result = await db.query(

@@ -1,7 +1,7 @@
 const db = require('../config/database')
 
 module.exports ={
-    async newMember(userId , clubID ,io) {
+    async newMember(userId , clubID ) {
         const { rows: members } = await db.query(
             `SELECT user_id FROM club_user WHERE club_id = $1 AND user_id != $2;`,
             [clubID, userId]
@@ -39,7 +39,7 @@ module.exports ={
                 });
               });
     },
-    async markAsRead(notificationID,io) {
+    async markAsRead(notificationID) {
         const result = await db.query(
           `
           UPDATE notifications
@@ -54,7 +54,7 @@ module.exports ={
           io.to(`user:${userId}`).emit('notification:new', {message : "Notification marked as read." , notificationID })
           return { success: true, message: "Notification marked as read." };
       },
-    async markAllAsRead(userId,io){
+    async markAllAsRead(userId){
         const result = await db.query(`
             UPDATE notifications
             SET is_read = true

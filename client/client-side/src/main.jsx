@@ -17,6 +17,7 @@ import { ThemeProvider } from './Context/ThemeContext.jsx';
 import PostHome from './pages/Post.jsx';
 import Just from './pages/just.jsx';
 import EditProfile from './components/profile/editProfile.jsx';
+import { Notifications } from './pages/Notification.jsx';
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,9 @@ const router = createBrowserRouter([
           },{
             path: 'edit-profile',
             element: <EditProfile />,
+          },{
+            path: 'notifications',
+            element : <Notifications />
           }
         ]
     }

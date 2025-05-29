@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import Profile from "../profile/Profile";
 import SideBar from "../SideBar/sidebar";
+import {NotificationIcon} from '../notfication/notificationIcon'
 
 const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
   const { isAuthenticated, logout } = useAuth();
@@ -81,6 +82,7 @@ const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
 
         {/* Theme & Auth Buttons */}
         <div className="flex items-center align-middle gap-4">
+          
           <CustomIcon colorMode={color} className="w-5 h-5" onClick={toggleTheme} />
 
           {!isAuthenticated && (
@@ -102,7 +104,9 @@ const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
 
           {isAuthenticated && (
             <div className="flex items-center gap-4">
+            <NotificationIcon />
             <Profile />
+
            
             </div>
           )}
