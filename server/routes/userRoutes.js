@@ -40,6 +40,7 @@ router.patch('/update', auth ,userController.updateUser);
 // notification sevices
 router.patch('notifications/:id/read', auth ,notificationController.markAsRead);
 router.patch('notifications/read-all', auth ,notificationController.markAllAsRead);
+router.get('notifications',auth,notificationController.getNotification)
 
 
 
