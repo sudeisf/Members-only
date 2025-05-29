@@ -121,58 +121,59 @@ const getClubsJoined = async (req, res) => {
   }
 }
 
-const privatePostControllerGet = async (req, res) => {
-  try {
-    const { club_id } = req.query; // Extract club_id from query params
+// const privatePostControllerGet = async (req, res) => {
+//   try {
+//     const { club_id } = req.query; // Extract club_id from query params
 
     
-    if (!club_id) {
-      return res.status(400).json({
-        success: false,
-        message: "club_id is required",
-      });
-    }
-    const result = await db.query(
-      `
-      SELECT 
-        c.name AS club_name, 
-        m.content AS message_content, 
-        u.firstname,
-        u.lastname,
-        u.email, 
-        c.id ,
-        m.sent_at
-      FROM messages m
-      JOIN users u ON m.user_id = u.id
-      JOIN clubs c ON m.club_id = c.id
-      WHERE  m.club_id = $1
-      ORDER BY m.sent_at DESC
-      `,
-      [club_id]
-    );
+//     if (!club_id) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "club_id is required",
+//       });
+//     }
+//     const result = await db.query(
+//       `
+//       SELECT 
+//         c.name AS club_name, 
+//         m.content AS message_content, 
+//         u.firstname,
+//         u.lastname,
+//         u.email, 
+//         c.id ,
+//         m.sent_at
+//       FROM messages m
+//       JOIN users u ON m.user_id = u.id
+//       JOIN clubs c ON m.club_id = c.id
+//       WHERE  m.club_id = $1
+//       ORDER BY m.sent_at DESC
+//       `,
+//       [club_id]
+//     );
 
-    // Handle empty result set
-    if (result.rows.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No messages found for this club",
-      });
-    }
+//     // Handle empty result set
+//     if (result.rows.length === 0) {
+//       console.log(result.rows)
+//       return res.status(404).json({
+//         success: false,
+//         message: "No messages found for this club",
+//       });
+//     }
 
-    // Return the results
-    res.status(200).json({
-      success: true,
-      result: result.rows,
-    });
-  } catch (err) {
-    console.error("Error in privatePostControllerGet:", err);
+//     // Return the results
+//     res.status(200).json({
+//       success: true,
+//       result: result.rows,
+//     });
+//   } catch (err) {
+//     console.error("Error in privatePostControllerGet:", err);
 
-    res.status(500).json({
-      success: false,
-      message: "Internal Server Error",
-    });
-  }
-};
+//     res.status(500).json({
+//       success: false,
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
 
 
 const privatePostControllerGetTwo = async (req, res) => {
@@ -199,6 +200,7 @@ const privatePostControllerGetTwo = async (req, res) => {
 
     // Handle empty result set
     if (result.rows.length === 0) {
+      console.log(result.rows)
       return res.status(404).json({
         success: false,
         message: "No messages found for this club",
@@ -252,83 +254,81 @@ const getClubById = async (req, res) => {
 
 
 
-const privateMessagePost = async (req, res) => {
+// const privateMessagePost = async (req, res) => {
   
-  const {io} = require('../app');
+//   const {io} = require('../app');
 
-  const data = {
-    user_id: req.body.user_id,
-    club_id: req.body.club_id,
-    message: req.body.content
-  }; 
+//   const data = {
+//     user_id: req.body.user_id,
+//     club_id: req.body.club_id,
+//     message: req.body.content
+//   }; 
 
-  try {
+//   try {
   
-    const result = await db.query(`
-      INSERT INTO messages (content, user_id, club_id) VALUES ($1, $2, $3) RETURNING *;`,
-      [data.message, data.user_id, data.club_id]
-    );
+//     const result = await db.query(`
+//       INSERT INTO messages (content, user_id, club_id) VALUES ($1, $2, $3) RETURNING *;`,
+//       [data.message, data.user_id, data.club_id]
+//     );
 
-    const messageData = result.rows[0];
+//     const messageData = result.rows[0];
 
     
-    const userResult = await db.query(`
-      SELECT firstname, lastname, email FROM users WHERE id = $1;`,
-      [data.user_id]
-    );
+//     const userResult = await db.query(`
+//       SELECT firstname, lastname, email FROM users WHERE id = $1;`,
+//       [data.user_id]
+//     );
 
-    const userData = userResult.rows[0];
+//     const userData = userResult.rows[0];
 
     
-    const clubResult = await db.query(`
-      SELECT name, id ,coverpic FROM clubs WHERE id = $1;`,
-      [data.club_id]
-    );
+//     const clubResult = await db.query(`
+//       SELECT name, id ,coverpic FROM clubs WHERE id = $1;`,
+//       [data.club_id]
+//     );
 
-    const clubData = clubResult.rows[0];
+//     const clubData = clubResult.rows[0];
 
    
-    const transformedMessageData = {
-      m_id: messageData.id,               
-      firstname: userData.firstname,     
-      lastname: userData.lastname,      
-      email: userData.email,             
-      message_content: messageData.content, 
-      sent_at: messageData.sent_at,      
-      club_name: clubData.club_name,     
-      id:  clubData.id,         
-    };
+//     const transformedMessageData = {
+//       m_id: messageData.id,               
+//       firstname: userData.firstname,     
+//       lastname: userData.lastname,      
+//       email: userData.email,             
+//       message_content: messageData.content, 
+//       sent_at: messageData.sent_at,      
+//       club_name: clubData.club_name,     
+//       id:  clubData.id,         
+//     };
 
 
-    if(io){
-       io.emit('new_post',transformedMessageData);
-    }else{
-      console.log('new post')
-    }
+//     if(io){
+//        io.emit('new_post',transformedMessageData);
+//     }else{
+//       console.log('new post')
+//     }
    
 
-    res.status(200).json({
-      success: true,
-      message: "Message created!",
-      result: result
-    });
+//     res.status(200).json({
+//       success: true,
+//       message: "Message created!",
+//       result: result
+//     });
 
-  } catch (err) {
-    res.status(400).json({
-      success: false,
-      message: err.message,
-    });
-  }
-};
+//   } catch (err) {
+//     res.status(400).json({
+//       success: false,
+//       message: err.message,
+//     });
+//   }
+// };
 
 
 module.exports = {
     privateClubGet,
     privateJoinClubGet,
     privateGetClubs,
-    privatePostControllerGet,
     getClubsJoined,
     getClubById,
-    privateMessagePost,
     privatePostControllerGetTwo
 }

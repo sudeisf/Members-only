@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import axios from 'axios';
+import { useQuery } from "react-query";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { usePostStore } from "../../../store/postStore"
 
 import plus from "../../../assets/plus.svg";
 import art from "../../../assets/club-icons/art.svg";
@@ -16,41 +16,47 @@ import robot from "../../../assets/club-icons/robot.svg";
 import science from "../../../assets/club-icons/science.svg";
 
 const MakePost = () => {
-  const [message, setMessage] = useState('');
   const { id } = useParams();
+  const { postMessage, setPostMessage, addPost } = usePostStore();
 
-  const userAndClubDataFecth = async () => {
+  const userAndClubDataFetch = async () => {
     const API_URL = import.meta.env.VITE_API_URL;
     const [clubDataFetch, userDataFetch] = await Promise.all([
       axios.get(`${API_URL}/api/club-joined/${id}`, { withCredentials: true }),
-      axios.get(`${API_URL}/api/user`, { withCredentials: true })
+      axios.get(`${API_URL}/api/user`, { withCredentials: true }),
     ]);
     return {
       clubData: clubDataFetch.data.result,
-      userData: userDataFetch.data.user
+      userData: userDataFetch.data.user,
     };
   };
 
-  const { data, isLoading, isError } = useQuery(['userAndClubData', id], userAndClubDataFecth, { enabled: !!id });
+  const { data, isLoading, isError } = useQuery(["userAndClubData", id], userAndClubDataFetch, {
+    enabled: !!id,
+  });
   if (isError) return <p className="text-red-500 dark:text-red-400">Error loading data. Please try again later.</p>;
 
   const { clubData, userData } = data || {};
 
-  const images = { 1: chess, 2: book, 3: art, 4: science, 5: music, 6: drama, 7: robot, 8: debate, 9: food, 10: photo };
+  const images = {
+    1: chess,
+    2: book,
+    3: art,
+    4: science,
+    5: music,
+    6: drama,
+    7: robot,
+    8: debate,
+    9: food,
+    10: photo,
+  };
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
-    if (!message.trim()) return alert('Post message cannot be empty!');
-    try {
-      const API_URL = import.meta.env.VITE_API_URL;
-      await axios.post(`${API_URL}/api/postMessage`, {
-        content: message,
-        user_id: userData.id,
-        club_id: id
-      }, { withCredentials: true });
-      setMessage('');
-    } catch (err) {
-      console.log(err);
+    if (userData?.id && id) {
+      await addPost(id, postMessage);
+    } else {
+      console.error("Missing userId or clubId");
     }
   };
 
@@ -59,18 +65,20 @@ const MakePost = () => {
       <div className="flex space-x-2 justify-between w-[90%] mx-auto">
         <div className="flex space-x-3 items-center">
           <div className="rounded-full w-14 h-14 border-2 border-black dark:border-white flex items-center justify-center bg-gray-100 dark:bg-gray-700">
-            <p className='text-2xl text-black dark:text-white font-bold'>
+            <p className="text-2xl text-black dark:text-white font-bold">
               {userData?.firstname?.charAt(0).toUpperCase() || "U"}
             </p>
           </div>
           <div>
-            <h3 className='capitalize font-medium text-black dark:text-white'>{userData?.firstname} {userData?.lastname[0]}.</h3>
+            <h3 className="capitalize font-medium text-black dark:text-white">
+              {userData?.firstname} {userData?.lastname[0]}.
+            </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400">{userData?.email}</p>
           </div>
         </div>
         <div className="flex items-center space-x-2">
           <div className="rounded-full border-2 border-black dark:border-white w-8 h-8 p-2">
-            <img src={images[id] || art} alt="Club Icon" className="w-full h-full" />
+            <img src={images[id]} alt="Club Icon" className="w-full h-full" />
           </div>
           <p className="text-sm capitalize text-black dark:text-white">
             {clubData?.[0]?.name || "Unknown Club"}
@@ -82,12 +90,15 @@ const MakePost = () => {
           <textarea
             name="postMessage"
             placeholder="What's on your mind?"
-            onChange={(e) => setMessage(e.target.value)}
-            value={message}
+            onChange={(e) => setPostMessage(e.target.value)}
+            value={postMessage}
             className="w-[95%] focus:outline-none text-sm bg-white dark:bg-gray-800 text-black dark:text-white border-none resize-none p-1"
             rows="1"
           ></textarea>
-          <button type="submit" className="bg-black dark:bg-gray-700 text-white rounded-full w-7 h-7 flex items-center justify-center">
+          <button
+            type="submit"
+            className="bg-black dark:bg-gray-700 text-white rounded-full w-7 h-7 flex items-center justify-center"
+          >
             <img src={plus} className="w-3 h-3" alt="Add Post" />
           </button>
         </form>

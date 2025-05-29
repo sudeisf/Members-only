@@ -25,21 +25,21 @@ const Posts = () => {
         },
         withCredentials: true,
       });
-      return response.data.result; // Return only the result data
+      return response.data.result;
     } catch (err) {
       console.error("Error fetching data:", err);
-      return []; // Return an empty array on error
+      return [];
     }
   };
 
   const {
-    data: messages2 = [], // Default to an empty array if no data
+    data: messages2 = [],
     error,
     isLoading,
   } = useQuery(["messages2", id], fetchData, {
-    staleTime: 1000 * 60 * 5 , // Cache data for 5 minutes
-    cacheTime: 1000 * 60 * 10, // Keep unused data in cache for 10 minutes
-    refetchOnWindowFocus: false, // Prevent refetching on window focus
+    staleTime: 1000 * 60 * 5 , 
+    cacheTime: 1000 * 60 * 10, 
+    refetchOnWindowFocus: false, 
   });
 
   useEffect(() => { 
@@ -63,7 +63,7 @@ const Posts = () => {
              className="grid grid-cols-1  [scrollbar-width:none] mt-2 pt-2  dark:bg-[#111827] gap-x-3 gap-y-4 w-full md:w-full ml-auto mr-auto min-h-screen overflow-y-scroll  ">
                 {messages2.map((msg, index) => (
                     <div key={index} className="post">
-                    <Post key={index} data={msg} />
+                    <Post key={index} data={msg}  />
                     </div>
                 ))}
                 </div>

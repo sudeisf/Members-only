@@ -15,7 +15,7 @@ import PostPage from './pages/CreatePost.jsx';
 import { QueryClient , QueryClientProvider } from 'react-query';
 import { ThemeProvider } from './Context/ThemeContext.jsx';
 import PostHome from './pages/Post.jsx';
-import Just from './pages/just.jsx';
+
 import EditProfile from './components/profile/editProfile.jsx';
 import { Notifications } from './pages/Notification.jsx';
 
@@ -31,13 +31,9 @@ const router = createBrowserRouter([
         path: '/',
         index:true,
         element: <Home />,
-      },
-      {
-        path: 'just',
-        element: <Just />,
       }
       ,
-    
+  
       {
         path: 'protected',
         element: <ProtectedRoute />, 
