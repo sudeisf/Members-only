@@ -32,6 +32,7 @@ router.post('/post/:id', auth, createPost);
 router.get('/post/:id', auth, getPost);  
 router.get('/message', auth, privatePostControllerGetTwo);    
 router.post('/postMessage', auth, privateMessagePost);  
+router.patch('/update', auth ,userController.updateUser);
 
 
 router.get('/logout',auth, (req,res)=>{

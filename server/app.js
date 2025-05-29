@@ -25,8 +25,9 @@ app.use(cookieParser());
 app.use(cors({
     origin: process.env.CORS_ORIGIN ,
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS' ,'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization' ],
+    exposedHeaders: ['X-Custom-Header'],
   }));
 
 const pgSession = require('connect-pg-simple')(session);
@@ -43,10 +44,10 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, 
-        sameSite: process.env.NODE_ENV  ? 'none' : 'lax',
-        secure: process.env.NODE_ENV === 'production', 
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
-    }    
+      }   
 }));
 
 // Passport setup

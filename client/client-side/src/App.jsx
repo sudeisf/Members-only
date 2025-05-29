@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Signup from './components//forms/signup';
 import NavBar from './components/static/navBar';
 import LoginDialog from './components/forms/login';
+import { Toaster } from "react-hot-toast";
 import Overlays from './components/modals/overlays';
 
 
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <div>
+      <Toaster position="top-center" />
       {/* Dialog Components */}
       <LoginDialog isOpen={isDialogOpen} onClose={closeDialog} />
       <Signup isOpen={isDialogO} onClose={closeSignUpDialog} />
