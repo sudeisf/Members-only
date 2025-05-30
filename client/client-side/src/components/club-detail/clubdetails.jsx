@@ -49,6 +49,7 @@ const ClubDetails = () => {
 
         if (response.data.success) {
           setClubData(response.data.club);
+          console.log(response.data)
         } else {
           setError('Failed to load club data');
         }
@@ -172,16 +173,16 @@ const ClubDetails = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">Members</p>
-                  <p className="text-lg font-medium text-black dark:text-white">{clubData.memberCount}</p>
+                  <p className="text-lg font-medium text-black dark:text-white">{clubData.member_count}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">Founded</p>
                   <p className="text-lg font-medium text-black dark:text-white">
-                    {new Date(clubData.foundedDate).toLocaleDateString('en-US', {
+                    {clubData.foundedDate ? new Date(clubData.foundedDate).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric'
-                    })}
+                    }) : "unknown"}
                   </p>
                 </div>
                 <div>
@@ -190,7 +191,7 @@ const ClubDetails = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 dark:text-gray-400">Location</p>
-                  <p className="text-lg font-medium text-black dark:text-white">{clubData.location}</p>
+                  <p className="text-lg font-medium text-black dark:text-white">{clubData.location ? clubData.location : "every tuesday"}</p>
                 </div>
               </div>
             </motion.div>
@@ -206,7 +207,7 @@ const ClubDetails = () => {
                 onClick={() => console.log('Join club clicked')}
                 aria-label="Join club"
               >
-                Join Club
+                Leave the club
               </button>
             </motion.div>
           </div>
