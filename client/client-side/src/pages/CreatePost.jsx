@@ -9,11 +9,9 @@ const PostPage = () => {
   const { posts, isLoading, error, fetchPosts, initializeSocket } = usePostStore();
 
   useEffect(() => {
-    if (id) {
       fetchPosts(id);
       const cleanupSocket = initializeSocket();
       return cleanupSocket;
-    }
   }, [id, fetchPosts, initializeSocket]);
 
   if (isLoading) return <div className="text-center mt-10 text-gray-500 dark:text-gray-400">Loading...</div>;
@@ -28,7 +26,7 @@ const PostPage = () => {
   }
 
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-4 w-full max-w-6xl mx-auto p-4">
+    <div className="flex flex-col-reverse md:flex-row gap-4 w-full max-w-7xl mx-auto p-4">
       <div className="flex-1 space-y-4 overflow-auto max-h-screen p-2 bg-gray-50 dark:bg-[#11182772] rounded-lg">
         {posts.length ? (
           posts.map((post,index) => <Post key={index} data={post}  />)
@@ -36,7 +34,7 @@ const PostPage = () => {
           <p className="text-center text-gray-500 dark:text-gray-400">No posts available.</p>
         )}
       </div>
-      <div className="w-full md:w-2/5 p-6">
+      <div className="w-full md:w-2/5">
         <MakePost />
       </div>
     </div>

@@ -5,12 +5,16 @@ import UiAtom from '../../State/modalState';
 import { useAtom } from 'jotai';
 import { useLocation , useNavigate } from 'react-router-dom';
 import {useTheme} from '../../Context/ThemeContext';
+import { set } from 'date-fns';
+import {LoaderCircle} from "lucide-react"
+import { toast } from "react-hot-toast";
 
 
 function SecretSection() {
    const para = useLocation();
    const nav = useNavigate();
    const [secretKey , setSecretKey] = useState('');
+   const [isLoading, setIsLoading] = useState(false)
    const {toggleTheme , darkMode} = useTheme();
 
    const [ui, setUi] = useAtom(UiAtom);
@@ -33,6 +37,7 @@ function SecretSection() {
    const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+        setIsLoading(true)
         const API_URL = import.meta.env.VITE_API_URL;
         const token = localStorage.getItem('jwtToken');
         
@@ -49,11 +54,16 @@ function SecretSection() {
         );
         const data = res.data;
         if(data.success){
+          setIsLoading(false)
+          toast.success("Joined successfully", {
+            position: "top-right",
+          });
           nav(`/protected/posts/${clubIdentifier}`);
         }
         closeSecretModal();
     } catch (err) {
-        console.log(err.message);
+        setIsLoading(false)
+        toast.error(err.response?.data?.message || err.message || "Failed to join club");
     }
 }
 
@@ -91,7 +101,7 @@ function SecretSection() {
               </div>
               <div>
                 <button className='text-white bg-black dark:bg-[#0D9488] w-24 rounded-md uppercase py-1 font-Bebas-Neue'>
-                  Enter
+                 {isLoading ? <LoaderCircle className='w-4 h-4 mx-auto animate-spin m-2'/> : "Enter"}
                 </button>
               </div>
           </form>

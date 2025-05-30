@@ -27,10 +27,12 @@ const privateClubGet = async (req, res) => {
   
       // Modified SQL Query
       const response = await db.query(`
-        SELECT c.*
+        SELECT c.*, COUNT(cu2.user_id) as member_count
         FROM clubs c
         LEFT JOIN club_user cu ON cu.club_id = c.id AND cu.user_id = $1
-        WHERE cu.user_id IS NULL;
+        LEFT JOIN club_user cu2 ON cu2.club_id = c.id
+        WHERE cu.user_id IS NULL
+        GROUP BY c.id;
       `,
         [userId]
       );
@@ -67,7 +69,6 @@ const privateJoinClubGet = async (req, res) => {
                 INSERT INTO club_user (user_id, club_id) VALUES ($1, $2);
             `, [userID, clubID]);
             
-            i
             await notification.newMember(userID,clubID)
 
             res.status(200).json({

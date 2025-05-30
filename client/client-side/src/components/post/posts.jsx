@@ -66,10 +66,11 @@ const Posts = ({ isCompact = false }) => {
   }
 
   return (
+    <div>
     <div
       ref={scope}
-      className={`grid ${isCompact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"} gap-6 p-4 w-full transition-colors duration-300`}
-    >
+      className={`grid ${isCompact ? "grid-cols-1 gap-2" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"}  p-4 w-full transition-colors duration-300`}
+    >  
       {messages2.map((msg, index) => (
         <div
           key={index}
@@ -78,6 +79,7 @@ const Posts = ({ isCompact = false }) => {
           <Post data={msg} />
         </div>
       ))}
+    </div>
     </div>
   );
 };

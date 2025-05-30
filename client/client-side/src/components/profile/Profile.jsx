@@ -2,11 +2,13 @@ import { User, LogOut, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '../../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import {useUserStore} from '../../store/userStore'
 
 export default function Profile() {
     const { logout } = useAuth();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
+    const user = useUserStore((state)=> state.user)
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -16,7 +18,7 @@ export default function Profile() {
         <div className="relative pr-2">
             <div className="flex items-center gap-2 cursor-pointer" onClick={toggleDropdown}>
                 <div className="flex justify-center items-center h-8 w-8 bg-black dark:bg-white dark:text-black text-white rounded-full">
-                    <h1 className=''>S</h1>
+                    <h1 className='uppercase'>{user.firstname[0]}</h1>
                 </div>
              
             </div>

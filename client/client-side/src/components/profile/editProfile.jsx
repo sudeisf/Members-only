@@ -138,10 +138,10 @@ export default function EditProfile() {
             </h1>
             <div className="flex flex-col md:flex-row gap-4 mt-8 items-center md:items-start">
                 <div className="flex justify-center items-center w-28 h-28 bg-black dark:bg-white text-white dark:text-black rounded-full border-2 border-black dark:border-white">
-                    <h1 className="text-3xl">S</h1>
+                    <h1 className="text-3xl uppercase">{user.firstname[0]}</h1>
                 </div>
                 <div className="text-center md:text-left">
-                    <h1 className="text-2xl font-Rubik text-black dark:text-white">{user.firstname} {user.lastname}</h1>
+                    <h1 className="text-2xl font-Rubik text-black dark:text-white capitalize">{user.firstname} {user.lastname}</h1>
                     <p className="text-xl font-Rubik text-gray-400 dark:text-gray-400">
                         {user.email}
                     </p>

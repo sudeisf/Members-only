@@ -19,7 +19,7 @@ export const useNotificationStore = create(
       markAsRead: async (id) => {
         try {
           const response = await axios.patch(
-            `${import.meta.env.VITE_API_URL}/notifications/${id}/read`,
+            `${import.meta.env.VITE_API_URL}/api/notifications/${id}/read`,
             {},
             { withCredentials: true }
           );
@@ -37,7 +37,7 @@ export const useNotificationStore = create(
       markAllAsRead: async () => {
         try {
           const response = await axios.patch(
-            `${import.meta.env.VITE_API_URL}/notifications/read-all`,
+            `${import.meta.env.VITE_API_URL}/api/notifications/read-all`,
             {},
             { withCredentials: true }
           );

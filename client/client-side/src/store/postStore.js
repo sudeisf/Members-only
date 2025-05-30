@@ -7,9 +7,7 @@ export const usePostStore = create((set, get) => ({
   isLoading: false,
   error: null,
   postMessage: "",
-
   setPostMessage: (message) => set({ postMessage: message }),
-
   clearPostMessage: () => set({ postMessage: "" }),
 
   fetchPosts: async (clubId) => {
@@ -19,7 +17,7 @@ export const usePostStore = create((set, get) => ({
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      const posts = response.data.result.map((post) => ({
+      const newPosts = (response.data.result || []).map((post) => ({
         id: post.id,
         message_content: post.message_content || post.content,
         user_id: post.user_id,
@@ -29,8 +27,18 @@ export const usePostStore = create((set, get) => ({
         lastname: post.lastname,
         email: post.email,
         club_name: post.club_name,
-      })) || [];
-      set({ posts, isLoading: false });
+      }));
+
+      // Merge new posts, avoiding duplicates
+      set((state) => {
+        const existingIds = new Set(state.posts.map((post) => post.id));
+        const uniqueNewPosts = newPosts.filter((post) => !existingIds.has(post.id));
+        return {
+          posts: [...state.posts, ...uniqueNewPosts],
+          isLoading: false,
+          error: null,
+        };
+      });
     } catch (err) {
       console.error("Error fetching posts:", err);
       set({ isLoading: false, error: err.message || "Failed to fetch posts" });
@@ -39,13 +47,13 @@ export const usePostStore = create((set, get) => ({
 
   addPost: async (clubId, content) => {
     if (!content.trim()) {
-      alert("Post message cannot be empty!");
+      set({ error: "Post message cannot be empty!" });
       return;
     }
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/api/post/${clubId}`,
-        { content},
+        { content },
         { withCredentials: true }
       );
       if (response.data.success) {
@@ -53,17 +61,21 @@ export const usePostStore = create((set, get) => ({
           id: response.data.post.id,
           message_content: response.data.post.message_content || response.data.post.content,
           user_id: response.data.post.user_id,
-          club_id: Number(response.data.post.club_id), // Ensure number
+          club_id: Number(response.data.post.club_id),
           sent_at: response.data.post.sent_at || response.data.post.created_at,
           firstname: response.data.post.firstname,
           lastname: response.data.post.lastname,
           email: response.data.post.email,
           club_name: response.data.post.club_name,
         };
-        set((state) => ({
-          posts: [newPost, ...state.posts],
-          postMessage: "",
-        }));
+
+        // Add post only if it doesn't already exist
+        set((state) => {
+          if (!state.posts.some((post) => post.id === newPost.id)) {
+            return { posts: [newPost, ...state.posts], postMessage: "", error: null };
+          }
+          return { postMessage: "", error: null };
+        });
       }
     } catch (err) {
       console.error("Error creating post:", err);
@@ -72,6 +84,10 @@ export const usePostStore = create((set, get) => ({
   },
 
   initializeSocket: () => {
+    if (!socket.connected) {
+      socket.connect();
+    }
+
     socket.on("connect", () => {
       console.log("Socket connected");
     });
@@ -82,20 +98,26 @@ export const usePostStore = create((set, get) => ({
         id: newPost.id,
         message_content: newPost.message_content || newPost.content,
         user_id: newPost.user_id,
-        club_id: newPost.club_id, 
-        sent_at: newPost.sent_at,
+        club_id: Number(newPost.club_id),
+        sent_at: newPost.sent_at || newPost.created_at,
         firstname: newPost.firstname,
         lastname: newPost.lastname,
         email: newPost.email,
         club_name: newPost.club_name,
       };
-      set((state) => ({
-        posts: [normalizedPost, ...state.posts],
-      }));
+
+      // Add post only if it doesn't already exist
+      set((state) => {
+        if (!state.posts.some((post) => post.id === normalizedPost.id)) {
+          return { posts: [normalizedPost, ...state.posts] };
+        }
+        return state;
+      });
     });
 
     socket.on("connect_error", (error) => {
       console.error("Socket.IO connection error:", error);
+      set({ error: "WebSocket connection failed" });
     });
 
     return () => {
