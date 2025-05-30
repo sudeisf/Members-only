@@ -4,6 +4,7 @@ import { usePostStore } from "../store/postStore";
 import MakePost from "../components/post/make-post-page/AddPost";
 import Post from "../components/post/post";
 import LoadingSpinner from "../components/custom/loadingSpinner";
+import ClubDetails from "../components/club-detail/ClubDetails";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -37,6 +38,7 @@ const PostPage = () => {
       </div>
       <div className="w-full md:w-2/5">
         <MakePost />
+       <ClubDetails/>
       </div>
     </div>
   );

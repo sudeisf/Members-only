@@ -8,6 +8,7 @@ const {
     privateJoinClubGet,
     getClubsJoined,
     getClubById,
+    clubDetailGet,
     privateGetClubs,
     privatePostControllerGetTwo,
 } = require('../controllers/protectedController');
@@ -27,6 +28,7 @@ router.get('/clubs', auth, privateGetClubs);
 router.post('/club-join/:id', auth, privateJoinClubGet);  
 router.get('/club-joined', auth, getClubsJoined);  
 router.get('/club-joined/:id', auth, getClubById);
+router.get('/club/:id/detail',auth,clubDetailGet);
 
 router.post('/post/:id', auth, createPost);  
 router.get('/post/:id', auth, getPost);  

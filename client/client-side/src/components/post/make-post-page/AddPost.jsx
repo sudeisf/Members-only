@@ -61,7 +61,7 @@ const MakePost = () => {
   };
 
   return (
-    <div className="py-5 px-5 border-[1px] border-gray-300 shadow-sm w-full bg-white dark:bg-gray-900 items-center rounded-xl space-y-7 sticky top-20 mx-auto">
+    <div className="py-5 px-5 border-[1px] border-gray-300 shadow-sm w-full bg-white dark:bg-gray-900 items-center rounded-xl space-y-7 mx-auto">
       <div className="flex space-x-2 justify-between w-full mx-auto max-h-60">
         <div className="flex space-x-3 items-center">
           <div className="rounded-full w-12 h-12 border-2 border-black dark:border-white flex items-center justify-center bg-gray-100 dark:bg-gray-700">

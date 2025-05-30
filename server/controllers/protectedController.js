@@ -42,11 +42,11 @@ const privateClubGet = async (req, res) => {
   
       res.status(200).json({
         success: true,
-        clubs: clubData,  // Use plural for clarity
+        clubs: clubData, 
       });
   
     } catch (err) {
-      console.error('Error extracting clubs:', err); // Log error for debugging
+     
       res.status(500).json({
         success: false,
         msg: "Error extracting clubs",
@@ -54,6 +54,37 @@ const privateClubGet = async (req, res) => {
     }
   };
   
+
+const clubDetailGet = async (req, res) => {
+  try {
+    const club_id = req.params.id;
+    const result = await db.query(`
+      SELECT c.*, COUNT(cu.user_id) as member_count 
+      FROM clubs c
+      LEFT JOIN club_user cu ON cu.club_id = c.id
+      WHERE c.id = $1
+      GROUP BY c.id
+    `, [club_id]);
+    
+    if (result.rows.length > 0) { 
+      const clubData = result.rows[0]; 
+      res.status(200).json({
+        success: true,
+        club: clubData, 
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        msg: "Club not found",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      msg: "Error extracting club details",
+    });
+  }
+}
 
 const privateJoinClubGet = async (req, res) => {
     
@@ -331,5 +362,6 @@ module.exports = {
     privateGetClubs,
     getClubsJoined,
     getClubById,
-    privatePostControllerGetTwo
+    privatePostControllerGetTwo,
+    clubDetailGet
 }
