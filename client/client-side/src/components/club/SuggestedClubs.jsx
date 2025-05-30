@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../Context/AuthContext";
+import { useAuthStore } from "../../store/authStore";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useAtom } from "jotai";
@@ -10,7 +10,7 @@ import Overlays from "../modals/overlays";
 export default function Club(){
 
     
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuthStore();
 
   const [err, setErr] = useState("");
 

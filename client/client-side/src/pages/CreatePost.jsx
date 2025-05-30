@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { usePostStore } from "../store/postStore";
 import MakePost from "../components/post/make-post-page/AddPost";
 import Post from "../components/post/post";
+import LoadingSpinner from "../components/custom/loadingSpinner";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const PostPage = () => {
       return cleanupSocket;
   }, [id, fetchPosts, initializeSocket]);
 
-  if (isLoading) return <div className="text-center mt-10 text-gray-500 dark:text-gray-400">Loading...</div>;
+  if (isLoading) return <LoadingSpinner/>;
 
   if (error) {
     console.error("Error loading posts:", error);
@@ -26,7 +27,7 @@ const PostPage = () => {
   }
 
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-4 w-full max-w-7xl mx-auto p-4">
+    <div className="flex flex-col-reverse md:flex-row gap-4 w-full max-w-7xl mx-auto p-4 mb-10">
       <div className="flex-1 space-y-4 overflow-auto max-h-screen p-2 bg-gray-50 dark:bg-[#11182772] rounded-lg">
         {posts.length ? (
           posts.map((post,index) => <Post key={index} data={post}  />)

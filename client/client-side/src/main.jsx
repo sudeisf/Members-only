@@ -8,7 +8,6 @@ import './index.css';
 
 
 import ProtectedRoute from './pages/protected.jsx';
-import { AuthProvider } from './Context/AuthContext.jsx';
 import ClubPage from './pages/Club.jsx';
 import Home from './pages/home.jsx'
 import PostPage from './pages/CreatePost.jsx';
@@ -67,9 +66,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-      <AuthProvider>
         <RouterProvider router={router} />
-      </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>

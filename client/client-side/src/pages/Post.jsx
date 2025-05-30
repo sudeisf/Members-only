@@ -53,9 +53,9 @@ const PostHome = () => {
   }
 
   return (
-    <div className="bg-[#fefefe] dark:bg-[#111827] min-h-screen flex flex-col">
+    <div className="bg-[#fefefe] dark:bg-[#111827] min-h-screen mb-20 flex flex-col">
       {/* Main content with side-by-side layout */}
-      <div className="flex flex-col lg:flex-row mx-auto w-full max-w-[1450px] gap-6 px-4 lg:px-8">
+      <div className="flex flex-col lg:flex-row mx-auto w-full max-w-[1450px] gap-6 lg:px-8">
         {/* Left Sidebar: Single Container for Both Sections */}
         <motion.div
           className="lg:w-[280px] w-full lg:sticky lg:top-6 h-fit mb-6 lg:mb-0"

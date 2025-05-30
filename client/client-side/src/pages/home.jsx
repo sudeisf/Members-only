@@ -1,10 +1,10 @@
 import hero from '../assets/hero.svg';
-import { useAuth } from '../Context/AuthContext';
+import { useAuthStore } from '../store/authStore';
 import Posts from '../components/post/posts';
 import Club from '../components/club/SuggestedClubs';
 
 const Home = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuthStore();
 
   return (
     <div className="bg-light-background dark:bg-dark-background">

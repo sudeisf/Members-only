@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useAuth } from "../../Context/AuthContext";
+import { useAuthStore } from "../../store/authStore";
 import { useTheme } from "../../Context/ThemeContext";
 import CustomIcon from "../custom/darkNdNigt";
 import CustomLockIcon from "../custom/lockIcon";
@@ -11,7 +11,7 @@ import SideBar from "../SideBar/sidebar";
 import {NotificationIcon} from '../notfication/notificationIcon'
 
 const NavBar = ({ onLoginClick, onSignUpClick, onOpenS, onOpenL }) => {
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuthStore();
   const navigate = useNavigate();
   const { toggleTheme, darkMode } = useTheme();
   const color = darkMode ? "dark" : "light";
