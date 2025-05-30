@@ -3,19 +3,17 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {useAnimate} from "motion/react-mini"
+import { useAnimate } from "motion/react-mini";
 import { useEffect } from "react";
 
-const Posts = () => {
+const Posts = ({ isCompact = false }) => {
   const [scope, animate] = useAnimate();
   const { id } = useParams();
   const navigate = useNavigate();
 
-
   const fetchData = async () => {
     try {
       const API = import.meta.env.VITE_API_URL;
-      
       const response = await axios.get(`${API}/api/message/`, {
         headers: {
           "Content-Type": "application/json",
@@ -25,66 +23,65 @@ const Posts = () => {
         },
         withCredentials: true,
       });
-      return response.data.result; // Return only the result data
+      return response.data.result;
     } catch (err) {
       console.error("Error fetching data:", err);
-      return []; // Return an empty array on error
+      return [];
     }
   };
 
   const {
-    data: messages2 = [], // Default to an empty array if no data
+    data: messages2 = [],
     error,
     isLoading,
   } = useQuery(["messages2", id], fetchData, {
-    staleTime: 1000 * 60 * 5 , // Cache data for 5 minutes
-    cacheTime: 1000 * 60 * 10, // Keep unused data in cache for 10 minutes
-    refetchOnWindowFocus: false, // Prevent refetching on window focus
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 10,
+    refetchOnWindowFocus: false,
   });
 
-  useEffect(() => { 
-    if(messages2.length > 0){
-      animate(".post", { opacity: 1 }, { duration: 1, delay: 0.1 });
+  useEffect(() => {
+    if (messages2.length > 0) {
+      animate(
+        ".post",
+        { opacity: 1, y: 0, scale: 1 },
+        { duration: 0.6, delay: 0.1, ease: "easeOut" }
+      );
     }
-  }, [messages2]);
+  }, [messages2, animate]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="text-center text-gray-600 dark:text-gray-300 py-10">
+        Loading posts...
+      </div>
+    );
   if (error) {
     console.error(error);
-    return <div>Error: Unable to load posts. Please try again later.</div>;
+    return (
+      <div className="text-center text-red-500 dark:text-red-400 py-10">
+        Error: Unable to load posts. Please try again later.
+      </div>
+    );
   }
 
- 
-
-    return ( 
-          
-            <div 
-            ref={scope}
-             className="grid grid-cols-1  [scrollbar-width:none] mt-2 pt-2  dark:bg-[#111827] gap-x-3 gap-y-4 w-full md:w-full ml-auto mr-auto min-h-screen overflow-y-scroll  ">
-                {messages2.map((msg, index) => (
-                    <div key={index} className="post">
-                    <Post key={index} data={msg} />
-                    </div>
-                ))}
-                </div>
-       
-
-        
-       )
-}
+  return (
+    <div>
+    <div
+      ref={scope}
+      className={`grid ${isCompact ? "grid-cols-1 gap-2" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"}  p-4 w-full transition-colors duration-300`}
+    >  
+      {messages2.map((msg, index) => (
+        <div
+          key={index}
+          className="post opacity-0 translate-y-6 scale-95 py-2 transform transition-all duration-500 ease-out  rounded-lg overflow-hidden bg-inherit dark:bg-inherit"
+        >
+          <Post data={msg} />
+        </div>
+      ))}
+    </div>
+    </div>
+  );
+};
 
 export default Posts;
-
-
-
-
-
-
-
-
-
-
-
-
-
-

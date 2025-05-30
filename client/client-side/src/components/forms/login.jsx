@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../Context/AuthContext';
+import { useAuthStore } from '../../store/authStore';
 import axios from 'axios';
 import Alert from './alert';
 import { useEffect } from 'react';
@@ -8,9 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const LoginDialog = ({ isOpen, onClose }) => {
-  const [isloading , setLoading] = useState(null)
-  const {checkAuth} = useAuth();
-
+  const { login, checkAuth, loading } = useAuthStore();
   const navigate = useNavigate();
   const [data, setData] = useState({
     email: '',
@@ -35,39 +33,29 @@ const LoginDialog = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    axios.defaults.withCredentials = true;
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
-      console.log("API URL:", API_URL);
-      const res = await axios.post(`${API_URL}/api/login`, data ,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      if (res.status === 200) {
-        await checkAuth()
+      const result = await login(data);
+      if (result.success) {
+        await checkAuth();
         onClose();
         navigate("/");
         setData({ email: "", password: "" });
-        setErr(""); 
+        setErr("");
+      } else {
+        setErr(result.error);
+        setTimeout(() => setErr(""), 5000);
+        if (result.type === "password") {
+          setData((prev) => ({ ...prev, password: "" }));
+        } else if (result.type === "user") {
+          setData((prev) => ({ ...prev, email: "" }));
+        }
       }
     } catch (error) {
       console.error("Login failed:", error);
-      setErr(error.response?.data?.msg || "An error occurred");
+      setErr("An unexpected error occurred");
       setTimeout(() => setErr(""), 5000);
-      if (error.response?.data?.type === "password") {
-        setData((prev) => ({ ...prev, password: "" }));
-      } else if (error.response?.data?.type === "user") {
-        setData((prev) => ({ ...prev, email: "" }));
-      }
-    } finally {
-      setLoading(false);
     }
-};
+  };
 
 if (!isOpen) { 
   return null;
@@ -99,7 +87,7 @@ if (!isOpen) {
               id="email"
               name="email"
               type="email"
-              className="peer placeholder-transparent h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black  dark:focus:border-white bg-[#ffffff00]"
+              className="peer h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white bg-[#ffffff00] [&:-webkit-autofill]:bg-[#ffffff00] [&:-webkit-autofill]:dark:bg-[#111827] [&:-webkit-autofill]:shadow-[0_0_0_1000px_#ffffff_inset] dark:[&:-webkit-autofill]:shadow-[0_0_0_1000px_#111827_inset] [&:-webkit-autofill]:!text-black dark:[&:-webkit-autofill]:!text-white [&::placeholder]:opacity-0"
               placeholder="abc@gmail.com"
               value={data.email}
               onChange={handleChange}
@@ -117,7 +105,7 @@ if (!isOpen) {
               id="password"
               name="password"
               type="password"
-              className="peer placeholder-transparent h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white bg-[#ffffff00]"
+              className="peer h-10 w-full border-b border-gray-300 text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white bg-[#ffffff00] [&:-webkit-autofill]:bg-[#ffffff00] [&:-webkit-autofill]:dark:bg-[#111827] [&:-webkit-autofill]:shadow-[0_0_0_1000px_#ffffff_inset] dark:[&:-webkit-autofill]:shadow-[0_0_0_1000px_#111827_inset] [&:-webkit-autofill]:!text-black dark:[&:-webkit-autofill]:!text-white [&::placeholder]:opacity-0"
               placeholder="Password"
               value={data.password}
               onChange={handleChange}
@@ -134,7 +122,7 @@ if (!isOpen) {
             type="submit"
             className="bg-[#000000d7] dark:bg-[#0d9489af] text-white text-xl py-2 px-4 rounded-md mt-6 shadow-sm w-full"
           >
-            {isloading ? <ClipLoader color="#ffffff" size={15} />: "Login"}
+            {loading ? <ClipLoader color="#ffffff" size={15} /> : "Login"}
           </button>
         </form>
       </div>

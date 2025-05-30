@@ -1,17 +1,12 @@
-
-
-import { useAuth } from "../../Context/AuthContext";
+import { useAuthStore } from "../../store/authStore";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion as m, useScroll, useSpring } from "framer-motion";
 import { NavLink } from "react-router-dom";
 
-
-
-
 export default function SideBar () {
 
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated } = useAuthStore();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
     const closeSidebar = () => setIsSidebarOpen(false);

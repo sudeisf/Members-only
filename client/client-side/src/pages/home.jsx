@@ -1,13 +1,13 @@
 import hero from '../assets/hero.svg';
-import { useAuth } from '../Context/AuthContext';
+import { useAuthStore } from '../store/authStore';
 import Posts from '../components/post/posts';
 import Club from '../components/club/SuggestedClubs';
 
 const Home = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuthStore();
 
   return (
-    <div className="bg-light-background dark:bg-dark-background ">
+    <div className="bg-light-background dark:bg-dark-background">
       {!isAuthenticated ? (
         <div className="bg-light-background dark:bg-dark-background flex flex-col items-center justify-center mt-10 md:mt-0 px-4">
           <div className="w-full max-w-4xl text-center flex flex-col items-center gap-6 p-4 md:p-10">
@@ -45,9 +45,13 @@ const Home = () => {
             </div>
           </div>
 
-          <div id="sec-2" className="flex flex-wrap md:flex-nowrap gap-4 px-4 md:px-10 lg:px-20 xl:px-40 bg-[#fafafa] dark:bg-dark-background">
-            <Posts />
-            <Club />
+          <div id="sec-2" className="flex flex-wrap md:flex-nowrap gap-4 px-4 md:px-10 lg:px-20 xl:px-40 bg-inherit dark:bg-dark-background">
+            <div className="w-full md:w-2/3 bg-inherit">
+              <Posts isCompact={true} />
+            </div>
+            <div className="w-full md:w-1/3">
+              <Club />
+            </div>
           </div>
         </div>
       )}

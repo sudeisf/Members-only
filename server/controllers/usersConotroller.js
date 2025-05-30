@@ -1,6 +1,7 @@
 const utilis = require('../utils/utils');
 const {validationResult} = require('express-validator');
 const pool = require('../config/database');
+const jwt = require('jsonwebtoken')
 
 
 
@@ -55,7 +56,6 @@ const getUserController = async (req, res, next) => {
     try {
         const result = await pool.query('SELECT * FROM users WHERE id = $1', [user_id]);
         const user = result.rows[0];
-        console.log(user)
         return res.status(200).json({ success: true, user: user });
     } catch (err) {
         next(err);
@@ -97,6 +97,66 @@ async function loginControllerPost(req, res, next) {
     }
 }
 
+const {genPwd}  = require('../utils/utils')
+
+const updateUser = async (req, res) => {
+    try {
+        const user_id = req.session.user.id;
+        const { firstname, lastname, newPassword, confirmPassword } = req.body;
+
+        // Prepare fields to update
+        const updates = [];
+        const values = [];
+        let index = 1;
+
+        if (firstname) {
+            updates.push(`firstname = $${index++}`);
+            values.push(firstname);
+        }
+
+        if (lastname) {
+            updates.push(`lastname = $${index++}`);
+            values.push(lastname);
+        }
+
+        if (newPassword || confirmPassword) {
+            if (!newPassword || !confirmPassword) {
+                return res.status(400).json({ message: "Both password fields are required" });
+            }
+
+            if (newPassword !== confirmPassword) {
+                return res.status(400).json({ message: "Passwords do not match" });
+            }
+
+            const hashedPassword = await genPwd(newPassword, 10);
+            updates.push(`password = $${index++}`);
+            values.push(hashedPassword);
+        }
+
+        if (updates.length === 0) {
+            return res.status(400).json({ message: "No fields provided for update" });
+        }
+
+        values.push(user_id); 
+
+        const query = `UPDATE users SET ${updates.join(", ")} WHERE id = $${index}`;
+        const result = await pool.query(query, values);
+
+        if (result.rowCount > 0) {
+            return res.status(200).json({ message: "User updated successfully" });
+        } else {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+    } catch (err) {
+        console.error("Update error:", err.message);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+
+
+
 
 
 
@@ -107,5 +167,6 @@ async function loginControllerPost(req, res, next) {
 module.exports = {
     registerControllerPost,
     loginControllerPost,
-    getUserController
+    getUserController,
+    updateUser
 }
