@@ -2,6 +2,15 @@
 
 A secure web application that implements a members-only system with authentication and authorization features.
 
+## Tech Stack
+
+- **Frontend**: React.js
+- **Backend**: Node.js with Express
+- **Database**: PostgreSQL
+- **Authentication**: Session-based authentication
+- **Real-time Communication**: WebSocket
+- **API**: RESTful API architecture
+
 ## Project Structure
 
 The project follows a client-server architecture:
@@ -9,7 +18,7 @@ The project follows a client-server architecture:
 ### Server
 - Built with Node.js and Express
 - Implements secure authentication and authorization
-- Uses JWT (JSON Web Tokens) for secure communication
+- Uses session-based authentication for secure communication
 - Organized into:
   - `controllers/`: Request handlers
   - `routes/`: API route definitions
@@ -27,6 +36,7 @@ The project follows a client-server architecture:
 ### Prerequisites
 - Node.js (v14 or higher)
 - npm or yarn
+- PostgreSQL (v12 or higher)
 
 ### Installation
 
@@ -48,6 +58,15 @@ cd ../client/client-side
 npm install
 ```
 
+4. Set up PostgreSQL database:
+```bash
+# Create database
+createdb members_only
+
+# Run migrations (if using a migration tool)
+npm run migrate
+```
+
 ### Running the Application
 
 1. Start the server:
@@ -64,19 +83,44 @@ npm start
 
 ## Features
 
-- Secure user authentication
-- Protected routes for members
-- JWT-based session management
-- User role management
-- Secure API endpoints
+### Authentication & User Management
+- Session-based user authentication
+- Secure user registration and login
+- User profile management
 
-## Security
+### Content Management
+- Create and manage posts
+- View and interact with other users' posts
+- Rich text editing capabilities
 
-This application implements several security measures:
-- JWT-based authentication
-- Secure password handling
+### Club System
+- Join and create clubs
+- Club membership management
+- Club-specific content and discussions
+
+### Real-time Notifications
+- WebSocket-based notification system
+- Real-time updates for:
+  - New club invitations
+  - Post interactions
+  - Club activities
+  - System notifications
+
+### Security Features
+- Session-based authentication
 - Protected API routes
+- Secure password handling
 - Middleware for authorization checks
+
+## Database Schema
+
+The application uses PostgreSQL with the following main tables:
+- Users
+- Posts
+- Clubs
+- Club_Members
+- Notifications
+- Sessions
 
 ## Contributing
 
