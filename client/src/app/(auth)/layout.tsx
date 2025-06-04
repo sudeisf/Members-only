@@ -18,7 +18,7 @@ export const metadata: Metadata = {
             <div className="min-h-dvh flex flex-col dark:bg-gray-900">
                 <div className="w-full flex justify-between px-4 py-2">
                     <div className=" flex items-center gap-4">
-                    <Link href={'/home'}  className="border-1 border-gray-300 dark:border-gray-700 shadow-xs rounded-md p-2 w-fit hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
+                    <Link href={'/'}  className="border-1 border-gray-300 dark:border-gray-700 shadow-xs rounded-md p-2 w-fit hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
                         <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 dark:text-gray-300 stroke-1" />
                     </Link>
                     <p className="font-roboto font-medium text-gray-600 dark:text-gray-300">Home page</p>
