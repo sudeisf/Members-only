@@ -1,4 +1,5 @@
 {
     "terminal.integrated.rescaleOverlappingGlyphs": false,
-    "editor.fontSize": 14
+    "editor.fontSize": 14,
+    "postman.settings.dotenv-detection-notification-visibility": false
 }
