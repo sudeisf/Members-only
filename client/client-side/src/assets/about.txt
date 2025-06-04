@@ -1,6 +1,0 @@
-This favicon was generated using the following font:
-
-- Font Title: Rubik Iso
-- Font Author: Copyright 2020 The Rubik Filtered Project Authors (https://github.com/NaN-xyz/Rubik-Filtered)
-- Font Source: https://fonts.gstatic.com/s/rubikiso/v2/x3dickHUfr-S4VAI4sABfPACvy_1BA.ttf
-- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
