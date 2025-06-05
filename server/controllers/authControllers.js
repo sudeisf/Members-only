@@ -1,8 +1,8 @@
 const utils = require('../utils/utils')
 const prisma = require("../config/client")
 const jwt = require("jsonwebtoken")
-
-
+const sendEmail = require("../utils/mailer")
+const bcrypt = require('bcrypt')
 
 const register = async (req, res) => {
 
@@ -182,4 +182,113 @@ const logout = async (req,res) => {
         console.error('Logout error:', error);
         res.status(500).json({ error: 'Internal server error' });
       }
+}
+
+const sendOtp = async (req,res) => {
+        try{
+            const {email} = req.body;
+            if (!email) {return  res.status(400).json("email is required")}
+
+            const otp = utils.generateOTP()
+            const otpcode = otp.otp;
+            const hashedOTP = otp.hasedCode
+
+            const response = await prisma.otp.create({
+                data: {
+                  code: hashedOTP,
+                  email: 'user@example.com',
+                  expiresAt: new Date(Date.now() + 5 * 60 * 1000), 
+                },
+              });
+
+              if(response){
+                 sendEmail(
+                    {
+                        email,
+                        subject : "OTP CODE",
+                        otp : otpcode
+                    })
+                    res.status(200).json({
+                        message : "verification send to your email check it"
+                    })
+              }else{
+                return res.status(500).json({ error: "Failed to save OTP" });
+              }
+        }catch(error){
+            console.error(error)
+            res.status(500).json("internal server error")
+        }
+}
+
+
+const verifyOTP = async (req, res) => {
+    try{
+
+        const {email, otp} = req.body;
+        if(!email || !otp) {return res.status(400).json({ error: "Email and OTP are required" });}
+
+        const fetchOtp = await prisma.otp.findFirst({where : {email} , orderBy: {
+            createdAt: 'desc',
+          },
+          expiresAt: {
+            gt: new Date(),
+          }
+        });
+
+          if (!fetchOtp) {
+            return res.status(400).json({ success: false, message: "OTP not found or expired" });
+          }
+        if(fetchOtp){
+            const otpHashcode = fetchOtp.code;
+            const isMatch = await bcrypt.compare(otp,otpHashcode);
+            if(isMatch){
+                res.status(200).json({success : true})
+            }else{
+                res.status(200).json({success : false, message : "invalid otp code"})
+            }
+        }
+    }catch(error){
+        console.error(error)
+        res.status(500).json("internal server error")
+    }
+}
+
+const newPassword = async (req, res) => {
+    try{
+        const {password, confirmPassword , email} = req.body;
+        if(!password || !confirmPassword || !email) {return res.status(400).json({ error: "full inputs required are required" });}
+        if(password !== confirmPassword) {return res.status(400).json({error: "password does not match"})}
+        const user = await prisma.user.findUnique({where : {email}})
+        if(!user){
+            return res.status(404).json({error: "User not found"});
+        }
+        const hashedPassword = await utils.generatePassword(password);
+        await prisma.user.update({
+            where: { email },
+            data: { password: hashedPassword }
+        });
+
+        await prisma.otp.deleteMany({
+            where: { email }
+        });
+
+        res.status(200).json({
+            message: "Password updated successfully"
+        });
+
+    }catch(err){
+        console.error('Password reset error:', err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+}
+
+
+module.exports ={
+    login,
+    logout,
+    register,
+    refreshToken,
+    sendOtp,
+    newPassword,
+    verifyOTP
 }

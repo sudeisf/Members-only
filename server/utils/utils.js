@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 require('dotenv').config();
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require("bcrypt")
 
 
 const validPassword = (password,hashedPassword)=>{
@@ -38,9 +39,15 @@ const GenerateToken = (user , rememberMe) =>{
 
       return { accessToken, refreshToken ,jti };
 } 
+function generateOTP() {
+    const otp = Math.floor(100000 + Math.random() * 900000); 
+    const hasedCode = bcrypt.hash(code,10)
+    return {otp , hasedCode}
+  }
 
 module.exports ={
     validPassword,
     generatePassword,
-    GenerateToken
+    GenerateToken,
+    generateOTP
 }

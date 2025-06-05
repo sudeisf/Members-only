@@ -1,12 +1,15 @@
 const { Router } = require('express');
+const Auth = require('../controllers/authControllers')
 const router = Router();
+const passport = require('passport');
 
 
+router.post('/login',Auth.login);
+router.post('/register',Auth.register);
+router.post('/email',Auth.sendOtp);
+router.post('/new-password',Auth.newPassword);
+router.post('/verify-otp',Auth.verifyOTP);
+router.post('/refreshToken',Auth.refreshToken);
+router.post('/logout',passport.authenticate('jwt', { session: false }),Auth.logout)
 
-
-
-router.post('/login');
-router.post('/register');
-router.post('/email');
-router.post('/new-password');
-router.post('/verify-otp')
+module.exports = router;
