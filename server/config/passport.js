@@ -1,30 +1,27 @@
-const path = require("path");
-const pool = require("./database");
-const JwtStratagey = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const fs = require('fs');
 
-const pathToKey = path.join(__dirname,'..',"id_rsa_pub.pem");
-const PUB_KEY = fs.readFileSync(pathToKey,'utf8');
-
-
-
+const {ExtractJwt , Strategy } = require('passport-jwt')
+const prisma = require('./client')
 const options ={
     jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey : PUB_KEY,
-    algorithms: ['RS256']
+    secretOrKey : process.env.JWT_ACCESS_SECRET,
 }
 
 
 const strategy = new JwtStratagey(options, async (payload , done)=>{
     try{
-        const result  = await pool.query('select * from users where id = $1' , [payload.sub]);
-        const user = result.rows[0];
-        done(null,user);
+        const user  = await prisma.user.findUnique(
+            {
+                where: {id: payload.id}
+            }
+        );
+        if (user) {
+            return done(null, user);
+          } else {
+            return done(null, false); 
+          }
     }catch(err){
         done(err,false)
     }
-
 })
 
 
