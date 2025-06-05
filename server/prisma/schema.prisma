@@ -41,7 +41,7 @@ model BlacklistedToken {
 model Otp {
   id          Int       @id @default(autoincrement())
   code        String
-  email       String?
+  email       String
   expiresAt   DateTime
   used        Boolean  @default(false)
   createdAt   DateTime @default(now())

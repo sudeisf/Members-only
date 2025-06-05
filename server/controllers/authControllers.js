@@ -37,7 +37,7 @@ const register = async (req, res) => {
             firstName: user.firstName,
             lastName: user.lastName,
         })
-    }catch(err){
+    }catch(error){
         console.error('Register error:', error);
         res.status(500).json({ error: 'Internal server error' });    
     }
@@ -45,7 +45,7 @@ const register = async (req, res) => {
 
 const login  = async (req , res) => {
     try{
-        const {email, password , remeberMe} = req.body;
+      const { email, password, rememberMe } = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: 'Email and password are required' });
@@ -53,7 +53,7 @@ const login  = async (req , res) => {
         
         const user = await prisma.user.findUnique( { where : {email}})
 
-        if(user) { res.status(201).json({error : 'Invalid email or password'})}
+        if(!user) { res.status(201).json({error : 'Invalid email or password'})}
          
         const isMatch  = await utils.validPassword(password , user.password);
 
@@ -61,9 +61,16 @@ const login  = async (req , res) => {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 
-        const tokens = utils.GenerateToken(user,remeberMe);
+        const tokens = utils.GenerateToken(user,rememberMe);
+        
+        res.cookie('refreshToken', tokens.refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 7 * 24 * 60 * 60 * 1000 
+      });
 
-        res.status(200).json({
+        return res.status(200).json({
             accessToken : tokens.accessToken,
             refreshToken : tokens.refreshToken,
             user: {
@@ -80,66 +87,99 @@ const login  = async (req , res) => {
         }
 }
 
+
 const refreshToken = async (req, res) => {
-        try{
-            const {refreshToken} = req.cookies?.refreshToken || req.headers['authorization']?.split(' ')[1];
-            if (!refreshToken){
-                return res.status(401).json({ error: 'Refresh token missing' });
-            }
-            const decoded = jwt.verify(refreshToken,process.env.JWT_REFRESH_TOKEN_SECRET)
-            const jti  = decoded.jti
+  try {
+    const refreshToken =
+      req.cookies?.refreshToken || req.headers['authorization']?.split(' ')[1];
 
-            const revokedToken = await prisma.revokedToken.findUnique({where : {jti}})
-            if(!revokedToken) return res.status(401).json({ error: 'Token is revoked' });
+    if (!refreshToken) {
+      return res.status(401).json({ error: 'Refresh token missing' });
+    }
 
-            const blacklisted = await prisma.blacklistedToken.findUnique({ where: { token: refreshToken } });
-            if (blacklisted) return res.status(401).json({ error: 'Token is blacklisted' });
 
-            const user = await prisma.user.findUnique({ where: { id: decoded.id } });
-            if (!user) return res.status(401).json({ error: 'User not found' });
+    let decoded;
+    try {
+      decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+     
+    } catch (err) {
+      console.error('Token verification error:', err.message);
+      return res.status(401).json({ error: 'Invalid or expired refresh token' });
+    }
 
-            const token  = utils.GenerateToken(user);
+   
+    const revokedToken = await prisma.revokedToken.findUnique({
+      where: { jti: decoded.jti },
+    });
+    if (revokedToken) {
+      return res.status(401).json({ error: 'Token is revoked' });
+    }
 
-            await prisma.blacklistedToken.create({
-                data: {
-                    token : refreshToken,
-                    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-                }
-            });
+ 
+    const blacklisted = await prisma.blacklistedToken.findUnique({
+      where: { token: refreshToken },
+    });
+    if (blacklisted) {
+      return res.status(401).json({ error: 'Token is blacklisted' });
+    }
 
-            await prisma.revokedToken.create({
-                data: {
-                  jti,
-                  expiresAt: new Date(decoded.exp * 1000),
-                },
-              });
-            
-            res.cookie('refreshToken', token.refreshToken, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: 'strict',
-                maxAge: 7 * 24 * 60 * 60 * 1000 
-            });
+  
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.id },
+    });
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
 
-            return res.status(200).json({
-                accessToken : token.accessToken,
-                user: {
-                    id: user.id,
-                    email: user.email,
-                }
-            });
 
-            
-        }catch(error){
-            console.error(err)
-            res.status(500).json("inetrnal server error")
-        }
-}
+    const tokens = utils.GenerateToken(user, false); 
+
+ 
+    await prisma.blacklistedToken.create({
+      data: {
+        token: refreshToken,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      },
+    });
+
+
+    await prisma.revokedToken.create({
+      data: {
+        jti: decoded.jti,
+        expiresAt: new Date(decoded.exp * 1000),
+      },
+    });
+
+
+    res.cookie('refreshToken', tokens.refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.status(200).json({
+      accessToken: tokens.accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error('Refresh token error:', error);
+    return res.status(500).json({ error: 'Internal server error' }); 
+  }
+};
 
 
 const logout = async (req,res) => {
       try{
-         const refreshToken  = req.cookie?.refreshToken;
+        const refreshToken =
+        req.cookies?.refreshToken || req.headers['authorization']?.split(' ')[1];
+  
+      if (!refreshToken) {
+        return res.status(401).json({ error: 'Refresh token missing' });
+      }
 
          if(!refreshToken){
             return res.status(400).json("refresh token missing")
@@ -189,14 +229,14 @@ const sendOtp = async (req,res) => {
             const {email} = req.body;
             if (!email) {return  res.status(400).json("email is required")}
 
-            const otp = utils.generateOTP()
+            const otp = await utils.generateOTP()
             const otpcode = otp.otp;
-            const hashedOTP = otp.hasedCode
+            const hashedOTP = otp.hashedCode;
 
             const response = await prisma.otp.create({
                 data: {
                   code: hashedOTP,
-                  email: 'user@example.com',
+                  email: email,
                   expiresAt: new Date(Date.now() + 5 * 60 * 1000), 
                 },
               });
@@ -204,7 +244,7 @@ const sendOtp = async (req,res) => {
               if(response){
                  sendEmail(
                     {
-                        email,
+                        to :email,
                         subject : "OTP CODE",
                         otp : otpcode
                     })
@@ -227,12 +267,17 @@ const verifyOTP = async (req, res) => {
         const {email, otp} = req.body;
         if(!email || !otp) {return res.status(400).json({ error: "Email and OTP are required" });}
 
-        const fetchOtp = await prisma.otp.findFirst({where : {email} , orderBy: {
+        const fetchOtp = await prisma.otp.findFirst({
+          where: {
+            email,
+            expiresAt: {
+              gt: new Date(), 
+            },
+            used: false,
+          },
+          orderBy: {
             createdAt: 'desc',
           },
-          expiresAt: {
-            gt: new Date(),
-          }
         });
 
           if (!fetchOtp) {

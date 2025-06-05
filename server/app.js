@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session'); 
 const passport = require('passport');
-const routes = require('./routes/userRoutes');
+const generalRoutes = require('./routes/userRoutes');
 
 const cors = require('cors');
 require('dotenv').config();
@@ -33,14 +33,14 @@ app.use(sessionMiddleware);
 
 
 // Passport setup
-require('./config/passport');
+require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
 
   
 // API routes
-app.use('/api', routes);
+app.use('/api', generalRoutes);
 
 
 

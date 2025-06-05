@@ -1,4 +1,3 @@
-
 const {ExtractJwt , Strategy } = require('passport-jwt')
 const prisma = require('./client')
 const options ={
@@ -6,8 +5,7 @@ const options ={
     secretOrKey : process.env.JWT_ACCESS_SECRET,
 }
 
-
-const strategy = new JwtStratagey(options, async (payload , done)=>{
+const strategy = new Strategy(options, async (payload , done)=>{
     try{
         const user  = await prisma.user.findUnique(
             {
@@ -23,10 +21,6 @@ const strategy = new JwtStratagey(options, async (payload , done)=>{
         done(err,false)
     }
 })
-
-
-
-
 
 module.exports =(passport) =>{
     passport.use(strategy);
