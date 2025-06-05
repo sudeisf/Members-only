@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jsonwebtoken = require('jsonwebtoken');
 require('dotenv').config();
+const { v4: uuidv4 } = require('uuid');
 
 
 const validPassword = (password,hashedPassword)=>{
@@ -18,7 +19,7 @@ const generatePassword = async (password) => {
     }
 }
 
-const GenerateToken = (user , remeberMe) =>{
+const GenerateToken = (user , rememberMe) =>{
     const accessToken = jwt.sign(
         { id: user.id },
         process.env.JWT_ACCESS_SECRET,
@@ -27,13 +28,15 @@ const GenerateToken = (user , remeberMe) =>{
 
       const refreshExpiry = rememberMe ? '30d' : '1d'; 
     
+      const jti = uuidv4();
+
       const refreshToken = jwt.sign(
-        { id: user.id },
+        { id: user.id, jti },
         process.env.JWT_REFRESH_SECRET,
         { expiresIn: refreshExpiry }
       );
 
-      return { accessToken, refreshToken };
+      return { accessToken, refreshToken ,jti };
 } 
 
 module.exports ={
