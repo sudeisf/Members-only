@@ -33,7 +33,7 @@ interface AuthState {
     error : string | null,
     accessToken : string | null ,
     loginFn :  (email: string , password: string) => Promise<void|boolean>,
-    registerFn : (email: string, firstname : string , lastname: string , password:string , confirmPassword :string) => Promise<void|string>,
+    registerFn : (email: string, firstname : string , lastname: string , password:string , confirmPassword :string) => Promise<void|boolean>,
     refreshTokenFn : () => Promise<void|string>,
     logout : () => Promise<void|string>,
     SendOtpFn : (email:string) => Promise<void|string>,
@@ -95,9 +95,11 @@ export const useAuthStore = create<AuthState>()(persist(
                         success : "you have been registerd successfuly"
                     })
                 }
+                return true
              }catch(err: any){
                 console.error(err)
                 set({isLoading:false , error: handleApiError(err)})
+                return false
              }
         },
         refreshTokenFn : async () =>{

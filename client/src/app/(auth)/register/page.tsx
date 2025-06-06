@@ -15,6 +15,9 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Roboto } from "next/font/google"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useAuthStore } from "@/store/authStore"
+import { useRouter } from "next/router"
+import { toast } from "sonner";
 
 const formScehma = z.object({
     email: z.string().email("invalid Email address"),
@@ -33,8 +36,17 @@ const formScehma = z.object({
 })
 
 export default function Register(){
+    
+    const isLoading = useAuthStore((state)=> state.isLoading);
+    const error = useAuthStore((state)=> state.error);
+    const refisterFn = useAuthStore((state)=> state.registerFn);
+    const router = useRouter();
+
+
+
+
     function onSubmit(values: z.infer<typeof formScehma>){
-        console.log(values);
+        
     }
 
     const form  = useForm<z.infer<typeof formScehma>>({
