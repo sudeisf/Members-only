@@ -72,7 +72,7 @@ const login  = async (req , res) => {
         const isMatch  = await utils.validPassword(password , user.password);
 
         if (!isMatch){
-            return res.status(401).json({ error: 'Invalid email or password' });
+            return res.status(401).json({ error: 'Invalid password' });
         }
 
         const tokens = utils.GenerateToken(user,rememberMe);

@@ -15,6 +15,10 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Roboto } from "next/font/google"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useAuthStore } from "@/store/authStore"
+import { useRouter } from "next/navigation"
+import { LoaderCircleIcon } from "lucide-react"
+import { toast } from "sonner"
 
 const formScehma = z.object({
     email: z.string().email("invalid Email address"),
@@ -22,9 +26,12 @@ const formScehma = z.object({
 })
 
 export default function Login(){
-    function onSubmit(values: z.infer<typeof formScehma>){
-        console.log(values);
-    }
+    const router = useRouter();
+    const isLoading = useAuthStore((state)=>state.isLoading);
+    const error = useAuthStore((state)=>state.error);
+    const success = useAuthStore((state)=>state.success);
+    const isAuthenticated = useAuthStore((state)=>state.isAuthenticated)
+    const loginFn = useAuthStore((state)=>state.loginFn);
 
     const form  = useForm<z.infer<typeof formScehma>>({
         resolver: zodResolver(formScehma),
@@ -34,6 +41,19 @@ export default function Login(){
         }
     });
 
+    
+    async function onSubmit(values: z.infer<typeof formScehma>){
+        const result  = await loginFn(values.email,values.password);
+        if(result){
+            toast(success || "Login successful");
+            router.push('/')
+        }else{
+            toast(error || "login failed")
+        }
+    }
+        
+
+   
     return (
         <div className="w-full max-w-[500px] mx-auto px-4 mt-10 md:mt-0 sm:px-6">
             <div className="flex flex-col justify-center text-center">
@@ -82,7 +102,7 @@ export default function Login(){
                     </div>
                     
                     <Button className="w-full py-6 rounded-md bg-blue-900 font-roboto font-medium text-md hover:bg-blue-900/90">
-                        Sign In
+                        {isLoading ? <LoaderCircleIcon className="w-5 h-5 animate-spin" /> : "Sign In"}
                     </Button>
                     
                     <div className="flex flex-col">

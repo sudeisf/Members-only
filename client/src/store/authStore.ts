@@ -19,7 +19,7 @@ type User = {
 }
 const handleApiError = (error: unknown): string => {
     if (error instanceof AxiosError) {
-        return error.response?.data?.message || error.message;
+        return error.response?.data?.error || error.message;
     }
     return 'An unexpected error occurred';
 }
@@ -32,7 +32,7 @@ interface AuthState {
     isLoading : boolean,
     error : string | null,
     accessToken : string | null ,
-    loginFn :  (email: string , password: string) => Promise<void|string>,
+    loginFn :  (email: string , password: string) => Promise<void|boolean>,
     registerFn : (email: string, firstname : string , lastname: string , password:string , confirmPassword :string) => Promise<void|string>,
     refreshTokenFn : () => Promise<void|string>,
     logout : () => Promise<void|string>,
@@ -65,9 +65,11 @@ export const useAuthStore = create<AuthState>()(persist(
                         success : "login succesful"
                     })
                 }
+                return true
              }catch(err: any){
                 console.error(err)
                 set({isLoading:false , error: handleApiError(err)})
+                return false
              }
         },
         registerFn : async (email, firstname , lastname, password , confirmPassword ) =>{
