@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 const register = async (req, res) => {
 
     try{
-        const { email, password, confirmPassword ,firstName, lastName }  = req.body;
+        const { email, password, confirmPassword ,firstName, lastName , rememberMe =  false }  = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: 'Email and password are required' });
@@ -18,7 +18,7 @@ const register = async (req, res) => {
         const existingUser =  await prisma.user.findUnique({where : { email}});
 
         if (existingUser){
-            res.status(400).json({error: 'Email already registered'})
+            return res.status(400).json({error: 'Email already registered'})
         }
 
         const hashedPassword = await utils.generatePassword(password);
@@ -32,7 +32,7 @@ const register = async (req, res) => {
             }
         });
 
-        const tokens = utils.GenerateToken(user,rememberMe);
+        const tokens = utils.GenerateToken(newUser,rememberMe);
         
         res.cookie('refreshToken', tokens.refreshToken, {
           httpOnly: true,
@@ -242,7 +242,7 @@ const logout = async (req,res) => {
 const sendOtp = async (req,res) => {
         try{
             const {email} = req.body;
-            if (!email) {return  res.status(400).json("email is required")}
+            if (!email) {return res.status(400).json({error : "email is required"})}
 
             const otp = await utils.generateOTP()
             const otpcode = otp.otp;
@@ -317,7 +317,7 @@ const verifyOTP = async (req, res) => {
 const newPassword = async (req, res) => {
     try{
         const {password, confirmPassword , email} = req.body;
-        if(!password || !confirmPassword || !email) {return res.status(400).json({ error: "full inputs required are required" });}
+        if(!password || !confirmPassword || !email) {return res.status(400).json({ error: "full inputs are required" });}
         if(password !== confirmPassword) {return res.status(400).json({error: "password does not match"})}
         const user = await prisma.user.findUnique({where : {email}})
         if(!user){

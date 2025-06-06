@@ -15,8 +15,10 @@ import { Button } from "@/components/ui/button";
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import Link from "next/link";
 
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, LoaderCircleIcon } from "lucide-react";
 import { useEffect } from "react";
+import { useAuthStore } from "@/store/authStore";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   otp: z.string()
@@ -26,8 +28,12 @@ const formSchema = z.object({
 });
 
 export default function OtpPage() {
+  const isLoading = useAuthStore((state)=>state.isLoading);
+  const error = useAuthStore((state)=>state.error);
+  const verifyOtpFn = useAuthStore((state)=>state.verifyOtpFn);
+  const success = useAuthStore((state)=>state.success);
+  const router = useRouter()
 
-  const router = useRouter();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,9 +43,15 @@ export default function OtpPage() {
     mode: "onChange",
   });
 
-  // Debug form state
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Submitting OTP:", values.otp);
+    const result = await verifyOtpFn(values.otp);
+    if (result){
+        toast(success)
+        router.push("/new-password")
+    }else{
+        toast(error)
+    }
   }
 
   return (
@@ -86,9 +98,10 @@ export default function OtpPage() {
 
         <Button 
           type="submit" 
+          disabled={isLoading}
           className="w-full py-6 rounded-md bg-blue-900 font-roboto font-medium text-md hover:bg-blue-900/90"
         >
-         verify OTP
+         {isLoading ? <LoaderCircleIcon className="w-4 h-4 animate-spin" /> : "Verify OTP"}
         </Button>
 
         <div className="flex justify-center align-middle font-inter gap-2">

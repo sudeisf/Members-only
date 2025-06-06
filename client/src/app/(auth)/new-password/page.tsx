@@ -18,7 +18,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { LoaderCircle } from "lucide-react"
+import { LoaderCircle, LoaderCircleIcon } from "lucide-react"
+import { useAuthStore } from "@/store/authStore"
+import { toast } from "sonner"
 
 const formSchema = z.object({
     password:  z.string()
@@ -33,8 +35,12 @@ const formSchema = z.object({
   });
 
 export default function NewPasswordPage() {
+  const isLoading = useAuthStore((state)=>state.isLoading);
+  const error = useAuthStore((state)=>state.error);
+  const newPasswordFn = useAuthStore((state)=>state.newPasswordFn);
+  const success = useAuthStore((state)=>state.success);
+  const router = useRouter()
   
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver : zodResolver(formSchema),
@@ -46,7 +52,13 @@ export default function NewPasswordPage() {
   })
 
    async function onSubmit(values: z.infer<typeof formSchema>) {
-    
+    const result = await newPasswordFn(values.password, values.confirmPassword);
+    if (result){
+        toast(success)
+        router.push("/login")
+    }else{
+        toast(error)
+    }
   }
 
 
@@ -96,7 +108,7 @@ export default function NewPasswordPage() {
          type="submit"
         
          >
-         Confirm
+         {isLoading ? <LoaderCircleIcon className="w-4 h-4 animate-spin"/> : "Confirm"}
         </Button>
       </form>
     </Form>

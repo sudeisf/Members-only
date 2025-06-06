@@ -34,11 +34,11 @@ interface AuthState {
     accessToken : string | null ,
     loginFn :  (email: string , password: string) => Promise<void|boolean>,
     registerFn : (email: string, firstname : string , lastname: string , password:string , confirmPassword :string) => Promise<void|boolean>,
-    refreshTokenFn : () => Promise<void|string>,
-    logout : () => Promise<void|string>,
-    SendOtpFn : (email:string) => Promise<void|string>,
-    verifyOtpFn : (otp:string) => Promise<void|string>,
-    newPasswordFn : (password: string , confirmPassword: string) => Promise<void|string>
+    refreshTokenFn : () => Promise<void|boolean>,
+    logout : () => Promise<void|boolean>,
+    SendOtpFn : (email:string) => Promise<void|boolean>,
+    verifyOtpFn : (otp:string) => Promise<void|boolean>,
+    newPasswordFn : (password: string , confirmPassword: string) => Promise<void|boolean>
 
 
 }
@@ -85,7 +85,7 @@ export const useAuthStore = create<AuthState>()(persist(
                     }
                 );
 
-                if(response.status == 200){
+                if(response.status == 201){
                     set({
                         isLoading:false,
                         isAuthenticated:true,
@@ -154,9 +154,11 @@ export const useAuthStore = create<AuthState>()(persist(
                         success: "OTP code have been sent succefully to your email"
                     })
                 }
+                return true
              }catch(err: any){
                 console.error(err)
                 set({isLoading:false , error: handleApiError(err)})
+                return false
              } 
         },
         verifyOtpFn : async (otp) => {
@@ -172,15 +174,20 @@ export const useAuthStore = create<AuthState>()(persist(
                         success: "OTP have been varified"
                     })
                 }
+                return true
              }catch(err: any){
                 console.error(err)
                 set({isLoading:false , error: handleApiError(err)})
+                return false
              }
         },
         newPasswordFn : async (password, confirmPassword) => {
             const email = get().tempEmail;
             try{
-                set({isLoading : true, error : null});
+                set({ isLoading: true, error: null, success: null });
+                if (!email) {
+                    throw new Error('No email stored for password reset');
+                }
        
                 const response  = await newPassword({
                     email : email,
@@ -195,9 +202,11 @@ export const useAuthStore = create<AuthState>()(persist(
                         success: "new password set sucessfully"
                     })
                 }
+                return true
              }catch(err: any){
                 console.error(err)
                 set({isLoading:false , error: handleApiError(err)})
+                return false
              }  
         },
     }),
@@ -206,7 +215,8 @@ export const useAuthStore = create<AuthState>()(persist(
         partialize: (state) => ({
             accessToken: state.accessToken,
             user: state.user,
-            isAuthenticated: state.isAuthenticated
+            isAuthenticated: state.isAuthenticated,
+            tempEmail: state.tempEmail,
         })
     }
 ));

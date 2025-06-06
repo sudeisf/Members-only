@@ -101,7 +101,7 @@ export default function Login(){
                         </Link>
                     </div>
                     
-                    <Button className="w-full py-6 rounded-md bg-blue-900 font-roboto font-medium text-md hover:bg-blue-900/90">
+                    <Button disabled={isLoading} className="w-full py-6 rounded-md bg-blue-900 font-roboto font-medium text-md hover:bg-blue-900/90">
                         {isLoading ? <LoaderCircleIcon className="w-5 h-5 animate-spin" /> : "Sign In"}
                     </Button>
                     

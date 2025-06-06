@@ -16,6 +16,10 @@ import Link from "next/link"
 import { Roboto } from "next/font/google"
 import { Checkbox } from "@/components/ui/checkbox"
 import {ChevronLeftIcon} from "lucide-react"
+import { useAuthStore } from "@/store/authStore"
+import { useRouter } from "next/navigation"
+import { LoaderCircleIcon } from "lucide-react"
+import { toast } from "sonner"
 
 const formScehma = z.object({
     email: z.string().email("invalid Email address"),
@@ -25,8 +29,24 @@ const formScehma = z.object({
 
 
 export default function ForgotPassword(){
-    function onSubmit(values: z.infer<typeof formScehma>){
-        console.log(values);
+    const isLoading = useAuthStore((state)=>state.isLoading);
+    const error = useAuthStore((state)=>state.error);
+    const sendOtpFn = useAuthStore((state)=>state.SendOtpFn);
+    const success = useAuthStore((state)=>state.success);
+    const router = useRouter()
+
+
+
+
+
+    async function onSubmit(values: z.infer<typeof formScehma>){
+        const result = await sendOtpFn(values.email);
+        if (result){
+            toast(success)
+            router.push("/verify-otp")
+        }else{
+            toast(error)
+        }
     }
 
     const form  = useForm<z.infer<typeof formScehma>>({
@@ -52,14 +72,14 @@ export default function ForgotPassword(){
                             <FormItem>
                                 <FormLabel className="text-md font-roboto font-medium">Email</FormLabel>
                                 <FormControl>
-                                    <Input {...field} placeholder="Enter your Email" className="py-6 text-lg font-roboto rounded-lg shadow-none"/>
+                                    <Input {...field} type="email" placeholder="Enter your Email" className="py-6 text-lg font-roboto rounded-lg shadow-none"/>
                                 </FormControl>
                                 <FormMessage/>
                             </FormItem>
                         )} 
                     />
                     <Button className="w-full py-6 rounded-md bg-blue-900 font-roboto font-medium text-md hover:bg-blue-900/90">
-                        Reset
+                       {isLoading ? <LoaderCircleIcon className="w-4 h-4 animate-spin"/> : "Reset"}
                     </Button>
                     <div className="w-full">
                             <Link href={'/login'} className="text-center capitalize font-roboto flex gap-4 w-full items-center mx-auto font-medium text-blue-800 ml-1">
