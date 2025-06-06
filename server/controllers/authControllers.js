@@ -7,11 +7,13 @@ const bcrypt = require('bcrypt')
 const register = async (req, res) => {
 
     try{
-        const { email, password, firstName, lastName }  = req.body;
+        const { email, password, confirmPassword ,firstName, lastName }  = req.body;
 
         if (!email || !password) {
             return res.status(400).json({ error: 'Email and password are required' });
           }
+        
+        if (confirmPassword !== password) {return res.status(400).json({ error: 'password does not match.' });}
 
         const existingUser =  await prisma.user.findUnique({where : { email}});
 
@@ -30,12 +32,24 @@ const register = async (req, res) => {
             }
         });
 
-        res.status(201).json({
+        const tokens = utils.GenerateToken(user,rememberMe);
+        
+        res.cookie('refreshToken', tokens.refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 7 * 24 * 60 * 60 * 1000 
+      });
+
+        return res.status(201).json({
             message : 'User registered successfully',
-            id: user.id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            accessToken : tokens.accessToken,
+            user : {
+              id: newUser.id,
+              email: newUser.email,
+              firstName: newUser.firstName,
+              lastName: newUser.lastname,
+            }
         })
     }catch(error){
         console.error('Register error:', error);
@@ -72,12 +86,11 @@ const login  = async (req , res) => {
 
         return res.status(200).json({
             accessToken : tokens.accessToken,
-            refreshToken : tokens.refreshToken,
             user: {
               id: user.id,
               email: user.email,
               firstName: user.firstName,
-              lastName: user.lastName,
+              lastName: user.lastname,
             },
           });
           
@@ -217,7 +230,7 @@ const logout = async (req,res) => {
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
           });
-          res.status(200).json({ message: 'Logged out successfully' });
+          res.status(200).json({ success : true , message: 'Logged out successfully' });
       }catch(error){
         console.error('Logout error:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -249,6 +262,7 @@ const sendOtp = async (req,res) => {
                         otp : otpcode
                     })
                     res.status(200).json({
+                        success : true ,
                         message : "verification send to your email check it"
                     })
               }else{
