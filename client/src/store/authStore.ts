@@ -1,8 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import axios, { AxiosError } from 'axios';
-import { email, success } from "zod/v4";
-
+import { AxiosError } from 'axios';
+import {
+    login,
+    register,
+    logout,
+    refresh,
+    SendOtp,
+    verifyOtp,
+    newPassword
+} from "@/api/auhtAPi"
 
 type User = {
     id : string,
@@ -10,9 +17,6 @@ type User = {
     firstname : string,
     lastname : string,
 }
-
-const BASE_URL = process.env.BASE_URL || 'http://localhost:5000';
-
 const handleApiError = (error: unknown): string => {
     if (error instanceof AxiosError) {
         return error.response?.data?.message || error.message;
@@ -50,10 +54,7 @@ export const useAuthStore = create<AuthState>()(persist(
         loginFn : async (email , password) => {
              try{
                 set({isLoading : true, error : null , success: null});
-                const response  = await axios.post(`${BASE_URL}/api/auth/login`, {
-                    email : email,
-                    password : password
-                })
+                const response  =  await login({ email, password });
                 if(response.status == 200){
                     set({
                         isLoading:false,
@@ -62,12 +63,6 @@ export const useAuthStore = create<AuthState>()(persist(
                         accessToken : response.data.accessToken,
                         user : response.data.user,
                         success : "login succesful"
-                    })
-                }else{
-                    set({
-                        isLoading: false,
-                        error : response.data.message,
-                        success: null
                     })
                 }
              }catch(err: any){
@@ -79,13 +74,15 @@ export const useAuthStore = create<AuthState>()(persist(
             try{
                 set({isLoading : true, error : null , success: null});
                
-                const response  = await axios.post(`${BASE_URL}/api/auth/register`, {
+                const response  =  await register({
                     email : email,
                     password : password,
                     confirmPassword : confirmPassword,
                     firstname : firstname,
-                    lastname : lastname,
-                });
+                    lastname : lastname
+                    }
+                );
+
                 if(response.status == 200){
                     set({
                         isLoading:false,
@@ -94,12 +91,6 @@ export const useAuthStore = create<AuthState>()(persist(
                         accessToken : response.data.accessToken,
                         user : response.data.user,
                         success : "you have been registerd successfuly"
-                    })
-                }else{
-                    set({
-                        isLoading: false,
-                        error : response.data.message,
-                        success: null
                     })
                 }
              }catch(err: any){
@@ -111,22 +102,14 @@ export const useAuthStore = create<AuthState>()(persist(
             try{
                 set({isLoading : true, error : null});
            
-                const response  = await axios.post(`${BASE_URL}/api/auth/refreshToken`, {},
-                    {
-                        withCredentials: true
-                    }
-                );
+                const response  = await refresh();
                 if(response.status == 200){
                     set({
                         isLoading:false,
                         isAuthenticated:true,
                         error : null,
                         accessToken : response.data.accessToken,
-                    })
-                }else{
-                    set({
-                        isLoading: false,
-                        error : response.data.message,
+                        user: response.data.user
                     })
                 }
              }catch(err: any){
@@ -138,11 +121,7 @@ export const useAuthStore = create<AuthState>()(persist(
             try{
                 set({isLoading : true, error : null , success: null});
          
-                const response  = await axios.post(`${BASE_URL}/api/auth/logout`, {},
-                    {
-                        withCredentials: true
-                    }
-                );
+                const response  = await logout();
                 if(response.status == 200){
                     set({
                         isLoading:false,
@@ -151,12 +130,6 @@ export const useAuthStore = create<AuthState>()(persist(
                         accessToken : null,
                         user: null,
                         success : "Log out successful"
-                    })
-                }else{
-                    set({
-                        isLoading: false,
-                        error : response.data.message,
-                        success: null
                     })
                 }
              }catch(err: any){
@@ -168,22 +141,13 @@ export const useAuthStore = create<AuthState>()(persist(
             try{
                 set({isLoading : true, error : null});
                
-                const response  = await axios.post(`${BASE_URL}/api/auth/email`, {
-                    email : email
-                }
-                );
+                const response  = await SendOtp({ email : email});
                 if(response.status == 200){
                     set({
                         isLoading: false,
                         error : null,
                         tempEmail : email,
                         success: "OTP code have been sent succefully to your email"
-                    })
-                }else{
-                    set({
-                        isLoading: false,
-                        error : response.data.message,
-                        success: null
                     })
                 }
              }catch(err: any){
@@ -196,22 +160,12 @@ export const useAuthStore = create<AuthState>()(persist(
             try{
                 set({isLoading : true, error : null});
           
-                const response  = await axios.post(`${BASE_URL}/api/auth/verify-otp`, {
-                    email : email,
-                    otp : otp
-                }
-                );
+                const response  = await verifyOtp({email: email , otp : otp});
                 if(response.status == 200){
                     set({
                         isLoading: false,
                         error : null,
                         success: "OTP have been varified"
-                    })
-                }else{
-                    set({
-                        isLoading: false,
-                        error : response.data.message,
-                        success: null
                     })
                 }
              }catch(err: any){
@@ -224,24 +178,17 @@ export const useAuthStore = create<AuthState>()(persist(
             try{
                 set({isLoading : true, error : null});
        
-                const response  = await axios.post(`${BASE_URL}/api/auth/new-password`, {
+                const response  = await newPassword({
                     email : email,
                     password: password,
                     confirmPassword: confirmPassword
-                }
-                );
+                });
                 if(response.status == 200){
                     set({
                         isLoading: false,
                         error : null,
                         tempEmail : null,
                         success: "new password set sucessfully"
-                    })
-                }else{
-                    set({
-                        isLoading: false,
-                        error : response.data.message,
-                        success : null
                     })
                 }
              }catch(err: any){

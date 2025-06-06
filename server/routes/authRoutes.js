@@ -9,7 +9,7 @@ router.post('/register',Auth.register);
 router.post('/email',Auth.sendOtp);
 router.post('/new-password',Auth.newPassword);
 router.post('/verify-otp',Auth.verifyOTP);
-router.post('/refreshToken',Auth.refreshToken);
+router.get('/refreshToken',Auth.refreshToken);
 router.post('/logout',passport.authenticate('jwt', { session: false }),Auth.logout)
 
 module.exports = router;
