@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { DotIcon } from "lucide-react"
+import { ActivityIcon, BadgeCheck, Bookmark, Calendar1Icon, CrownIcon, DotIcon } from "lucide-react"
 
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -66,7 +66,7 @@ export default function Landing(){
                               </Button>
                         </div>
                   </div>
-                  <div className="min-h-[90vh] flex flex-col justify-evenly space-y-6 md:space-y-4">
+                  <div className="min-h-[vh] flex flex-col justify-evenly space-y-6 md:space-y-4">
                         <div className="space-y-3 max-w-2xl mx-auto px-4 sm:px-0 mt-2  md:mt-0">
                               <h1 className="w-fit bg-blue-700/5  text-blue-400 font-medium mx-auto py-1 flex px-5 rounded-full items-center font-roboto text-sm sm:text-base"><DotIcon className="bg-blue-400/20 animate-pulse text-blue-700 w-6 h-6 rounded-full mr-2" /> Wellcome</h1>
                               <p className="text-center text-gray-400 font-roboto font-medium text-base sm:text-lg">Discover and join exclusive clubs that match your interests. Connect with like-minded individuals and be part of something special.</p>
@@ -110,16 +110,53 @@ export default function Landing(){
                                     <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
                               </div>
                         </div>
-                        <div>
-                            <div>
-                            <h1>features</h1> 
-                            <h1> The Blocks of powerfull platform </h1>
+                        <div className="flex flex-col lg:flex-row mt-10 min-h-[80vh]">
+                            <div className="w-full lg:w-1/2 p-4 sm:p-8 lg:p-20 space-y-5">
+                            <h1 className="w-fit bg-blue-700/5  capitalize text-blue-400 font-medium py-1 flex px-5 rounded-full items-center font-roboto text-sm sm:text-base">features</h1> 
+                            <h1 className="text-4xl sm:text-4xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-blue-800 py-2"> The Blocks of powerfull platform </h1>
+                            <p className="text-gray-400 font-roboto font-normal leading-7 text-base sm:text-lg">Our platform offers a seamless experience with real-time messaging, secure authentication, and personalized club recommendations. Enjoy exclusive content, event management, and a vibrant community of like-minded individuals.</p>
+                            <Button variant={"ghost"} className="px-6 sm:px-8 py-4 sm:py-6  text-blue-600 text-base sm:text-lg  w-fit  font-roboto hover:text-blue-600  bg-blue-500/5 shadow-lg transition-all">
+                                          Start free
+                                    </Button>
+                            </div>
+                          
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 p-4 sm:p-8 lg:p-20">
+                              <div className="p-4 sm:p-6 rounded-lg gap-y-2 shadow-sm hover:bg-gradient-to-r hover:from-blue-400/10 hover:via-blue-200/10 hover:to-blue-100/30">
+                                    <CrownIcon className="w-8 h-8 text-blue-800 mb-2" />
+                                    <h1 className="text-lg font-semibold text-blue-800 font-roboto mb-2">Exclusivity</h1>
+                                    <p className="text-gray-500">Secure, pass-code-protected clubs for private, trusted communities.</p>
+                              </div>
+                              <div className=" p-4 sm:p-6 rounded-lg gap-y-2 shadow-sm hover:bg-gradient-to-r hover:from-blue-400/10 hover:via-blue-200/10 hover:to-blue-100/30">
+                                    <ActivityIcon className="w-8 h-8 text-blue-800 mb-2" />
+                                    <h1 className="text-lg font-semibold mb-2 text-blue-800">Real-Time Engagement</h1>
+                                    <p className="text-gray-500">Stay updated with instant notifications on posts and events</p>
+                              </div>
+                               <div className=" p-4 sm:p-6 rounded-lg gap-y-2 shadow-sm hover:bg-gradient-to-r hover:from-blue-400/10 hover:via-blue-200/10 hover:to-blue-100/30">
+                                    <BadgeCheck className="w-8 h-8 text-blue-800 mb-2"/>
+                                    <h1 className="text-lg font-semibold mb-2 text-blue-800">Social Interaction</h1>
+                                    <p className="text-gray-500">Like, comment, and share fancy posts with ease.</p>
+                              </div>
+                              <div className=" p-4 sm:p-6 rounded-lg gap-y-2 shadow-sm hover:bg-gradient-to-r hover:from-blue-400/10 hover:via-blue-200/10 hover:to-blue-100/30">
+                               <Calendar1Icon className="w-8 h-8 text-blue-800 mb-2" />
+                                    <h1 className="text-lg font-semibold mb-2 text-blue-800">Event Planning</h1>
+                                    <p className="text-gray-500">Organize and join club events effortlessly</p>
+                              </div>
+                              <div className=" p-4 sm:p-6 rounded-lg gap-y-2 shadow-sm hover:bg-gradient-to-r hover:from-blue-400/10 hover:via-blue-200/10 hover:to-blue-100/30">
+                                    <Bookmark className="w-8 h-8 text-blue-800 mb-2" />
+                                    <h1 className="text-lg font-semibold mb-2 text-blue-800">Future Features</h1>
+                                    <p className="text-gray-500">Tease "Group Chat Coming Soon" to build anticipation.</p>
+                              </div>
+                              <div className=" p-4 sm:p-6  flex  items-center gap-4 rounded-lg gap-y-2 ">
+                              <img src="/curve.svg" className="w-8 sm:w-12 inline animate-pulse" />
+                              <p className="capitalize font-roboto text-blue-800">this platform will be open source soon</p>
+                              </div>
+
                             </div>
 
                         </div>
                         <footer className="py-3 sm:py-4 w-full border-gray-200 dark:border-gray-700">
                               <div className="border-t w-fit mt-2 py-2 mx-auto">
-                                    <p className="text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400">© {new Date().getFullYear()} Members Only. All rights reserved.</p>
+                                    <p className="text-center text-xs sm:text-sm  text-blue-800">© {new Date().getFullYear()} Members Only. All rights reserved.</p>
                               </div>
                         </footer>
                   </div>
