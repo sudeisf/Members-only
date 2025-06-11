@@ -2,15 +2,10 @@
 
 import { Button } from "@/components/ui/button"
 import { DotIcon } from "lucide-react"
-import { Rubik } from "next/font/google"
+
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 
-const rubik = Rubik({
-      weight : ["300","500"] ,
-      style: "normal",
-      subsets : ["latin","latin-ext"]
-})
 
 const clubs = [
       {
@@ -53,12 +48,12 @@ export default function Landing(){
                   <div className="flex items-center justify-between p-2 sm:p-4">
                         <div className="flex items-center gap-1 px-2 sm:px-5">
                               <Image src={'/lock.svg'} alt={"lock icon"} width={20} height={20} className="dark:invert" />
-                              <h1 className={`${rubik.className} font-medium text-lg sm:text-xl drop-shadow-2xl text-blue-800`}>Memebers-only</h1>
+                              <h1 className="font-medium text-lg sm:text-xl drop-shadow-2xl text-blue-800">Memebers-only</h1>
                         </div>
                         <div className="flex gap-1 sm:gap-2">
                               <Button 
                                 variant={"ghost"} 
-                                className="px-2 sm:px-5 capitalize font-roboto font-medium text-sm sm:text-md hover:bg-blue-50/0" 
+                                className="px-2 sm:px-5 capitalize font-roboto font-medium text-md sm:text-md hover:bg-blue-50/0" 
                                 onClick={() => router.push('/login')}
                               >
                                 Login
@@ -71,20 +66,20 @@ export default function Landing(){
                               </Button>
                         </div>
                   </div>
-                  <div className="min-h-[90vh] flex flex-col justify-evenly space-y-6 md:space-y-0">
+                  <div className="min-h-[90vh] flex flex-col justify-evenly space-y-6 md:space-y-4">
                         <div className="space-y-3 max-w-2xl mx-auto px-4 sm:px-0 mt-2  md:mt-0">
-                              <h1 className="w-fit bg-blue-700/10 shadow-xs text-blue-500 font-medium mx-auto py-1 flex px-5 rounded-full items-center font-roboto text-sm sm:text-base"><DotIcon /> Wellcome</h1>
-                              <p className="text-center text-gray-500 font-roboto font-medium text-base sm:text-lg">Discover and join exclusive clubs that match your interests. Connect with like-minded individuals and be part of something special.</p>
+                              <h1 className="w-fit bg-blue-700/5  text-blue-400 font-medium mx-auto py-1 flex px-5 rounded-full items-center font-roboto text-sm sm:text-base"><DotIcon className="bg-blue-400/20 animate-pulse text-blue-700 w-6 h-6 rounded-full mr-2" /> Wellcome</h1>
+                              <p className="text-center text-gray-400 font-roboto font-medium text-base sm:text-lg">Discover and join exclusive clubs that match your interests. Connect with like-minded individuals and be part of something special.</p>
                         </div>
                         <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-4 sm:gap-8 px-4 sm:px-0">
-                              <div className={`${rubik.className} flex flex-col items-start justify-start text-left pl-2 sm:pl-10 w-full md:w-1/2 capitalize`}>
+                              <div className="flex flex-col items-start justify-start text-left pl-2 sm:pl-10 w-full md:w-1/2 capitalize">
                                     <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-blue-800 py-2">
                                           Join Exclusive Clubs <span><img src="/curve.svg" className="w-8 sm:w-12 inline" /></span>
                                     </h1>
                                     <p className="text-sm sm:text-base md:text-lg text-gray-400 mb-6 sm:mb-8 max-w-xl font-roboto">
-                                          Connect with like-minded individuals, share experiences, and be part of something special. Your journey to meaningful connections starts here.
+                                         Connect with <span className="text-blue-600   font-robto font-medium"> like-minded individuals</span>, share experiences, and <span className="text-blue-600 ">be part of something special</span> . Your journey to meaningful connections starts here.
                                     </p>
-                                    <Button className="px-6 sm:px-8 py-4 sm:py-6 rounded-lg text-base sm:text-lg bg-blue-800 hover:bg-blue-800/90 w-fit capitalize font-roboto font-medium shadow-lg hover:shadow-xl transition-all">
+                                    <Button className="px-6 animate-bounce sm:px-8 py-4 sm:py-6 rounded-lg text-base sm:text-lg bg-blue-800 hover:bg-blue-800/90 w-fit capitalize font-roboto font-medium shadow-lg hover:shadow-xl transition-all">
                                           Get Started
                                     </Button>
                               </div>
@@ -114,6 +109,13 @@ export default function Landing(){
                                     </div>
                                     <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
                               </div>
+                        </div>
+                        <div>
+                            <div>
+                            <h1>features</h1> 
+                            <h1> The Blocks of powerfull platform </h1>
+                            </div>
+
                         </div>
                         <footer className="py-3 sm:py-4 w-full border-gray-200 dark:border-gray-700">
                               <div className="border-t w-fit mt-2 py-2 mx-auto">

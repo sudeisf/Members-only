@@ -15,7 +15,7 @@ export default function Home() {
       <Button onClick={
           () => {
             logoutFn()
-            router.push('/login')
+            router.push('/landing')
           }
       }>{isLoading ? <LoaderCircleIcon className="w-4 h-4 animate-spin" /> : "Logout"}</Button>
     </div>
